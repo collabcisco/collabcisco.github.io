@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SeguroYa - Tu Protección, Nuestra Prioridad</title>
+  <title id="companyNameTitle">SeguroYa - Tu Protección, Nuestra Prioridad</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -28,7 +28,7 @@
       font-family: 'Inter', sans-serif;
       background-color: var(--light-bg);
       color: var(--dark-text);
-      line-height: 1.5; /* Ligeramente más compacto */
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -36,7 +36,7 @@
     /* Header */
     header {
       background-color: var(--white);
-      padding: 0.7rem 2rem; /* Más compacto */
+      padding: 0.7rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -47,24 +47,24 @@
     }
 
     header .logo {
-      height: 38px; /* Más pequeño */
+      height: 38px;
       display: flex;
       align-items: center;
-      font-size: 1.5rem; /* Más pequeño */
+      font-size: 1.5rem;
       font-weight: 700;
       color: var(--primary-green);
       text-decoration: none;
     }
 
     header .logo img {
-      height: 32px; /* Más pequeño */
+      height: 32px;
       margin-right: 8px;
       border-radius: var(--border-radius-sm);
     }
 
     nav a {
       color: var(--dark-text);
-      margin-left: 1.2rem; /* Más compacto */
+      margin-left: 1.2rem;
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s ease;
@@ -74,17 +74,58 @@
       color: var(--primary-green);
     }
 
+    /* Admin Panel Styles */
+    .admin-panel {
+      background-color: #e6ffe6; /* Un verde muy claro */
+      padding: 1rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid #c6ecc6;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .admin-panel label {
+      font-weight: 600;
+      color: var(--primary-green);
+      margin-right: 10px;
+    }
+
+    .admin-panel input[type="text"] {
+      padding: 0.6rem 1rem;
+      border: 1px solid #a6d9a6;
+      border-radius: var(--border-radius-sm);
+      width: 250px;
+      max-width: 70%;
+      margin-right: 10px;
+      font-size: 0.9rem;
+    }
+
+    .admin-panel button {
+      background-color: var(--primary-green);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: var(--border-radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .admin-panel button:hover {
+      background-color: #006666;
+    }
+
     /* Hero Section */
     .hero {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2.5rem 2rem; /* Más compacto */
-      background: linear-gradient(135deg, #e0f8e0 0%, #d4f0d4 100%); /* Gradiente suave verdoso */
-      min-height: 350px; /* Ajustado para ser más pequeño */
+      padding: 2.5rem 2rem;
+      background: linear-gradient(135deg, #e0f8e0 0%, #d4f0d4 100%);
+      min-height: 350px;
       position: relative;
       overflow: hidden;
-      gap: 1.5rem; /* Espacio entre texto e imagen */
+      gap: 1.5rem;
     }
 
     .hero::before {
@@ -92,11 +133,11 @@
       position: absolute;
       top: -40px;
       left: -40px;
-      width: 160px; /* Más pequeño */
-      height: 160px; /* Más pequeño */
+      width: 160px;
+      height: 160px;
       background: rgba(0, 128, 128, 0.1);
       border-radius: 50%;
-      filter: blur(60px); /* Menos blur */
+      filter: blur(60px);
     }
 
     .hero::after {
@@ -104,11 +145,11 @@
       position: absolute;
       bottom: -40px;
       right: -40px;
-      width: 200px; /* Más pequeño */
-      height: 200px; /* Más pequeño */
+      width: 200px;
+      height: 200px;
       background: rgba(178, 223, 219, 0.15);
       border-radius: 50%;
-      filter: blur(80px); /* Menos blur */
+      filter: blur(80px);
     }
 
     .hero-content {
@@ -118,16 +159,16 @@
     }
 
     .hero-content h1 {
-      font-size: 2.8rem; /* Ajustado */
-      margin-bottom: 0.6rem; /* Más compacto */
+      font-size: 2.8rem;
+      margin-bottom: 0.6rem;
       color: var(--primary-green);
       font-weight: 700;
       line-height: 1.1;
     }
 
     .hero-content p {
-      font-size: 1.1rem; /* Ajustado */
-      margin-bottom: 1.5rem; /* Más compacto */
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
       color: #555;
     }
 
@@ -147,7 +188,7 @@
       display: inline-block;
       background-color: var(--primary-green);
       color: white;
-      padding: 0.7rem 1.8rem; /* Más compacto */
+      padding: 0.7rem 1.8rem;
       border-radius: var(--border-radius-sm);
       text-decoration: none;
       font-weight: 600;
@@ -163,16 +204,16 @@
     /* Sections / Cards */
     .sections-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); /* Más compacto */
-      gap: 1.2rem; /* Menor espacio entre tarjetas */
-      padding: 2rem 2rem; /* Más compacto */
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.2rem;
+      padding: 2rem 2rem;
       max-width: 1200px;
       margin: 0 auto;
     }
 
     .section-card {
       background-color: var(--white);
-      padding: 1.8rem; /* Más compacto */
+      padding: 1.8rem;
       border-radius: var(--border-radius-lg);
       box-shadow: var(--shadow-light);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -183,58 +224,58 @@
     }
 
     .section-card:hover {
-      transform: translateY(-2px); /* Menor movimiento */
+      transform: translateY(-2px);
       box-shadow: var(--shadow-medium);
     }
 
     .section-card h2 {
       margin-bottom: 0.7rem;
       color: var(--primary-green);
-      font-size: 1.5rem; /* Más compacto */
+      font-size: 1.5rem;
       font-weight: 600;
     }
 
     .section-card p {
-      font-size: 0.9rem; /* Más compacto */
+      font-size: 0.9rem;
       color: #666;
       flex-grow: 1;
-      margin-bottom: 0.8rem; /* Más compacto */
+      margin-bottom: 0.8rem;
     }
 
     .section-card img {
       width: 100%;
-      max-height: 140px; /* Más pequeña */
+      max-height: 140px;
       object-fit: cover;
       border-radius: var(--border-radius-sm);
-      margin-top: 0.8rem; /* Más compacto */
-      margin-bottom: 0.3rem; /* Más compacto */
+      margin-top: 0.8rem;
+      margin-bottom: 0.3rem;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
 
     /* Sección de Beneficios/Características */
     .features-section {
       background-color: var(--secondary-mint);
-      padding: 2.5rem 2rem; /* Más compacto */
+      padding: 2.5rem 2rem;
       text-align: center;
     }
 
     .features-section h2 {
-      font-size: 2rem; /* Más compacto */
+      font-size: 2rem;
       color: var(--primary-green);
-      margin-bottom: 1.8rem; /* Más compacto */
+      margin-bottom: 1.8rem;
     }
 
     .feature-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Más compacto */
-      gap: 1.2rem; /* Menor espacio */
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
       max-width: 1000px;
       margin: 0 auto;
     }
 
     .feature-item {
       background-color: var(--white);
-      padding: 1.3rem; /* Más compacto */
+      padding: 1.3rem;
       border-radius: var(--border-radius-lg);
       box-shadow: var(--shadow-light);
       text-align: left;
@@ -243,12 +284,12 @@
     .feature-item h3 {
       color: var(--primary-green);
       margin-bottom: 0.5rem;
-      font-size: 1.1rem; /* Más compacto */
+      font-size: 1.1rem;
     }
 
     .feature-item p {
       color: #555;
-      font-size: 0.85rem; /* Más compacto */
+      font-size: 0.85rem;
     }
 
     /* Footer */
@@ -256,8 +297,8 @@
       background-color: var(--primary-green);
       color: white;
       text-align: center;
-      padding: 1.2rem; /* Más compacto */
-      margin-top: 2rem; /* Más compacto */
+      padding: 1.2rem;
+      margin-top: 2rem;
       font-size: 0.8rem;
     }
 
@@ -266,17 +307,17 @@
       .hero {
         flex-direction: column;
         text-align: center;
-        padding: 2rem 1.5rem; /* Ajustado */
-        min-height: auto; /* Permite que el contenido determine la altura */
+        padding: 2rem 1.5rem;
+        min-height: auto;
       }
       .hero-content, .hero-image {
         max-width: 100%;
       }
       .hero-content h1 {
-        font-size: 2.2rem; /* Ajustado */
+        font-size: 2.2rem;
       }
       .hero-content p {
-        font-size: 1rem; /* Ajustado */
+        font-size: 1rem;
       }
       header {
         padding: 0.7rem 1.5rem;
@@ -285,10 +326,13 @@
         margin-left: 1rem;
       }
       .sections-container, .features-section {
-        padding: 1.8rem 1.5rem; /* Ajustado */
+        padding: 1.8rem 1.5rem;
       }
       .section-card {
-        padding: 1.5rem; /* Ajustado */
+        padding: 1.5rem;
+      }
+      .admin-panel input[type="text"] {
+        width: 200px;
       }
     }
 
@@ -309,13 +353,13 @@
         font-size: 0.8rem;
       }
       .hero {
-        padding: 2rem 1rem; /* Ajustado */
+        padding: 2rem 1rem;
       }
       .hero-content h1 {
-        font-size: 1.8rem; /* Ajustado */
+        font-size: 1.8rem;
       }
       .hero-content p {
-        font-size: 0.9rem; /* Ajustado */
+        font-size: 0.9rem;
       }
       .btn {
         padding: 0.6rem 1.5rem;
@@ -323,36 +367,41 @@
       }
       .sections-container {
         grid-template-columns: 1fr;
-        padding: 1.2rem 1rem; /* Ajustado */
+        padding: 1.2rem 1rem;
       }
       .section-card {
-        padding: 1rem; /* Ajustado */
+        padding: 1rem;
       }
       .section-card h2 {
-        font-size: 1.3rem; /* Ajustado */
+        font-size: 1.3rem;
       }
       .section-card p {
-        font-size: 0.8rem; /* Ajustado */
+        font-size: 0.8rem;
       }
       .section-card img {
-        max-height: 120px; /* Más pequeña en móvil */
+        max-height: 120px;
       }
       .features-section h2 {
-        font-size: 1.6rem; /* Ajustado */
+        font-size: 1.6rem;
       }
       .feature-item {
-        padding: 1rem; /* Ajustado */
+        padding: 1rem;
       }
       .feature-item h3 {
-        font-size: 1rem; /* Ajustado */
+        font-size: 1rem;
       }
       .feature-item p {
-        font-size: 0.75rem; /* Ajustado */
+        font-size: 0.75rem;
       }
       footer {
-        padding: 1rem; /* Ajustado */
-        margin-top: 1.5rem; /* Ajustado */
+        padding: 1rem;
+        margin-top: 1.5rem;
         font-size: 0.75rem;
+      }
+      .admin-panel input[type="text"], .admin-panel button {
+        display: block;
+        width: calc(100% - 20px); /* Ajusta para padding */
+        margin: 10px auto;
       }
     }
 
@@ -383,8 +432,8 @@
 
 <header>
   <a href="#" class="logo">
-    <img src="logo.jpg" alt="Logo SeguroYa">
-    SeguroYa
+    <img id="companyNameLogoImg" src="logo-seguroya.jpg" alt="Logo SeguroYa">
+    <span id="companyNameLogoText">SeguroYa</span>
   </a>
   <nav>
     <a href="#">Inicio</a>
@@ -394,14 +443,21 @@
   </nav>
 </header>
 
+<!-- Nuevo Panel de Administración para cambiar el nombre -->
+<div class="admin-panel">
+  <label for="companyNameInput">Cambiar nombre de la empresa:</label>
+  <input type="text" id="companyNameInput" placeholder="Ej: Seguros Monterrey">
+  <button id="updateCompanyNameBtn">Actualizar</button>
+</div>
+
 <section class="hero">
   <div class="hero-content">
-    <h1>Protege lo que Más Importa con SeguroYa</h1>
+    <h1 id="companyNameHeroHeading">Protege lo que Más Importa con SeguroYa</h1>
     <p>Ofrecemos soluciones de seguros personalizadas para tu tranquilidad y la de tu familia. ¡Tu futuro seguro, desde hoy!</p>
     <a href="#cotizar" class="btn">Obtén tu Cotización Gratuita</a>
   </div>
   <div class="hero-image">
-    <img src="logo.jpg" alt="Familia protegida">
+    <img src="hero-seguroya-green.jpg" alt="Familia protegida">
   </div>
 </section>
 
@@ -409,25 +465,25 @@
   <section class="section-card">
     <h2>Seguro de Auto</h2>
     <p>Conduce con confianza. Protege tu vehículo y a tus seres queridos en cada trayecto.</p>
-    <img src="car.jpg" alt="Seguro de Auto">
+    <img src="seguro-auto-green.jpg" alt="Seguro de Auto">
   </section>
 
   <section class="section-card">
     <h2>Seguro de Hogar</h2>
     <p>Tu casa es tu refugio. Asegura tu patrimonio y todo lo que hay dentro de ella.</p>
-    <img src="casa.jpg" alt="Seguro de Hogar">
+    <img src="https://image.pollinations.ai/prompt/Minimalist%20icon%20or%20illustration%20of%20a%20house%20with%20a%20shield%20or%20protection%20symbol.%20Concise%20design%20in%20green%20and%20white%20tones%20conveying%20home%20security.%20Vector%20style." alt="Seguro de Hogar">
   </section>
 
   <section class="section-card">
     <h2>Seguro de Vida</h2>
     <p>Asegura el bienestar de tu familia. Un respaldo económico para su futuro.</p>
-    <img src="vida.jpg" alt="Seguro de Vida">
+    <img src="seguro-vida-green.jpg" alt="Seguro de Vida">
   </section>
 
   <section class="section-card">
     <h2>Seguro de Salud</h2>
     <p>Cuida tu salud y la de los tuyos. Acceso a la mejor atención médica cuando más lo necesitas.</p>
-    <img src="salud.jpg" alt="Seguro de Salud">
+    <img src="seguro-salud-green.jpg" alt="Seguro de Salud">
   </section>
 </div>
 
@@ -453,12 +509,72 @@
   </div>
 </section>
 
-<footer>
+<footer id="companyNameFooter">
   &copy; 2025 SeguroYa. Todos los derechos reservados. | Aviso de Privacidad | Términos y Condiciones
 </footer>
 
-</body>
-</html>
+<!-- SCRIPT PARA AUTOMATIZAR EL NOMBRE DE LA EMPRESA -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Función para actualizar el nombre de la empresa en la página
+    function updateCompanyName(newCompanyName) {
+      if (!newCompanyName) {
+        // Opcional: Si el campo está vacío, puedes poner un nombre por defecto
+        newCompanyName = "Nombre de Empresa";
+      }
+
+      // 1. Título de la página (<title>)
+      const titleElement = document.getElementById('companyNameTitle');
+      if (titleElement) {
+        titleElement.textContent = `${newCompanyName} - Tu Protección, Nuestra Prioridad`;
+      }
+
+      // 2. Logo en el encabezado (texto y alt de la imagen)
+      const logoTextElement = document.getElementById('companyNameLogoText');
+      if (logoTextElement) {
+        logoTextElement.textContent = newCompanyName;
+      }
+      const logoImgElement = document.getElementById('companyNameLogoImg');
+      if (logoImgElement) {
+        logoImgElement.alt = `Logo ${newCompanyName}`;
+      }
+
+      // 3. Título principal (H1 en la sección Hero)
+      const heroHeadingElement = document.getElementById('companyNameHeroHeading');
+      if (heroHeadingElement) {
+        heroHeadingElement.textContent = `Protege lo que Más Importa con ${newCompanyName}`;
+      }
+
+      // 4. Pie de página (Footer)
+      const footerElement = document.getElementById('companyNameFooter');
+      if (footerElement) {
+        footerElement.innerHTML = `&copy; 2025 ${newCompanyName}. Todos los derechos reservados. | Aviso de Privacidad | Términos y Condiciones`;
+      }
+    }
+
+    // Establecer el nombre inicial de la empresa al cargar la página
+    const initialCompanyName = "SeguroYa"; // Nombre por defecto al cargar
+    updateCompanyName(initialCompanyName);
+    document.getElementById('companyNameInput').value = initialCompanyName; // Poner el nombre inicial en el input
+
+    // Obtener referencias al input y al botón
+    const companyNameInput = document.getElementById('companyNameInput');
+    const updateButton = document.getElementById('updateCompanyNameBtn');
+
+    // Añadir un "event listener" al botón para que actúe al hacer clic
+    updateButton.addEventListener('click', function() {
+      const newName = companyNameInput.value; // Obtener el valor del campo de texto
+      updateCompanyName(newName); // Llamar a la función para actualizar el nombre
+    });
+
+    // Opcional: También actualizar al presionar Enter en el campo de texto
+    companyNameInput.addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        updateButton.click(); // Simular un clic en el botón
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
