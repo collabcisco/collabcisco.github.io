@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Cliente y Pedido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        h1 {
+            font-size: 20px;
+            color: black;
+            margin-bottom: 20px;
+        }
+        .info-section {
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .info-section div {
+            margin-bottom: 10px;
+        }
+        input, button {
+            margin-top: 10px;
+        }
+        table {
+            width: 60%; /* Reduce el ancho de la tabla */
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.9em; /* Reduce el tamaño de la fuente */
+            margin-left: 0; /* Alinea la tabla a la izquierda */
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 4px; /* Reduce el espaciado interno de las celdas */
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .modify-btn {
+            background-color: #ffcc00;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+        .modify-btn:hover {
+            background-color: #e6b800;
+        }
+
+        /* Estilos del formulario emergente */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .modal input {
+            margin: 5px 0;
+            padding: 8px;
+            width: 100%;
+        }
+
+        .modal button {
+            background-color: #04AA6D;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .modal button:hover {
+            background-color: #45a049;
+        }
+      
+    </style>
+</head>
+<body>
+      <header>
+        <img src="logo2.png" style="width: 150px; height: auto;">
+    </header>
+    <h1>Buscar Cliente</h1>
+    <input type="text" id="phoneNumber" placeholder="ID del Cliente">
+    <button onclick="searchCustomer()">Buscar</button>
+
+    <div id="customerData" class="info-section"></div>
+
+    <h1>Buscar Pedido</h1>
+    <input type="text" id="orderId" placeholder="ID del Pedido">
+    <button onclick="searchOrder()">Buscar Pedido</button>
+
+    <div id="orderData" class="info-section"></div>
+
+    <!-- Formulario de edición emergente -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2>Editar Producto</h2>
+            <label for="editQty">Cantidad:</label>
+            <input type="number" id="editQty" placeholder="Cantidad" onchange="updateTotal()">
+            <button onclick="saveChanges()">Guardar Cambios</button>
+            <button onclick="closeModal()">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Botón para generar la factura -->
+    <button id="generateInvoiceBtn" style="display:none;" onclick="generateInvoice()">Generar Factura</button>
+    <div id="invoiceMessage" style="color:white;"></div>
+
+  
+ 
+    <script>
+        let currentProductIndex = -1; // Para rastrear el índice del producto que se está editando
+        let currentOrder = null; // Para rastrear el pedido actual
+
+
+      
+
+        // Función para buscar cliente
+        async function searchCustomer() {
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const customerDataDiv = document.getElementById('customerData');
+            const orderIdInput = document.getElementById('orderId');
+            customerDataDiv.innerHTML = 'Buscando...';
+
+            try {
+                const response = await fetch('https://67f48026cbef97f40d2e5fbd.mockapi.io/CustomerInfo');
+                const customers = await response.json();
+
+                const customer = customers.find(c => c.accountname === phoneNumber);
+
+                if (customer) {
+                    customerDataDiv.innerHTML = `
+                        <div><strong>Nombre:</strong> ${customer.name}</div>
+                        <div><strong>Correo Electrónico:</strong> ${customer.email}</div>
+                        <div><strong>Teléfono:</strong> ${customer.number}</div>
+                        <div><strong>ID del Cliente:</strong> ${customer.accountname}</div>
+                        <div><strong>CP:</strong> ${customer.zip}</div>
+                        <div><strong>Último Pedido:</strong> ${customer.ordenandrea}</div>
+                    `;
+                    orderIdInput.value = customer.ordenandrea;
+          
+
+
+
+                } else {
+                    customerDataDiv.innerHTML = 'Cliente no encontrado.';
+                }
+            } catch (error) {
+                customerDataDiv.innerHTML = 'Error al obtener los datos del cliente.';
+                console.error('Error:', error);
+            }
+        }
+
+        // Función para buscar pedido
+        async function searchOrder() {
+            const orderId = document.getElementById('orderId').value;
+            const orderDataDiv = document.getElementById('orderData');
+            orderDataDiv.innerHTML = 'Buscando...';
+
+            try {
+                const response = await fetch('https://67f48026cbef97f40d2e5fbd.mockapi.io/customerOrders');
+                const orders = await response.json();
+
+                currentOrder = orders.find(o => o.order === orderId);
+
+                if (currentOrder) {
+                    let productosHTML = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                    
+                    currentOrder.products.forEach((producto, index) => {
+                        productosHTML += `
+                            <tr>
+                                <td>${producto.name}</td>
+                                <td>${producto.qty}</td>
+                                <td>$${producto.cost}</td>
+                                <td><button class="modify-btn" onclick="openEditModal(${index})">Modificar Producto</button></td>
+                            </tr>`;
+                    });
+
+                    productosHTML += `
+                            </tbody>
+                        </table>`;
+
+                    orderDataDiv.innerHTML = `
+                        <div><strong>ID del Pedido:</strong> ${currentOrder.order}</div>
+                        <div><strong>ID del Cliente:</strong> ${currentOrder.customerid}</div>
+                        <div><strong>Fecha:</strong> ${currentOrder.date}</div>
+                        <div><strong>Total:</strong> $${currentOrder.amount}</div>
+                        <div><strong>Productos:</strong> ${productosHTML}</div>
+                    `;
+                  // Mostrar el botón para generar factura
+                  document.getElementById('generateInvoiceBtn').style.display = 'inline-block';
+                } else {
+                    orderDataDiv.innerHTML = 'Pedido no encontrado.';
+                }
+            } catch (error) {
+                orderDataDiv.innerHTML = 'Error al obtener los datos del pedido.';
+                console.error('Error:', error);
+            }
+        }
+
+        function openEditModal(productIndex) {
+            currentProductIndex = productIndex;
+            const producto = currentOrder.products[productIndex];
+            document.getElementById('editQty').value = producto.qty;
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        async function saveChanges() {
+            const newQty = document.getElementById('editQty').value;
+            
+            if (newQty) {
+                currentOrder.products[currentProductIndex].qty = newQty;
+                const updatedProduct = currentOrder.products[currentProductIndex];
+                currentOrder.amount = currentOrder.products.reduce((acc, product) => acc + (product.qty * product.cost), 0); 
+
+                try {
+                    // Realizar la actualización en la base de datos
+                    const response = await fetch(`https://67f48026cbef97f40d2e5fbd.mockapi.io/customerOrders/${currentOrder.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(currentOrder)
+                    });
+
+                    if (response.ok) {
+                        alert('Producto modificado con éxito');
+                        closeModal();
+                        searchOrder();
+                      // Recargar los datos actualizados
+                    } else {
+                        alert('Error al actualizar el producto');
+                    }
+                } catch (error) {
+                    console.error('Error al guardar los cambios:', error);
+                    alert('Hubo un error al guardar los cambios');
+                }
+            } else {
+                alert('Por favor, ingrese la cantidad.');
+            }
+        }
+              // Función para generar la factura
+        function generateInvoice() {
+            if (currentOrder && currentOrder.customerid) {
+        
+                const customerEmail = currentOrder.customerid; // Aquí usamos el correo del cliente
+                const invoiceMessage = `Factura generada exitosamente. Se ha enviado a ${customerEmail}.`;
+
+                // Simular el envío de la factura
+                document.getElementById('invoiceMessage').innerText = invoiceMessage;
+
+                // Aquí se puede simular una llamada a la API de correo o generar el documento de factura
+                setTimeout(() => {
+                    alert('Factura enviada al correo del cliente.');
+                }, 1000);
+            }
+        }
+          // Función para generar el link de pago
+      function generatePaymentLink() {
+        const totalAmount = newOrderProducts.reduce((acc, product) => acc + product.amount, 0);
+        if (totalAmount > 0) {
+            // Generamos el link de pago simulado (esto puede ser reemplazado por un sistema real de generación de links de pago)
+            const paymentLink = `https://discreet-olive-sleet.glitch.me/pagos.html`;
+            alert(`El link de pago ha sido generado y enviado a su correo electrónico: ${paymentLink}`);
+        } else {
+            alert("Por favor, agregue productos al pedido para generar un link de pago.");
+        }
+    }
+
+    </script>
+</body>
+</html>

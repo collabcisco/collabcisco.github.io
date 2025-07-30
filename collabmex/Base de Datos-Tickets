@@ -1,0 +1,117 @@
+Base de Datos-Tickets
+  {
+    "id": "3",
+    "client_id": 103,
+    "client_name": "Conexion Empresarial",
+    "title": "Actualización pendiente de políticas en firewall administrado",
+    "description": "Se detectaron cambios recientes en la infraestructura. Es necesario actualizar las políticas del servicio de seguridad gestionada en firewall.",
+    "status": "Resuelto",
+    "created_at": "2025-07-28T14:22:00Z",
+    "updated_at": "2025-07-29T18:45:00Z",
+    "reported_by": "Andrea Pineda"
+  },
+  {
+    "id": "4",
+    "client_id": 104,
+    "client_name": "SoftGuard",
+    "title": "Evaluación de vulnerabilidades en aplicaciones web",
+    "description": "Se solicita realizar una gestión de vulnerabilidades enfocada en las nuevas aplicaciones web desplegadas en la nube.",
+    "status": "Cerrado",
+    "created_at": "2025-07-25T11:00:00Z",
+    "updated_at": "2025-07-27T13:20:00Z",
+    "reported_by": "Carlos Torres"
+  },
+  {
+    "id": "5",
+    "client_id": 105,
+    "client_name": "BlueShield IT",
+    "title": "Simulación de phishing programada",
+    "description": "Se requiere agendar y ejecutar una simulación de ataque de phishing para el área administrativa como parte de la concientización de seguridad.",
+    "status": "Nuevo",
+    "created_at": "2025-07-30T09:50:00Z",
+    "updated_at": "2025-07-30T09:50:00Z",
+    "reported_by": "Elena Guzmán"
+  },
+  {
+    "id": "6",
+    "client_id": 106,
+    "client_name": "InnovaTI",
+    "title": "Incidente de fuga de información en servicios cloud",
+    "description": "Se reporta posible fuga de datos a través de un bucket mal configurado en la nube. Urge revisión y remediación.",
+    "status": "En progreso",
+    "created_at": "2025-07-29T17:10:00Z",
+    "updated_at": "2025-07-30T03:00:26.526Z",
+    "reported_by": "Gerardo Díaz"
+  },
+  {
+    "id": "7",
+    "client_id": 107,
+    "client_name": "CiberMex",
+    "title": "Pruebas de continuidad de negocio",
+    "description": "Solicitud para realizar pruebas de recuperación ante desastres y continuidad de negocio en los sistemas críticos de la empresa.",
+    "status": "Resuelto",
+    "created_at": "2025-07-26T15:40:00Z",
+    "updated_at": "2025-07-28T10:20:00Z",
+    "reported_by": "Paola Salinas"
+  },
+  {
+    "id": "8",
+    "client_id": 108,
+    "client_name": "SecureLink",
+    "title": "Reporte de vulnerabilidad crítica por SOC",
+    "description": "El SOC notificó una vulnerabilidad crítica en uno de los servidores de producción. Se requiere gestión inmediata.",
+    "status": "En progreso",
+    "created_at": "2025-07-29T12:30:00Z",
+    "updated_at": "2025-07-30T09:40:00Z",
+    "reported_by": "Ricardo Ortega"
+  }
+  
+
+
+
+[
+  {
+    "id": "1",
+    "client_id": 101,
+    "client_name": "CorpIT",
+    "title": "Corte de red en sucursal Reforma",
+    "description": "Desde las 9:00 AM no hay conectividad en la sucursal Reforma. Se requiere revisión de enlaces.",
+    "status": "Nuevo",
+    "created_at": "2025-07-29T09:15:00Z",
+    "updated_at": "2025-07-29T23:47:40.761Z",
+    "reported_by": "Veronica Diaz"
+  },
+  {
+    "id": "2",
+    "client_id": 102,
+    "client_name": "RedesPlus",
+    "title": "Error en autenticación de VPN",
+    "description": "Varios usuarios reportan fallas al intentar autenticarse en el acceso remoto VPN.",
+    "status": "En progreso",
+    "created_at": "2025-07-28T17:30:00Z",
+    "updated_at": "2025-07-29T08:00:00Z",
+    "reported_by": "Jorge Salgado"
+  },
+  {
+    "id": "3",
+    "client_id": 103,
+    "client_name": "Conexion Empresarial",
+    "title": "Falla en envío de correos desde dominio",
+    "description": "Los mensajes enviados a dominios externos rebotan por SPF fail.",
+    "status": "Resuelto",
+    "created_at": "2025-07-27T11:20:00Z",
+    "updated_at": "2025-07-29T23:48:10.758Z",
+    "reported_by": "Erick Gómez"
+  },
+  {
+    "id": "4",
+    "client_id": 104,
+    "client_name": "SoftGuard",
+    "title": "Actualización de firewall pendiente",
+    "description": "El firewall de la sede Monterrey requiere actualización urgente.",
+    "status": "Cerrado",
+    "created_at": "2025-07-25T10:00:00Z",
+    "updated_at": "2025-07-26T12:00:00Z",
+    "reported_by": "Luis Torres"
+  }
+]
