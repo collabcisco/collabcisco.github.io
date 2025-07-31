@@ -140,7 +140,7 @@
                 horaSalida: "08:00",
                 horaLlegada: "16:00",
                 tiempoViaje: "8h",
-                fechaCompra: "2025-07-25",
+                fechaCompra: "2025-08-01",
                 historial: [
                     { boleto: "Z54321", origen: "Monterrey", destino: "Guadalajara", fecha: "2025-06-10" },
                     { boleto: "Y98765", origen: "Monterrey", destino: "Querétaro", fecha: "2025-05-05" }
@@ -191,7 +191,7 @@
 
         function displayGreeting(agentName, queue) {
             if (agentName && queue) {
-                greetingDiv.textContent = `Hola agente, ${agentName}. Esta llamada llegó a la cola: ${queue}.`;
+                greetingDiv.textContent = `Hola agente ${agentName}. Esta llamada llegó a la cola: ${queue}`;
             } else if (agentName) {
                 greetingDiv.textContent = `Hola, ${agentName}.`;
             } else {
