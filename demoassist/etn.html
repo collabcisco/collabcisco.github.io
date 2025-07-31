@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Información Cliente ETN</title>
+    <title>Información Cliente</title>
     <!-- Google Fonts for modern typography -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
     <style>
@@ -79,20 +79,6 @@
             font-weight: 600;
             margin-top: 20px;
         }
-        button#clear-btn {
-            margin-top: 25px;
-            background-color: #00457c;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button#clear-btn:hover {
-            background-color: #00335a;
-        }
         #history {
             margin-top: 30px;
             text-align: left;
@@ -118,18 +104,24 @@
             border-radius: 6px;
             font-size: 1rem;
         }
+        #greeting {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: #00457c;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
     <header>
-        <img src="https://www.etn.com.mx/wp-content/themes/etn/images/logo-etn.svg" alt="ETN Logo" />
-        <h1>Información Cliente ETN</h1>
+        <img src="logo-etn.png" alt="ETN Logo" />
+        <h1>Información Cliente</h1>
     </header>
     <main>
+        <div id="greeting"></div>
         <div id="loading" class="loading-spinner" aria-label="Cargando información"></div>
         <div id="client-info"></div>
         <div id="no-data"></div>
-        <button id="clear-btn" style="display:none;">Limpiar Información</button>
         <section id="history" style="display:none;">
             <h2>Historial de Viajes</h2>
             <ul id="history-list"></ul>
@@ -140,7 +132,8 @@
         // Simulated client data for demonstration (replace with real API call)
         const clients = {
             "5512345678": {
-                nombre: "Juan Pérez",
+                nombre: "Veronica Diaz",
+                correo: "vdiazrod@cisco.com",
                 boleto: "A12345",
                 origen: "Monterrey",
                 destino: "Ciudad de México",
@@ -155,6 +148,7 @@
             },
             "5598765432": {
                 nombre: "María López",
+                correo: "maria.lopez@example.com",
                 boleto: "B67890",
                 origen: "Guadalajara",
                 destino: "Ciudad de México",
@@ -172,13 +166,14 @@
         const clientInfoDiv = document.getElementById('client-info');
         const loadingSpinner = document.getElementById('loading');
         const noDataDiv = document.getElementById('no-data');
-        const clearBtn = document.getElementById('clear-btn');
         const historySection = document.getElementById('history');
         const historyList = document.getElementById('history-list');
+        const greetingDiv = document.getElementById('greeting');
 
         // Íconos SVG para los datos
         const icons = {
             nombre: `<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`,
+            correo: `<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>`,
             boleto: `<svg viewBox="0 0 24 24"><path d="M20 6H4v12h16V6zm-2 10H6v-8h12v8z"/></svg>`,
             origen: `<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>`,
             destino: `<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.5-2.5 6.5-5 9.88C9.5 15.5 7 11.5 7 9z"/></svg>`,
@@ -188,14 +183,25 @@
             fechaCompra: `<svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>`
         };
 
-        function getPhoneNumberFromURL() {
+        function getURLParameter(name) {
             const params = new URLSearchParams(window.location.search);
-            return params.get('telefono') || params.get('phone') || params.get('numero') || null;
+            return params.get(name) || null;
+        }
+
+        function displayGreeting(agentName, queue) {
+            if (agentName && queue) {
+                greetingDiv.textContent = `Hola, ${agentName}. Esta llamada llegó a la cola: ${queue}.`;
+            } else if (agentName) {
+                greetingDiv.textContent = `Hola, ${agentName}.`;
+            } else {
+                greetingDiv.textContent = '';
+            }
         }
 
         function displayClientInfo(client) {
             clientInfoDiv.innerHTML = `
                 <div class="info-item">${icons.nombre}<strong>Nombre:</strong> ${client.nombre}</div>
+                <div class="info-item">${icons.correo}<strong>Correo Electrónico:</strong> ${client.correo}</div>
                 <div class="info-item">${icons.boleto}<strong>Boleto:</strong> ${client.boleto}</div>
                 <div class="info-item">${icons.origen}<strong>Origen:</strong> ${client.origen}</div>
                 <div class="info-item">${icons.destino}<strong>Destino:</strong> ${client.destino}</div>
@@ -205,7 +211,6 @@
                 <div class="info-item">${icons.fechaCompra}<strong>Fecha de Compra:</strong> ${client.fechaCompra}</div>
             `;
             noDataDiv.textContent = '';
-            clearBtn.style.display = 'inline-block';
 
             if (client.historial && client.historial.length > 0) {
                 historyList.innerHTML = '';
@@ -220,25 +225,10 @@
             }
         }
 
-        function clearInfo() {
-            clientInfoDiv.innerHTML = '';
-            noDataDiv.textContent = '';
-            clearBtn.style.display = 'none';
-            historySection.style.display = 'none';
-            historyList.innerHTML = '';
-            // Remove phone param from URL without reload
-            const url = new URL(window.location);
-            url.searchParams.delete('telefono');
-            url.searchParams.delete('phone');
-            url.searchParams.delete('numero');
-            window.history.replaceState({}, document.title, url.toString());
-        }
-
         async function fetchClientData(phone) {
             loadingSpinner.style.display = 'block';
             clientInfoDiv.innerHTML = '';
             noDataDiv.textContent = '';
-            clearBtn.style.display = 'none';
             historySection.style.display = 'none';
             historyList.innerHTML = '';
 
@@ -251,7 +241,11 @@
         }
 
         async function init() {
-            const phone = getPhoneNumberFromURL();
+            const agentName = getURLParameter('agentname');
+            const queue = getURLParameter('queue');
+            displayGreeting(agentName, queue);
+
+            const phone = getURLParameter('telefono') || getURLParameter('phone') || getURLParameter('numero');
             if (!phone) {
                 noDataDiv.textContent = 'No se proporcionó número telefónico en la URL.';
                 return;
@@ -263,8 +257,6 @@
                 noDataDiv.textContent = `No se encontró información para el número: ${phone}`;
             }
         }
-
-        clearBtn.addEventListener('click', clearInfo);
 
         window.addEventListener('DOMContentLoaded', init);
     </script>
