@@ -245,11 +245,14 @@
             const queue = getURLParameter('queue');
             displayGreeting(agentName, queue);
 
-            const phone = getURLParameter('telefono') || getURLParameter('phone') || getURLParameter('numero');
-            if (!phone) {
+            let phoneRaw = getURLParameter('telefono') || getURLParameter('phone') || getURLParameter('numero');
+            if (!phoneRaw) {
                 noDataDiv.textContent = 'No se proporcionó número telefónico en la URL.';
                 return;
             }
+            // Remove leading '+' if present
+            const phone = phoneRaw.replace(/^\+/, '');
+
             const client = await fetchClientData(phone);
             if (client) {
                 displayClientInfo(client);
