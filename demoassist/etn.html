@@ -42,7 +42,7 @@
             padding: 30px 40px;
             border-radius: 10px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            max-width: 480px;
+            max-width: 600px;
             width: 100%;
             text-align: center;
             position: relative;
@@ -62,7 +62,7 @@
             100% { transform: rotate(360deg);}
         }
         .info-item {
-            margin: 15px 0;
+            margin: 12px 0;
             font-size: 1.1rem;
             display: flex;
             align-items: center;
@@ -93,6 +93,31 @@
         button#clear-btn:hover {
             background-color: #00335a;
         }
+        #history {
+            margin-top: 30px;
+            text-align: left;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        #history h2 {
+            color: #00457c;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        #history ul {
+            list-style: none;
+            padding-left: 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        #history li {
+            background: #f0f4fa;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -105,6 +130,10 @@
         <div id="client-info"></div>
         <div id="no-data"></div>
         <button id="clear-btn" style="display:none;">Limpiar Información</button>
+        <section id="history" style="display:none;">
+            <h2>Historial de Viajes</h2>
+            <ul id="history-list"></ul>
+        </section>
     </main>
 
     <script>
@@ -113,14 +142,29 @@
             "5512345678": {
                 nombre: "Juan Pérez",
                 boleto: "A12345",
+                origen: "Monterrey",
                 destino: "Ciudad de México",
-                fechaCompra: "2025-07-25"
+                horaSalida: "08:00",
+                horaLlegada: "16:00",
+                tiempoViaje: "8h",
+                fechaCompra: "2025-07-25",
+                historial: [
+                    { boleto: "Z54321", origen: "Monterrey", destino: "Guadalajara", fecha: "2025-06-10" },
+                    { boleto: "Y98765", origen: "Monterrey", destino: "Querétaro", fecha: "2025-05-05" }
+                ]
             },
             "5598765432": {
                 nombre: "María López",
                 boleto: "B67890",
-                destino: "Guadalajara",
-                fechaCompra: "2025-07-28"
+                origen: "Guadalajara",
+                destino: "Ciudad de México",
+                horaSalida: "10:30",
+                horaLlegada: "18:30",
+                tiempoViaje: "8h",
+                fechaCompra: "2025-07-28",
+                historial: [
+                    { boleto: "X11223", origen: "Guadalajara", destino: "Monterrey", fecha: "2025-04-15" }
+                ]
             }
             // Agrega más clientes según sea necesario
         };
@@ -129,12 +173,18 @@
         const loadingSpinner = document.getElementById('loading');
         const noDataDiv = document.getElementById('no-data');
         const clearBtn = document.getElementById('clear-btn');
+        const historySection = document.getElementById('history');
+        const historyList = document.getElementById('history-list');
 
         // Íconos SVG para los datos
         const icons = {
             nombre: `<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`,
             boleto: `<svg viewBox="0 0 24 24"><path d="M20 6H4v12h16V6zm-2 10H6v-8h12v8z"/></svg>`,
+            origen: `<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>`,
             destino: `<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.5-2.5 6.5-5 9.88C9.5 15.5 7 11.5 7 9z"/></svg>`,
+            horaSalida: `<svg viewBox="0 0 24 24"><path d="M12 20c4.41 0 8-3.59 8-8s-3.59-8-8-8-8 3.59-8 8 3.59 8 8 8zm.5-13h-1v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>`,
+            horaLlegada: `<svg viewBox="0 0 24 24"><path d="M12 20c4.41 0 8-3.59 8-8s-3.59-8-8-8-8 3.59-8 8 3.59 8 8 8zm.5-13h-1v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>`,
+            tiempoViaje: `<svg viewBox="0 0 24 24"><path d="M12 4a8 8 0 1 0 8 8 8.01 8.01 0 0 0-8-8zm.5 8.25V7h-1v6l5.25 3.15.75-1.23z"/></svg>`,
             fechaCompra: `<svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>`
         };
 
@@ -147,18 +197,36 @@
             clientInfoDiv.innerHTML = `
                 <div class="info-item">${icons.nombre}<strong>Nombre:</strong> ${client.nombre}</div>
                 <div class="info-item">${icons.boleto}<strong>Boleto:</strong> ${client.boleto}</div>
+                <div class="info-item">${icons.origen}<strong>Origen:</strong> ${client.origen}</div>
                 <div class="info-item">${icons.destino}<strong>Destino:</strong> ${client.destino}</div>
+                <div class="info-item">${icons.horaSalida}<strong>Hora de Salida:</strong> ${client.horaSalida}</div>
+                <div class="info-item">${icons.horaLlegada}<strong>Hora de Llegada:</strong> ${client.horaLlegada}</div>
+                <div class="info-item">${icons.tiempoViaje}<strong>Tiempo de Viaje:</strong> ${client.tiempoViaje}</div>
                 <div class="info-item">${icons.fechaCompra}<strong>Fecha de Compra:</strong> ${client.fechaCompra}</div>
             `;
             noDataDiv.textContent = '';
             clearBtn.style.display = 'inline-block';
+
+            if (client.historial && client.historial.length > 0) {
+                historyList.innerHTML = '';
+                client.historial.forEach(viaje => {
+                    const li = document.createElement('li');
+                    li.textContent = `Boleto: ${viaje.boleto} | Origen: ${viaje.origen} | Destino: ${viaje.destino} | Fecha: ${viaje.fecha}`;
+                    historyList.appendChild(li);
+                });
+                historySection.style.display = 'block';
+            } else {
+                historySection.style.display = 'none';
+            }
         }
 
         function clearInfo() {
             clientInfoDiv.innerHTML = '';
             noDataDiv.textContent = '';
             clearBtn.style.display = 'none';
-            // Optionally remove phone param from URL without reload
+            historySection.style.display = 'none';
+            historyList.innerHTML = '';
+            // Remove phone param from URL without reload
             const url = new URL(window.location);
             url.searchParams.delete('telefono');
             url.searchParams.delete('phone');
@@ -167,13 +235,13 @@
         }
 
         async function fetchClientData(phone) {
-            // Simulate loading delay
             loadingSpinner.style.display = 'block';
             clientInfoDiv.innerHTML = '';
             noDataDiv.textContent = '';
             clearBtn.style.display = 'none';
+            historySection.style.display = 'none';
+            historyList.innerHTML = '';
 
-            // Simulate async fetch with timeout
             return new Promise((resolve) => {
                 setTimeout(() => {
                     loadingSpinner.style.display = 'none';
