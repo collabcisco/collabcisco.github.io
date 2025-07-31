@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Demostraciones Webex Contact Center</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --webex-blue: #005ede;
+      --webex-green: #06c8ae;
+      --webex-dark: #23272f;
+      --webex-gray-bg: #f6f9fb;
+      --webex-card: #fff;
+      --webex-header: #f7fafc;
+      --webex-link: #005ede;
+      --webex-link-hover: #06c8ae;
+      --webex-border: #e5eef7;
+      --webex-shadow: 0 4px 24px rgba(0,0,0,0.05);
+      --webex-radius: 18px;
+      --webex-text: #23272f;
+      --webex-secondary: #525c6a;
+    }
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--webex-gray-bg);
+      margin: 0;
+      color: var(--webex-text);
+    }
+    header {
+      background: var(--webex-header);
+      color: var(--webex-blue);
+      padding: 2.2rem 1rem 2rem 1rem;
+      text-align: center;
+      border-bottom: 2px solid var(--webex-border);
+    }
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--webex-shadow);
+      margin: 0 auto;
+      background: #ffffff;
+      border: 2.5px solid var(--webex-blue);
+    }
+    .logo img {
+      height: 64px;
+      width: auto;
+      display: block;
+    }
+    main {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1.2rem;
+    }
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin: 0.5rem 0 0.2rem 0;
+      letter-spacing: 0.01em;
+      color: var(--webex-blue);
+    }
+    .subtitle {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #06c8ae;
+      margin-top: .3rem;
+      margin-bottom: .4rem;
+      display: block;
+    }
+    h2 {
+      color: var(--webex-blue);
+      font-size: 1.4rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    .credenciales-section {
+      background: var(--webex-card);
+      box-shadow: var(--webex-shadow);
+      border-radius: var(--webex-radius);
+      padding: 1.6rem 1.2rem 1.2rem 1.2rem;
+      margin: 2.5rem 0 2.5rem 0;
+      text-align: center;
+      border: 1.5px solid var(--webex-border);
+    }
+    .ae-select {
+      font-size: 1.07rem;
+      padding: 0.7rem 1.2rem;
+      border-radius: 10px;
+      border: 1.7px solid var(--webex-blue);
+      background: #f6fbff;
+      color: var(--webex-blue);
+      margin: 0 0 1.3rem 0;
+      min-width: 260px;
+      outline: none;
+      transition: border-color .2s;
+      font-weight: 600;
+    }
+    .ae-select:focus {
+      border-color: var(--webex-green);
+    }
+    .credencial-info {
+      display: none;
+      margin: 1.5rem auto 0 auto;
+      max-width: 630px;
+      min-width: 300px;
+      background: #fafdff;
+      border-radius: 15px;
+      padding: 1.7rem 1.8rem 1.5rem 1.8rem;
+      border-left: 5px solid var(--webex-blue);
+      box-shadow: 0 2px 14px rgba(0, 94, 222, 0.07);
+      text-align: left;
+      border-top: 1.3px solid var(--webex-border);
+    }
+    .credencial-info h4 {
+      margin-top: 0;
+      color: var(--webex-green);
+      font-size: 1.18rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      margin-bottom: 1.1rem;
+    }
+    .credencial-usuarios {
+      margin-bottom: 1.2rem;
+    }
+    .user-row, .pass-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+    .credencial-info .user-type {
+      font-weight: bold;
+      color: var(--webex-blue);
+      min-width: 140px;
+      display: inline-block;
+      font-size: 1.04rem;
+      letter-spacing: 0.01em;
+    }
+    .credencial-info .correo {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.02rem;
+      color: var(--webex-text);
+      background: #eaf9f7;
+      padding: 0.14rem 0.65rem;
+      border-radius: 6px;
+      font-weight: 500;
+      margin-right: 0.33rem;
+      border: 1.5px solid var(--webex-green);
+      min-width: 250px;
+      max-width: 100%;
+      word-break: break-all;
+    }
+    .credencial-info .copy-btn-inline {
+      padding: 0.18rem 0.7rem;
+      font-size: 0.98rem;
+      color: #fff;
+      background: var(--webex-blue);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 0.2rem;
+      transition: background .2s;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    .credencial-info .copy-btn-inline:hover {
+      background: var(--webex-green);
+      color: #fff;
+    }
+    .credencial-info .inline-copied-msg {
+      color: var(--webex-green);
+      font-size: 0.98rem;
+      margin-left: 0.23rem;
+      display: none;
+      vertical-align: middle;
+    }
+    .credencial-info .portal-link {
+      display: inline-flex;
+      align-items: center;
+      background: #f2fafd;
+      color: var(--webex-blue);
+      border-radius: 6px;
+      font-size: 0.99rem;
+      font-weight: 700;
+      margin-left: 0.65rem;
+      padding: 0.09rem 0.8rem 0.09rem 0.45rem;
+      text-decoration: none;
+      border: 1px solid var(--webex-blue);
+      transition: background 0.16s, border-color .18s, color .18s;
+      box-shadow: 0 1px 2px rgba(0,94,222,0.04);
+    }
+    .credencial-info .portal-link:hover {
+      background: #e8f7f3;
+      color: var(--webex-green);
+      border-color: var(--webex-green);
+      text-decoration: underline;
+    }
+    .credencial-info .pass-label {
+      font-weight: 700;
+      color: var(--webex-blue);
+      min-width: 140px;
+      display: inline-block;
+    }
+    .credencial-info .password {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.05rem;
+      color: var(--webex-text);
+      background: #eaf9f7;
+      padding: 0.15rem 0.85rem;
+      border-radius: 6px;
+      font-weight: 500;
+      letter-spacing: 0.23em;
+      min-width: 110px;
+      text-align: center;
+      display: inline-block;
+      border: 1.5px solid var(--webex-green);
+    }
+    .credencial-info .show-hide-btn {
+      padding: 0.18rem 0.9rem;
+      font-size: 1rem;
+      color: var(--webex-blue);
+      background: #fff;
+      border: 1.5px solid var(--webex-blue);
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 0.2rem;
+      margin-right: 0.1rem;
+      transition: background .2s, color .2s, border-color .2s;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    .credencial-info .show-hide-btn:hover {
+      background: var(--webex-green);
+      color: #fff;
+      border-color: var(--webex-green);
+    }
+    .copied-msg {
+      color: var(--webex-green);
+      font-size: 1.01rem;
+      margin-left: 0.8rem;
+      display: none;
+      vertical-align: middle;
+      font-weight: 600;
+    }
+    /* Escenarios */
+    .escenarios {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.7rem;
+      justify-content: center;
+    }
+    .escenario {
+      background: var(--webex-card);
+      border-radius: var(--webex-radius);
+      box-shadow: var(--webex-shadow);
+      padding: 1.3rem 1.2rem 1.5rem 1.2rem;
+      flex: 1 1 260px;
+      min-width: 260px;
+      max-width: 325px;
+      transition: transform .2s, box-shadow .2s, border-top .2s, border-left .2s;
+      position: relative;
+      margin-bottom: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-top: 2.5px solid var(--webex-blue);
+      border-left: 2.5px solid var(--webex-green);
+      align-items: flex-start;
+    }
+    .escenario:hover {
+      border-top: 2.5px solid var(--webex-green);
+      border-left: 2.5px solid var(--webex-blue);
+      box-shadow: 0 8px 28px rgba(0, 94, 222, 0.12);
+      transform: translateY(-7px) scale(1.03);
+    }
+    .escenario h3 {
+      color: var(--webex-blue);
+      margin-top: 0;
+      font-size: 1.19rem;
+      font-weight: 700;
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .escenario p {
+      color: var(--webex-secondary);
+      font-size: 1.01rem;
+      margin-bottom: 0.8rem;
+      line-height: 1.55;
+    }
+    .escenario-link {
+      background: var(--webex-green);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 0.45rem 1.1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 0.5rem;
+      transition: background .18s;
+      box-shadow: 0 1.5px 8px rgba(0,94,222,0.09);
+      display: inline-block;
+    }
+    .escenario-link:hover {
+      background: var(--webex-blue);
+      color: #fff;
+      text-decoration: underline;
+    }
+    @media (max-width: 900px) {
+      main { padding: 0 0.4rem; }
+      .credencial-info { max-width: 98vw; }
+      .escenarios { flex-direction: column; gap: 1rem; }
+      .escenario { align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <div class="logo">
+        <img src="logo.png" alt="Mi Logo" style="height:64px">
+      </div>
+    </div>
+    <h1>
+      Demostraciones Webex Contact Center<br>
+      <span class="subtitle">Cisco Collab México</span>
+    </h1>
+    <p style="font-size:1.2rem; margin-top: .5rem;">
+      Selecciona tu nombre para ver tus credenciales de acceso y elige el escenario que deseas demostrar.
+    </p>
+  </header>
+  <main>
+    <section class="credenciales-section">
+
+ <h2>Credenciales de Acceso</h2>
+<select id="aeDropdown" class="ae-select">
+  <option value="">-- Selecciona tu nombre --</option>
+  <option value="jacob">Jacob Toala</option>
+  <option value="andres">Andres Corral</option>
+  <option value="luz">Luz Morfin</option>
+  <option value="jesus">Jesus Gutierrez</option>
+  <option value="jorge">Jorge Salgado</option>
+</select>
+
+<!-- Jacob Toala (2/admin22) -->
+<div id="credencial-jacob" class="credencial-info">
+  <h4>Jacob Toala</h4>
+  <div class="credencial-usuarios">
+    <div class="user-row">
+      <span class="user-type">Agente:</span>
+      <span class="correo">agente2@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('agente2@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" class="portal-link">Portal Agente</a>
+    </div>
+    <div class="user-row">
+      <span class="user-type">Supervisor:</span>
+      <span class="correo">supervisor2@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('supervisor2@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" class="portal-link">Portal Supervisor</a>
+    </div>
+    <div class="user-row">
+      <span class="user-type">Admin read-only:</span>
+      <span class="correo">admin22@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('admin22@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://admin.webex.com/" target="_blank" class="portal-link">Portal Admin</a>
+    </div>
+  </div>
+  <div class="pass-row">
+    <span class="pass-label">Contraseña:</span>
+    <span class="password" id="pass-jacob">******</span>
+    <button class="show-hide-btn" onclick="togglePass('pass-jacob', this, 'dCloud!1')">Mostrar</button>
+    <button class="copy-btn-inline" onclick="copiarCampo('dCloud!1', this)">Copiar</button>
+    <span class="inline-copied-msg">¡Copiado!</span>
+  </div>
+</div>
+
+<!-- Andres Corral (3/admin23) -->
+<div id="credencial-andres" class="credencial-info">
+  <h4>Andres Corral</h4>
+  <div class="credencial-usuarios">
+    <div class="user-row">
+      <span class="user-type">Agente:</span>
+      <span class="correo">agente3@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('agente3@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" class="portal-link">Portal Agente</a>
+    </div>
+    <div class="user-row">
+      <span class="user-type">Supervisor:</span>
+      <span class="correo">supervisor3@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('supervisor3@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" class="portal-link">Portal Supervisor</a>
+    </div>
+    <div class="user-row">
+      <span class="user-type">Admin read-only:</span>
+      <span class="correo">admin23@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('admin23@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://admin.webex.com/" target="_blank" class="portal-link">Portal Admin</a>
+    </div>
+  </div>
+  <div class="pass-row">
+    <span class="pass-label">Contraseña:</span>
+    <span class="password" id="pass-andres">******</span>
+    <button class="show-hide-btn" onclick="togglePass('pass-andres', this, 'dCloud!1')">Mostrar</button>
+    <button class="copy-btn-inline" onclick="copiarCampo('dCloud!1', this)">Copiar</button>
+    <span class="inline-copied-msg">¡Copiado!</span>
+  </div>
+</div>
+
+<!-- Luz Morfin (4/admin24) -->
+<div id="credencial-luz" class="credencial-info">
+  <h4>Luz Morfin</h4>
+  <div class="credencial-usuarios">
+    <div class="user-row">
+      <span class="user-type">Agente:</span>
+      <span class="correo">agente4@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('agente4@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" class="portal-link">Portal Agente</a>
+    </div>
+    <div class="user-row">
+      <span class="user-type">Supervisor:</span>
+      <span class="correo">supervisor4@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('supervisor4@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" class="portal-link">Portal Supervisor</a>
+    </div>
+    <div class="user-row">
+      <span class="user-type">Admin read-only:</span>
+      <span class="correo">admin24@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('admin24@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://admin.webex.com/" target="_blank" class="portal-link">Portal Admin</a>
+    </div>
+  </div>
+  <div class="pass-row">
+    <span class="pass-label">Contraseña:</span>
+    <span class="password" id="pass-luz">******</span>
+    <button class="show-hide-btn" onclick="togglePass('pass-luz', this, 'dCloud!1')">Mostrar</button>
+    <button class="copy-btn-inline" onclick="copiarCampo('dCloud!1', this)">Copiar</button>
+    <span class="inline-copied-msg">¡Copiado!</span>
+  </div>
+</div>
+
+<!-- Jesus Gutierrez (5/admin25) -->
+<div id="credencial-jesus" class="credencial-info">
+  <h4>Jesus Gutierrez</h4>
+  <div class="credencial-usuarios">
+    <div class="user-row">
+      <span class="user-type">Agente:</span>
+      <span class="correo">agente5@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('agente5@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" class="portal-link">Portal Agente</a>
+    </div>
+    <div class="user-row">
+      <span class="user-type">Supervisor:</span>
+      <span class="correo">supervisor5@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('supervisor5@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" class="portal-link">Portal Supervisor</a>
+    </div>
+    <div class="user-row">
+      <span class="user-type">Admin read-only:</span>
+      <span class="correo">admin25@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('admin25@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://admin.webex.com/" target="_blank" class="portal-link">Portal Admin</a>
+    </div>
+  </div>
+  <div class="pass-row">
+    <span class="pass-label">Contraseña:</span>
+    <span class="password" id="pass-jesus">******</span>
+    <button class="show-hide-btn" onclick="togglePass('pass-jesus', this, 'dCloud!1')">Mostrar</button>
+    <button class="copy-btn-inline" onclick="copiarCampo('dCloud!1', this)">Copiar</button>
+    <span class="inline-copied-msg">¡Copiado!</span>
+  </div>
+</div>
+
+<!-- Jorge Salgado (6/admin26) -->
+<div id="credencial-jorge" class="credencial-info">
+  <h4>Jorge Salgado</h4>
+  <div class="credencial-usuarios">
+    <div class="user-row">
+      <span class="user-type">Agente:</span>
+      <span class="correo">agente6@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('agente6@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" class="portal-link">Portal Agente</a>
+    </div>
+    <div class="user-row">
+      <span class="user-type">Supervisor:</span>
+      <span class="correo">supervisor6@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('supervisor6@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" class="portal-link">Portal Supervisor</a>
+    </div>
+    <div class="user-row">
+      <span class="user-type">Admin read-only:</span>
+      <span class="correo">admin26@ccbcamp0241.wbx.ai</span>
+      <button class="copy-btn-inline" onclick="copiarCampo('admin26@ccbcamp0241.wbx.ai', this)">Copiar</button>
+      <span class="inline-copied-msg">¡Copiado!</span>
+      <a href="https://admin.webex.com/" target="_blank" class="portal-link">Portal Admin</a>
+    </div>
+  </div>
+  <div class="pass-row">
+    <span class="pass-label">Contraseña:</span>
+    <span class="password" id="pass-jorge">******</span>
+    <button class="show-hide-btn" onclick="togglePass('pass-jorge', this, 'dCloud!1')">Mostrar</button>
+    <button class="copy-btn-inline" onclick="copiarCampo('dCloud!1', this)">Copiar</button>
+    <span class="inline-copied-msg">¡Copiado!</span>
+  </div>
+</div>
+    </section>
+    <!-- Escenarios de demo -->
+    <section>
+      <h2>Escenarios disponibles</h2>
+      <div class="escenarios">
+        <div class="escenario">
+          <h3>🛒 Retail</h3>
+          <p>Automatiza consultas, seguimiento de pedidos y atención al cliente para mejorar la experiencia de compra.</p>
+          <a href="retail.html" class="escenario-link" target="_blank">Ver pasos de demo</a>
+        </div>
+        <div class="escenario">
+          <h3>💊 Salud/Farmacia</h3>
+          <p>Atiende consultas frecuentes, gestiona recetas y disponibilidad usando agentes virtuales y automatización.</p>
+          <a href="salud.html" class="escenario-link" target="_blank">Ver pasos de demo</a>
+        </div>
+        <div class="escenario">
+          <h3>🛠️ Soporte</h3>
+          <p>Resuelve incidencias y gestiona tickets automáticamente, priorizando la atención rápida y eficiente.</p>
+          <a href="soporte.html" class="escenario-link" target="_blank">Ver pasos de demo</a>
+        </div>
+        <div class="escenario">
+          <h3>🎓 Educación</h3>
+          <p>Automatiza inscripciones, consultas y soporte tecnológico para alumnos y personal escolar.</p>
+          <a href="educacion.html" class="escenario-link" target="_blank">Ver pasos de demo</a>
+        </div>
+        <div class="escenario">
+          <h3>🛡️ Seguros</h3>
+          <p>Gestiona pólizas y reclamaciones con autoservicio, redirigiendo casos complejos a agentes expertos.</p>
+          <a href="seguros.html" class="escenario-link" target="_blank">Ver pasos de demo</a>
+        </div>
+        <div class="escenario">
+          <h3>🏦 Banca</h3>
+          <p>Automatiza operaciones bancarias y soporte, permitiendo asesoría personalizada en casos especiales.</p>
+          <a href="banca.html" class="escenario-link" target="_blank">Ver pasos de demo</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    document.getElementById('aeDropdown').addEventListener('change', function() {
+      var aelist = ['jacob','andres','luz','jesus','jorge'];
+      aelist.forEach(function(ae){
+        var el = document.getElementById('credencial-'+ae);
+        if (el) el.style.display = 'none';
+        var pw = document.getElementById('pass-'+ae);
+        if (pw) { pw.innerText = "******"; }
+      });
+      var val = this.value;
+      if (val) {
+        document.getElementById('credencial-' + val).style.display = 'block';
+      }
+    });
+    function copiarCampo(texto, btn) {
+      navigator.clipboard.writeText(texto);
+      var allMsgs = btn.parentNode.querySelectorAll('.inline-copied-msg');
+      allMsgs.forEach(function(msg){ msg.style.display='none'; });
+      var msg = btn.parentNode.querySelector('.inline-copied-msg');
+      if (msg) {
+        msg.style.display = 'inline';
+        setTimeout(function(){ msg.style.display = 'none'; }, 1600);
+      }
+    }
+    function togglePass(id, btn, realPass) {
+      var span = document.getElementById(id);
+      var oculto = span.innerText === "******";
+      if (oculto) {
+        span.innerText = realPass;
+        btn.innerText = "Ocultar";
+      } else {
+        span.innerText = "******";
+        btn.innerText = "Mostrar";
+      }
+    }
+  </script>
+</body>
+</html>

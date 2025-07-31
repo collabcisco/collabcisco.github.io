@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo Retail | Webex CC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --webex-blue: #005ede;
+      --webex-green: #06c8ae;
+      --webex-dark: #23272f;
+      --webex-gray-bg: #f6f9fb;
+      --webex-card: #fff;
+      --webex-header: #f7fafc;
+      --webex-link: #005ede;
+      --webex-link-hover: #06c8ae;
+      --webex-border: #e5eef7;
+      --webex-shadow: 0 4px 24px rgba(0,0,0,0.05);
+      --webex-radius: 18px;
+    }
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--webex-gray-bg);
+      margin: 0;
+      color: #23272f;
+    }
+    header {
+      background: var(--webex-header);
+      color: var(--webex-blue);
+      padding: 2.1rem 1rem 1.6rem 1rem;
+      text-align: center;
+      border-bottom: 2px solid var(--webex-border);
+    }
+    .logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--webex-shadow);
+      border: 2px solid var(--webex-blue);
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--webex-blue);
+      margin-bottom: 0.3rem;
+      margin-top: 0.5rem;
+    }
+    .vertical-title {
+      font-size: 1.23rem;
+      font-weight: 600;
+      color: var(--webex-green);
+      margin-bottom: 1.1rem;
+      letter-spacing: .01em;
+    }
+    main {
+      max-width: 720px;
+      margin: 2rem auto;
+      background: var(--webex-card);
+      border-radius: var(--webex-radius);
+      box-shadow: var(--webex-shadow);
+      padding: 2.5rem 2rem;
+      border: 1.5px solid var(--webex-border);
+    }
+    ol {
+      padding-left: 1.2em;
+      margin-bottom: 2.5rem;
+    }
+    li {
+      margin-bottom: 1.15rem;
+      font-size: 1.09rem;
+      line-height: 1.7;
+    }
+    .back-link {
+      color: var(--webex-blue);
+      text-decoration: underline;
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-block;
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+      transition: color .18s;
+    }
+    .back-link:hover {
+      color: var(--webex-green);
+    }
+    @media (max-width: 600px) {
+      main { padding: 1.2rem 0.5rem; }
+      h1 { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <!-- Puedes poner tu logo aquí o dejar el SVG como en la landing -->
+      <svg width="38" height="38" viewBox="0 0 64 64" fill="none">
+        <circle cx="32" cy="32" r="32" fill="#F4F7FA"/>
+        <path d="M32 15C25.3726 15 20 20.3726 20 27C20 32.5228 26.2721 39.8833 31.4335 44.817C31.7756 45.1423 32.2244 45.1423 32.5665 44.817C37.7279 39.8833 44 32.5228 44 27C44 20.3726 38.6274 15 32 15ZM32 38C27.5817 38 24 34.4183 24 30C24 25.5817 27.5817 22 32 22C36.4183 22 40 25.5817 40 30C40 34.4183 36.4183 38 32 38Z" fill="#005ede"/>
+        <path d="M32 49C34.2091 49 36 47.2091 36 45H28C28 47.2091 29.7909 49 32 49Z" fill="#06c8ae"/>
+        <text x="50%" y="80%" text-anchor="middle" fill="#005ede" font-family="Montserrat, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="2px" dominant-baseline="middle">CC</text>
+      </svg>
+    </div>
+    <h1>🛒 Escenario: Retail</h1>
+    <div class="vertical-title">Pasos para la demostración de Retail</div>
+  </header>
+  <main>
+    <ol>
+      <li><b>Inicia sesión</b> como agente, supervisor o admin en el portal: <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" style="color:#005ede;">desktop.wxcc-us1.cisco.com</a> (admin: <a href="https://admin.webex.com/" target="_blank" style="color:#005ede;">admin.webex.com</a>).</li>
+      <li><b>Simula una interacción de cliente</b> (por ejemplo, consulta de producto o pedido) usando los canales disponibles (chat, voz, WhatsApp, etc.).</li>
+      <li><b>Muestra cómo el Agente de IA responde y automatiza</b> tareas: respuestas a preguntas frecuentes, seguimiento de inventario, y actualizaciones de pedido.</li>
+      <li><b>Escala la interacción al supervisor</b> y demuestra la visibilidad de la operación en tiempo real.</li>
+      <li><b>Accede al panel de reportes</b> para mostrar cómo se visualiza la actividad, la satisfacción del cliente y la eficiencia operativa.</li>
+      <li><b>Destaca la experiencia omnicanal</b> y cómo las herramientas colaborativas de Webex CC mejoran la atención en Retail.</li>
+      <!-- Puedes agregar, quitar o personalizar los pasos según tu demo -->
+    </ol>
+    <a href="index.html" class="back-link">&larr; Volver a la página principal</a>
+  </main>
+</body>
+</html>
