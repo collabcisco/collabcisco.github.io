@@ -157,7 +157,8 @@
                 tiempoViaje: "8h",
                 fechaCompra: "2025-07-28",
                 historial: [
-                    { boleto: "X11223", origen: "Guadalajara", destino: "Monterrey", fecha: "2025-04-15" }
+                    { boleto: "X11223", origen: "Guadalajara", destino: "Monterrey", fecha: "2025-07-15" },
+                    { boleto: "Y98767", origen: "Monterrey", destino: "Querétaro", fecha: "2025-06-05" }
                 ]
             }
             // Agrega más clientes según sea necesario
@@ -190,7 +191,7 @@
 
         function displayGreeting(agentName, queue) {
             if (agentName && queue) {
-                greetingDiv.textContent = `Hola Agente, ${agentName}. Esta llamada llegó a la cola: ${queue}.`;
+                greetingDiv.textContent = `Hola agente, ${agentName}. Esta llamada llegó a la cola: ${queue}.`;
             } else if (agentName) {
                 greetingDiv.textContent = `Hola, ${agentName}.`;
             } else {
