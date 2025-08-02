@@ -114,6 +114,7 @@
       transform: translateY(-2px);
     }
 
+    /* Estilos del Tooltip (restaurados a la versión que indicaste) */
     .contact-info-tooltip {
       display: none;
       position: absolute;
@@ -124,8 +125,7 @@
       color: white;
       padding: 8px 12px;
       border-radius: var(--border-radius-sm);
-      min-width: 280px; /* Ancho mínimo para el tooltip */
-      max-width: 380px; /* Ancho máximo para el tooltip */
+      max-width: 350px; /* Ancho más amplio para los tooltips */
       text-align: center; /* Centrar el texto si se envuelve */
       font-size: 0.9rem;
       box-shadow: var(--shadow-medium);
@@ -147,12 +147,13 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* Contenedor para el texto y el botón de copiar (horizontal) */
+    /* Contenedor para el texto y el botón de copiar (horizontal, puede envolver) */
     .tooltip-content-top {
       display: flex;
       align-items: center; /* Alinea verticalmente el texto y el botón */
       gap: 8px; /* Espacio entre el texto y el botón de copiar */
-      white-space: nowrap; /* Fuerza que el contenido se mantenga en una sola línea */
+      flex-wrap: wrap; /* Permite que el contenido se envuelva en varias líneas */
+      justify-content: center; /* Centra el contenido cuando se envuelve */
     }
 
     .contact-info-tooltip a {
@@ -161,7 +162,8 @@
       font-weight: 500;
       transition: color 0.2s ease;
       margin-left: 0; /* Resetear margin-left de nav a */
-      white-space: nowrap; /* Fuerza que el texto del enlace se mantenga en una sola línea */
+      white-space: normal; /* Permite que el texto del enlace se envuelva */
+      word-break: break-word; /* Romper palabras largas si es necesario */
     }
 
     .contact-info-tooltip a:hover {
@@ -422,8 +424,7 @@
         padding: 6px 10px;
         left: 50%;
         transform: translateX(-50%);
-        min-width: 250px; /* Ajuste para pantallas medianas */
-        max-width: 320px; /* Ajuste para pantallas medianas */
+        max-width: 280px; /* Ajuste para pantallas medianas */
       }
       .hero {
         padding: 2.5rem 1rem;
@@ -469,15 +470,18 @@
         font-size: 1.5rem;
       }
       .contact-info-tooltip {
-        /* En pantallas muy pequeñas, el tooltip se ajustará al ancho de la pantalla */
-        min-width: unset; /* Reiniciar min-width */
         max-width: calc(100vw - 20px); /* Ajuste para no desbordar en pantallas muy pequeñas */
         box-sizing: border-box;
         padding: 6px 8px;
       }
-      /* En pantallas muy pequeñas, el contenido horizontal podría forzar el desbordamiento.
-         Si esto ocurre y la horizontalidad es crítica, el usuario deberá desplazarse lateralmente.
-         Si el desbordamiento es inaceptable, se podría considerar volver a flex-wrap aquí. */
+      .tooltip-content-top {
+        flex-wrap: wrap; /* Permite que el contenido se envuelva en varias líneas */
+        justify-content: center; /* Centra el contenido cuando se envuelve */
+      }
+      .contact-info-tooltip a {
+        white-space: normal; /* Permite que el enlace se envuelva */
+        text-align: center; /* Centra el texto del enlace si se envuelve */
+      }
     }
   </style>
 </head>
