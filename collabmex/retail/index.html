@@ -46,7 +46,7 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      gap: 1rem; /* Espacio entre el logo, la navegación y los iconos */
+      gap: 1rem; /* Espacio entre el logo, la navegación y los elementos */
     }
 
     header .logo {
@@ -66,13 +66,13 @@
     }
 
     nav {
-      flex-grow: 1; /* Permite que la navegación ocupe el espacio disponible */
-      text-align: center; /* Centra los enlaces de navegación si hay espacio */
+      flex-grow: 1;
+      text-align: center;
     }
 
     nav a {
       color: var(--dark-text);
-      margin: 0 1rem; /* Margen ajustado para mejor espaciado */
+      margin: 0 1rem;
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s ease;
@@ -82,91 +82,104 @@
       color: var(--primary-blue);
     }
 
-    /* Nuevo: Contenedor de iconos de contacto */
-    .contact-icons-container {
-      display: flex;
-      gap: 1.5rem; /* Espacio entre iconos */
-      align-items: center;
-      margin-right: 8rem; /* Mueve el contenedor más a la izquierda */
+    /* Sección de Contacto con Dropdown */
+    .contact-dropdown {
+      position: relative;
+      display: inline-block;
+      margin-left: 2rem; /* Espacio entre la navegación y el botón de contacto */
     }
 
-    .contact-icon-wrapper {
-      position: relative; /* Para posicionar el tooltip */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .contact-icon-trigger { /* Elemento que activa el tooltip */
-      font-size: 1.8rem; /* Tamaño del icono */
-      color: var(--primary-blue);
-      transition: color 0.3s ease, transform 0.2s ease;
-      cursor: pointer;
-      padding: 5px; /* Área de clic ligeramente más grande */
-      border-radius: 50%;
-      display: flex; /* Para centrar el icono de Font Awesome */
-      align-items: center;
-      justify-content: center;
-    }
-
-    .contact-icon-trigger:hover {
-      color: #0056b3; /* Azul más oscuro al pasar el ratón */
-      transform: translateY(-2px);
-    }
-
-    /* Estilos del Tooltip (restaurados a la versión que indicaste) */
-    .contact-info-tooltip {
-      display: none;
-      position: absolute;
-      top: 100%; /* Posicionar debajo del icono */
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: var(--dark-text);
+    .btn-contact {
+      background-color: var(--primary-blue); /* Botón azul */
       color: white;
-      padding: 8px 12px;
+      padding: 0.8rem 1.5rem;
+      border: none;
       border-radius: var(--border-radius-sm);
-      max-width: 350px; /* Ancho más amplio para los tooltips */
-      text-align: center; /* Centrar el texto si se envuelve */
-      font-size: 0.9rem;
+      font-weight: 600;
+      font-size: 1.1rem; /* Aumentado el tamaño de la letra */
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); /* Sombra azul */
+    }
+
+    .btn-contact:hover {
+      background-color: #0056b3; /* Azul más oscuro al pasar el ratón */
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4); /* Sombra azul más pronunciada */
+    }
+
+    .dropdown-content {
+      display: none; /* Oculto por defecto */
+      position: absolute;
+      background-color: #ffffff;
+      min-width: 280px; /* Ancho mínimo para el contenido */
       box-shadow: var(--shadow-medium);
-      z-index: 1001; /* Por encima de otros contenidos */
-      margin-top: 10px; /* Espacio entre icono y tooltip */
+      z-index: 1;
+      right: 0; /* Alineado a la derecha del botón */
+      border-radius: var(--border-radius-sm);
+      overflow: hidden;
+      margin-top: 10px; /* Espacio entre el botón y el menú */
+      transform-origin: top right;
+      transform: scale(0.95);
       opacity: 0;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-
-      /* Estilos para el contenido del tooltip (texto + botón + QR) */
-      display: flex;
-      flex-direction: column; /* Apilar elementos verticalmente */
-      align-items: center; /* Centrar horizontalmente */
-      gap: 8px; /* Espacio entre elementos */
+      transition: all 0.3s ease-out;
+      border: 1px solid #eee;
     }
 
-    .contact-info-tooltip.show {
-      display: flex; /* Usar flex para mostrar y alinear contenido */
+    .dropdown-content.show {
+      display: block;
+      transform: scale(1);
       opacity: 1;
-      transform: translateX(-50%) translateY(0);
     }
 
-    /* Contenedor para el texto y el botón de copiar (horizontal, puede envolver) */
-    .tooltip-content-top {
-      display: flex;
-      align-items: center; /* Alinea verticalmente el texto y el botón */
-      gap: 8px; /* Espacio entre el texto y el botón de copiar */
-      flex-wrap: wrap; /* Permite que el contenido se envuelva en varias líneas */
-      justify-content: center; /* Centra el contenido cuando se envuelve */
-    }
-
-    .contact-info-tooltip a {
-      color: white; /* Color del texto del enlace dentro del tooltip */
+    .dropdown-item { /* Estilos para cada opción del menú desplegable */
+      color: var(--dark-text);
+      padding: 12px 16px;
       text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s ease;
-      margin-left: 0; /* Resetear margin-left de nav a */
-      white-space: normal; /* Permite que el texto del enlace se envuelva */
-      word-break: break-word; /* Romper palabras largas si es necesario */
+      display: flex; /* Usar flex para organizar contenido */
+      flex-direction: column; /* Apilar contenido verticalmente */
+      align-items: center; /* Centrar horizontalmente */
+      transition: background-color 0.2s ease;
+      position: relative; /* Para posicionar el feedback de copiado */
+      border-bottom: 1px solid #f0f0f0; /* Separador sutil */
+      gap: 5px; /* Espacio entre elementos apilados */
     }
 
-    .contact-info-tooltip a:hover {
+    .dropdown-item:last-child {
+        border-bottom: none;
+    }
+
+    .dropdown-item:hover {
+      background-color: var(--light-gray);
+      color: var(--primary-blue);
+    }
+
+    .dropdown-item-content { /* Contenedor para texto y botón de copiar en horizontal */
+      display: flex;
+      align-items: center;
+      gap: 8px; /* Espacio entre el texto y el botón de copiar */
+      white-space: nowrap; /* Mantiene el texto y el botón en una sola línea */
+      color: var(--dark-text); /* Asegura que el color del texto sea oscuro */
+    }
+
+    .dropdown-item-content .fas, .dropdown-item-content .fab { /* Estilo para los iconos dentro del dropdown */
+      font-size: 1.1em; /* Tamaño del icono */
+      color: var(--primary-blue); /* Color del icono */
+      flex-shrink: 0; /* Evita que el icono se encoja */
+    }
+
+    .dropdown-item-content span {
+      flex-shrink: 0; /* Evita que el texto se encoja */
+    }
+
+    .dropdown-item-content a { /* Estilo específico para el enlace dentro del dropdown-item-content */
+      color: var(--dark-text); /* Color del texto del enlace */
+      text-decoration: none;
+      margin-left: 0; /* Resetear margen */
+      white-space: nowrap; /* Asegura que el texto del enlace no se envuelva */
+    }
+
+    .dropdown-item-content a:hover {
       color: var(--primary-blue); /* Cambia de color al pasar el ratón */
     }
 
@@ -174,28 +187,28 @@
     .copy-button {
       background: none;
       border: none;
-      color: rgba(255, 255, 255, 0.8); /* Color del icono de copiar */
+      color: #777; /* Color del icono de copiar */
       cursor: pointer;
       font-size: 0.9em; /* Tamaño del icono de copiar */
       padding: 4px;
       border-radius: 4px;
       transition: background-color 0.2s ease, color 0.2s ease;
-      line-height: 1; /* Asegura que el icono esté bien alineado */
-      display: flex; /* Para centrar el icono */
+      line-height: 1;
+      display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0; /* Evita que se encoja */
+      flex-shrink: 0;
     }
 
     .copy-button:hover {
-      background-color: rgba(255, 255, 255, 0.2);
-      color: white;
+      background-color: #e0e0e0;
+      color: var(--primary-blue);
     }
 
     /* Estilos del feedback de copiado */
     .copy-feedback {
       position: absolute;
-      top: -35px; /* Posicionar encima del tooltip */
+      top: -25px; /* Posicionar encima del dropdown-item */
       left: 50%;
       transform: translateX(-50%);
       background-color: #5cb85c; /* Verde para éxito */
@@ -207,19 +220,19 @@
       transition: opacity 0.3s ease, top 0.3s ease;
       pointer-events: none; /* Para que no bloquee clics */
       white-space: nowrap;
-      z-index: 1002; /* Por encima del tooltip */
+      z-index: 1002;
     }
 
     .copy-feedback.show {
       opacity: 1;
-      top: -45px; /* Se mueve ligeramente hacia arriba al mostrarse */
+      top: -35px; /* Se mueve ligeramente hacia arriba al mostrarse */
     }
 
     /* Estilos para el QR de WhatsApp */
     .whatsapp-qr-code {
       max-width: 100px; /* Tamaño del QR */
       height: auto;
-      margin-top: 10px; /* Espacio entre el texto y el QR */
+      margin-top: 5px; /* Espacio entre el texto y el QR */
       border-radius: var(--border-radius-sm);
       background-color: white; /* Fondo blanco para el QR */
       padding: 5px; /* Pequeño padding alrededor del QR */
@@ -384,12 +397,8 @@
       .section-card {
         padding: 2rem;
       }
-      .contact-icons-container {
-        gap: 1rem;
-        margin-right: 3rem; /* Ajuste para pantallas más pequeñas */
-      }
-      .contact-icon-trigger {
-        font-size: 1.6rem;
+      .contact-dropdown {
+        margin-left: 1rem;
       }
     }
 
@@ -409,22 +418,23 @@
         margin: 0 0.5rem;
         font-size: 0.9rem;
       }
-      .contact-icons-container {
+      .contact-dropdown {
+        width: 100%; /* Ocupa el ancho completo */
         margin-top: 1rem;
-        width: 100%;
-        justify-content: center;
-        gap: 1rem;
-        margin-right: 0; /* Eliminar margen derecho para centrar */
+        text-align: center; /* Centra el botón */
       }
-      .contact-icon-trigger {
-        font-size: 1.5rem;
+      .contact-dropdown .btn-contact {
+        width: auto; /* Ajusta el botón al contenido */
+        font-size: 1rem; /* Ajuste para móviles */
       }
-      .contact-info-tooltip {
-        font-size: 0.8rem;
-        padding: 6px 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        max-width: 280px; /* Ajuste para pantallas medianas */
+      .dropdown-content {
+        left: 50%; /* Centrar el dropdown */
+        transform: translateX(-50%) scale(0.95);
+        right: auto; /* Desactivar alineación a la derecha */
+        transform-origin: top center; /* Origen de la transformación para el centrado */
+      }
+      .dropdown-content.show {
+        transform: translateX(-50%) scale(1);
       }
       .hero {
         padding: 2.5rem 1rem;
@@ -442,6 +452,17 @@
       }
       .section-card {
         padding: 1.5rem;
+      }
+      .dropdown-item {
+        padding: 10px 12px; /* Ajuste de padding para móviles */
+      }
+      .dropdown-item-content {
+        flex-wrap: wrap; /* Permitir que el contenido se envuelva en móviles */
+        justify-content: center;
+      }
+      .dropdown-item-content span, .dropdown-item-content a {
+        white-space: normal; /* Permitir el salto de línea */
+        text-align: center;
       }
     }
 
@@ -469,18 +490,15 @@
       .section-card h2 {
         font-size: 1.5rem;
       }
-      .contact-info-tooltip {
-        max-width: calc(100vw - 20px); /* Ajuste para no desbordar en pantallas muy pequeñas */
-        box-sizing: border-box;
-        padding: 6px 8px;
+      .contact-dropdown .btn-contact {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
       }
-      .tooltip-content-top {
-        flex-wrap: wrap; /* Permite que el contenido se envuelva en varias líneas */
-        justify-content: center; /* Centra el contenido cuando se envuelve */
+      .dropdown-content {
+        min-width: 250px;
       }
-      .contact-info-tooltip a {
-        white-space: normal; /* Permite que el enlace se envuelva */
-        text-align: center; /* Centra el texto del enlace si se envuelve */
+      .whatsapp-qr-code {
+        max-width: 80px; /* QR más pequeño en móviles */
       }
     }
   </style>
@@ -498,51 +516,42 @@
     <a href="#">Promociones</a>
     <!-- Se eliminó el enlace "Contacto" para no confundir -->
   </nav>
-  <!-- Nuevos iconos de contacto -->
-  <div class="contact-icons-container">
-    <div class="contact-icon-wrapper">
-      <span class="contact-icon-trigger">
-        <i class="fas fa-phone"></i>
-      </span>
-      <span class="contact-info-tooltip">
-        <div class="tooltip-content-top">
-          <a href="tel:+525590886970,1">Llámanos: +52 55 9088 6970 (opción 1)</a>
+  <!-- Botón de Contáctanos con Dropdown -->
+  <div class="contact-dropdown">
+    <button class="btn-contact" id="contactBtn">Contáctanos</button>
+    <div class="dropdown-content" id="contactDropdown">
+      <a href="tel:+525590886970,1" class="dropdown-item">
+        <div class="dropdown-item-content">
+          <i class="fas fa-phone"></i> <!-- Icono de teléfono -->
+          <span>Llámanos: +52 55 9088 6970 (opción 1)</span>
           <button class="copy-button" data-copy-target="+525590886970,1">
             <i class="fas fa-copy"></i>
           </button>
         </div>
         <span class="copy-feedback">¡Copiado!</span>
-      </span>
-    </div>
-    <div class="contact-icon-wrapper">
-      <span class="contact-icon-trigger">
-        <i class="fas fa-envelope"></i>
-      </span>
-      <span class="contact-info-tooltip">
-        <div class="tooltip-content-top">
-          <a href="mailto:wxconnect.demo@gmail.com">Email: wxconnect.demo@gmail.com</a>
+      </a>
+      <a href="mailto:wxconnect.demo@gmail.com" class="dropdown-item">
+        <div class="dropdown-item-content">
+          <i class="fas fa-envelope"></i> <!-- Icono de email -->
+          <span>Email: wxconnect.demo@gmail.com</span>
           <button class="copy-button" data-copy-target="wxconnect.demo@gmail.com">
             <i class="fas fa-copy"></i>
           </button>
         </div>
         <span class="copy-feedback">¡Copiado!</span>
-      </span>
-    </div>
-    <div class="contact-icon-wrapper">
-      <span class="contact-icon-trigger">
-        <i class="fab fa-whatsapp"></i>
-      </span>
-      <span class="contact-info-tooltip">
-        <div class="tooltip-content-top">
-          <a href="https://wa.me/14086764583?text=collabmex" target="_blank">WhatsApp: +1 408 676 4583 (collabmex)</a>
+      </a>
+      <a href="https://wa.me/14086764583?text=collabmex" target="_blank" class="dropdown-item">
+        <div class="dropdown-item-content">
+          <i class="fab fa-whatsapp"></i> <!-- Icono de WhatsApp -->
+          <span>WhatsApp: +1 408 676 4583 (collabmex --> Retail)</span>
           <button class="copy-button" data-copy-target="+14086764583">
             <i class="fas fa-copy"></i>
           </button>
         </div>
         <!-- Aquí va tu imagen de QR de WhatsApp -->
-        <img src="whatsapp-qr.png" alt="WhatsApp QR Code" class="whatsapp-qr-code">
+        <img src="qr-code.png" alt="WhatsApp QR Code" class="whatsapp-qr-code">
         <span class="copy-feedback">¡Copiado!</span>
-      </span>
+      </a>
     </div>
   </div>
 </header>
@@ -579,54 +588,36 @@
   &copy; 2025 Merka+. Todos los derechos reservados. | Aviso de Privacidad
 </footer>
 
-<!-- Script para la funcionalidad de los tooltips de contacto y el botón de copiar -->
+<!-- Script para la funcionalidad del dropdown y el botón de copiar -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const contactIconTriggers = document.querySelectorAll('.contact-icon-trigger');
-    const tooltips = document.querySelectorAll('.contact-info-tooltip');
+    const contactBtn = document.getElementById('contactBtn');
+    const contactDropdown = document.getElementById('contactDropdown');
     const copyButtons = document.querySelectorAll('.copy-button');
 
-    function hideAllTooltips() {
-      tooltips.forEach(tooltip => {
-        tooltip.classList.remove('show');
-      });
-    }
-
-    // Manejo de la visibilidad de los tooltips
-    contactIconTriggers.forEach(trigger => {
-      trigger.addEventListener('click', function(event) {
-        event.stopPropagation(); // Evita que el clic se propague al documento y cierre el tooltip inmediatamente
-
-        const currentTooltip = this.nextElementSibling; // El tooltip es el siguiente hermano
-
-        // Si este tooltip ya está abierto, ciérralo y sal
-        if (currentTooltip.classList.contains('show')) {
-          currentTooltip.classList.remove('show');
-          return;
-        }
-
-        // Cierra todos los demás tooltips
-        hideAllTooltips();
-
-        // Muestra el tooltip actual
-        currentTooltip.classList.add('show');
-      });
+    // Funcionalidad del Dropdown "Contáctanos"
+    contactBtn.addEventListener('click', function(event) {
+      contactDropdown.classList.toggle('show');
+      event.stopPropagation(); // Evita que el clic se propague y cierre el dropdown inmediatamente
     });
 
-    // Cierra los tooltips cuando se hace clic en cualquier lugar fuera de ellos
-    document.addEventListener('click', function(event) {
-      if (!event.target.closest('.contact-icon-wrapper')) {
-        hideAllTooltips();
+    // Cerrar el dropdown si se hace clic fuera de él
+    window.addEventListener('click', function(event) {
+      if (!event.target.matches('#contactBtn') && !event.target.closest('.dropdown-content')) {
+        if (contactDropdown.classList.contains('show')) {
+          contactDropdown.classList.remove('show');
+        }
       }
     });
 
     // Manejo del botón de copiar
     copyButtons.forEach(button => {
       button.addEventListener('click', function(event) {
-        event.stopPropagation(); // Evita que el clic cierre el tooltip o active el enlace
+        event.stopPropagation(); // Evita que el clic cierre el dropdown o active el enlace
 
         const textToCopy = this.dataset.copyTarget;
-        const feedbackSpan = this.closest('.contact-info-tooltip').querySelector('.copy-feedback'); // Encuentra el feedback dentro del mismo tooltip
+        // El feedback span ahora es un hermano del div.dropdown-item-content dentro del a.dropdown-item
+        const feedbackSpan = this.closest('.dropdown-item').querySelector('.copy-feedback'); 
 
         navigator.clipboard.writeText(textToCopy).then(() => {
           // Mostrar feedback de copiado
@@ -642,6 +633,6 @@
     });
   });
 </script>
-
+<div id="divicw" data-bind="60548417-582E-41F6-BC2D-9FD462921185" data-org=""></div><script>var i={t:function(t){var e="https://media.imi.chat/widget/js/imichatinit.js";try{var o=new XMLHttpRequest;o.onreadystatechange=function(){if(this.readyState==4){var t=document.getElementById("divicw");if(this.status==0){i.o(t);return}var e=document.createElement("script");e.innerHTML=this.responseText;t.parentNode.insertBefore(e,t.nextSibling)}};o.open("GET",e,true);o.send()}catch(s){console.error(s)}},o:function(t){t.insertAdjacentHTML("afterend",'<iframe id="tls_al_frm" frameborder="0" style="overflow: hidden;height: 208px;width: 394px;position: fixed;display: block;right: 48px;bottom: 12px;z-index: 99999; display:none;"></iframe>');var e=document.getElementById("tls_al_frm");var o=e.contentWindow||(e.contentDocument.document||e.contentDocument);o.document.open();o.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Untitled Document</title><style>body{font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;color: #99a0b0;font-size: 14px;}.popover__content{background-color: #fbfbfe; padding: 1.5rem; border-radius: 5px; width: 300px; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);position: relative;}.popover__message{font-weight: 600;color:#56627c;font-size: 16px;}.pull-left{float:left;}.clearfix{clear: both;}.hdr-txt{width: 218px; margin-top: 3px;}.para-txt a{text-decoration: none;color: #005cde;}.close-btn{position: absolute;right:15px;top:15px;}.close-btn a{text-decoration: none;font-weight: 400; color: #56627c; font-size: 16px;}</style></head><body><div class="popover__content"><div class="close-btn"><a href="#" onclick="closeTLSAlert();">X</a></div><div class="popover__message"><div class="pull-left hdr-txt">This browser version is not supported on LiveChat.</div></div><div class="clearfix"></div><p class="para-txt">Please update your browser to the latest version and re-open the website to access the widget. </p></div><script>function closeTLSAlert(){window.parent.postMessage({key: "close_tls_alert",value: "close_tls_alert",action: "close_tls_alert"}, "*");}<\/script></body></html>');o.document.close();e.style.display="block";window.addEventListener("message",function(t){if(t.data.action=="close_tls_alert"){i.s()}})},s:function(){var t=document.getElementById("tls_al_frm");t.remove()}};i.t(function(t){});</script>
 </body>
 </html>
