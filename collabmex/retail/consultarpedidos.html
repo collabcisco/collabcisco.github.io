@@ -17,8 +17,8 @@
       --status-received: #ffc107; /* Amarillo para 'Recibido' */
       --status-preparing: #17a2b8; /* Azul claro para 'Preparando' */
       --status-shipped: var(--primary); /* Azul principal para 'Enviado' */
-      --button-bg-received: #ffc107;
-      --button-bg-preparing: #17a2b8;
+      --button-bg-received: #ffc107; /* Estos ya no se usan pero se mantienen por si acaso */
+      --button-bg-preparing: #17a2b8; /* Estos ya no se usan pero se mantienen por si acaso */
     }
 
     * {
@@ -65,7 +65,7 @@
     .search-container {
       padding: 2rem;
       max-width: 900px;
-      margin: 0 auto;
+      margin: 0 auto; /* Mantiene el contenedor centrado en la página */
       background-color: var(--card-bg);
       border-radius: var(--border-radius);
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
@@ -73,7 +73,7 @@
     }
 
     .search-container h1 {
-      text-align: center;
+      text-align: left; /* Alineado a la izquierda */
       color: var(--primary);
       margin-bottom: 1.5rem;
       font-size: 2.2rem;
@@ -84,17 +84,17 @@
       display: flex;
       gap: 1rem;
       margin-bottom: 2rem;
-      flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
-      justify-content: center;
+      flex-wrap: wrap;
+      justify-content: flex-start; /* Alineado a la izquierda */
     }
 
     .search-input-group input[type="text"] {
-      flex-grow: 1; /* Permite que el input crezca */
+      flex-grow: 1;
       padding: 0.8rem 1rem;
       border: 1px solid #ccc;
       border-radius: var(--border-radius);
       font-size: 1rem;
-      min-width: 200px; /* Ancho mínimo para el input */
+      min-width: 200px;
     }
 
     .search-input-group button {
@@ -116,9 +116,10 @@
     /* Contenedor de resultados */
     #searchResults {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Columnas responsivas */
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.5rem;
       margin-top: 2rem;
+      /* Las tarjetas se llenarán de izquierda a derecha por defecto */
     }
 
     /* Estilos de las tarjetas de pedido (reutilizados del dashboard) */
@@ -131,7 +132,7 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      /* Eliminado justify-content: space-between; y align-self: flex-end; ya que no hay botón */
     }
 
     .order-card:hover {
@@ -144,38 +145,25 @@
       margin-bottom: 0.5rem;
       font-size: 1.1rem;
       font-weight: 600;
+      text-align: left; /* Asegura alineación a la izquierda */
     }
 
     .order-card p {
       font-size: 0.9rem;
       color: #666;
       margin-bottom: 0.3rem;
+      text-align: left; /* Asegura alineación a la izquierda */
     }
 
     .order-card .status-indicator {
       font-weight: 700;
       color: var(--primary);
       margin-top: 0.5rem;
-      margin-bottom: 1rem;
+      /* Eliminado margin-bottom ya que no hay botón */
+      text-align: left; /* Asegura alineación a la izquierda */
     }
 
-    .order-card button {
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.6rem 1rem;
-      border-radius: var(--border-radius); /* Usar --border-radius para consistencia */
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-      align-self: flex-end;
-      margin-top: 1rem; /* Espacio entre contenido y botón */
-    }
-
-    .order-card button:hover {
-      opacity: 0.9;
-    }
+    /* Eliminados los estilos para botones dentro de order-card */
 
     /* Colores específicos para el borde de las tarjetas según el estado */
     .order-card[data-status="received"] { border-left-color: var(--status-received); }
@@ -186,14 +174,6 @@
     .order-card[data-status="received"] .status-indicator { color: var(--status-received); }
     .order-card[data-status="preparing"] .status-indicator { color: var(--status-preparing); }
     .order-card[data-status="shipped"] .status-indicator { color: var(--status-shipped); }
-
-    /* Colores de botón según el estado */
-    .order-card button.received-btn { background-color: var(--button-bg-received); }
-    .order-card button.preparing-btn { background-color: var(--button-bg-preparing); }
-    .order-card button:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
-    }
 
     /* Pie de Página - Estilo de Merka+ */
     footer {
@@ -225,10 +205,12 @@
       }
       .search-container h1 {
         font-size: 1.8rem;
+        text-align: left; /* Mantiene alineación a la izquierda */
       }
       .search-input-group {
         flex-direction: column;
         gap: 0.8rem;
+        justify-content: flex-start; /* Mantiene alineación a la izquierda */
       }
       .search-input-group input[type="text"],
       .search-input-group button {
@@ -247,10 +229,7 @@
       .order-card p {
         font-size: 0.85rem;
       }
-      .order-card button {
-        padding: 0.5rem 0.8rem;
-        font-size: 0.8rem;
-      }
+      /* Eliminados los estilos para botones en media query */
       footer {
         margin-top: 2rem;
       }
@@ -262,10 +241,8 @@
 <header>
   <img src="logo.jpg" alt="Logo Merka+">
   <nav>
-    <a href="index.html">Dashboard de Pedidos</a> <!-- Enlace a tu página principal de gestión -->
-    <a href="#">Productos</a>
-    <a href="#">Promociones</a>
-    <a href="search.html">Buscar Pedidos</a> <!-- Enlace a esta página -->
+    <a href="pedidos.html">Dashboard de Pedidos</a> <!-- Enlace a tu página principal de gestión -->
+    <a href="consultarpedidos.html">Buscar Pedidos</a> <!-- Enlace a esta página -->
   </nav>
 </header>
 
@@ -274,7 +251,7 @@
     <h1>Buscar Pedidos por Cliente</h1>
 
     <div class="search-input-group">
-      <input type="text" id="customerSearchInput" placeholder="Ingrese el nombre del cliente">
+      <input type="text" id="customerSearchInput" placeholder="Ingrese el nombre o ID del cliente">
       <button onclick="searchOrders()">Buscar Pedidos</button>
     </div>
 
@@ -292,91 +269,29 @@
 <script>
   // ¡¡¡IMPORTANTE!!! REEMPLAZA ESTA URL CON LA TUYA DE MOCKAPI.IO
   const MOCKAPI_URL = 'https://686f1c1891e85fac429fcd60.mockapi.io/pedidos';
-  const WEBHOOK_URL = 'https://hooks.us.webexconnect.io/events/QW1I70QW3Y'; // Tu URL de Webhook
 
   const searchResultsContainer = document.getElementById('searchResults');
   const noResultsMessage = document.getElementById('noResultsMessage');
 
-  /**
-   * Envía una solicitud POST al Webhook con el ID de pedido y el estado.
-   * @param {string} orderId - El ID del pedido (el que se muestra al usuario, e.g., "PEDIDO_XYZ_123").
-   * @param {string} status - El nuevo estado del pedido (ej. "preparando envio", "enviado").
-   */
-  async function sendWebhookUpdate(orderId, status) {
-      if (!orderId) {
-          console.error('Error: El ID de pedido para el Webhook no está definido.');
-          return;
-      }
-
-      const payload = {
-          orderId: orderId,
-          status: status
-      };
-
-      try {
-          const response = await fetch(WEBHOOK_URL, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(payload)
-          });
-
-          if (response.ok) {
-              console.log(`Webhook enviado exitosamente para el pedido ${orderId} con estado: ${status}.`);
-          } else {
-              const errorText = await response.text();
-              console.error(`Error al enviar el Webhook para el pedido ${orderId}: ${response.status} ${response.statusText} - ${errorText}`);
-              alert(`Error al enviar el Webhook para el pedido ${orderId}. Código: ${response.status}`);
-          }
-      } catch (error) {
-          console.error(`Error de red al enviar el Webhook para el pedido ${orderId}:`, error);
-          alert(`Error de conexión al enviar el Webhook para el pedido ${orderId}.`);
-      }
-  }
-
-  // Función para crear una tarjeta de pedido HTML (reutilizada)
+  // Función para crear una tarjeta de pedido HTML (modificada para solo lectura)
   function createOrderCard(order) {
     const card = document.createElement('div');
     card.className = 'order-card';
     card.dataset.orderId = order.id; // ID de MockAPI
     card.dataset.status = order.status; // Para aplicar estilos CSS dinámicamente
 
-    let buttonHtml = '';
-    let buttonClass = '';
-    let buttonText = '';
-    let nextStatus = '';
     let currentStatusText = '';
 
     switch (order.status) {
       case 'received':
-        buttonText = 'Marcar como Preparando Envío';
-        buttonClass = 'received-btn';
-        nextStatus = 'preparing';
         currentStatusText = 'Estado: Recibido';
         break;
       case 'preparing':
-        buttonText = 'Marcar como Enviado';
-        buttonClass = 'preparing-btn';
-        nextStatus = 'shipped';
         currentStatusText = 'Estado: En Preparación';
         break;
       case 'shipped':
-        buttonText = 'Pedido Enviado';
-        buttonClass = 'shipped-btn';
-        nextStatus = ''; // No hay siguiente estado
         currentStatusText = 'Estado: Enviado';
         break;
-    }
-
-    if (order.status !== 'shipped') {
-      buttonHtml = `<button class="${buttonClass}" data-next-status="${nextStatus}">
-                      ${buttonText}
-                    </button>`;
-    } else {
-      buttonHtml = `<button disabled>
-                      ${buttonText}
-                    </button>`;
     }
 
     card.innerHTML = `
@@ -388,68 +303,24 @@
         <p>Total: ${order.costo} MXN</p>
         <p class="status-indicator">${currentStatusText}</p>
       </div>
-      ${buttonHtml}
+      <!-- Botones de acción eliminados para modo solo lectura -->
     `;
 
-    // Añadir el event listener al botón si existe y no está deshabilitado
-    const button = card.querySelector('button:not([disabled])');
-    if (button) {
-      button.addEventListener('click', () => {
-        const newStatus = button.dataset.nextStatus;
-        // Pasa tanto el ID de MockAPI (order.id) como el ID de negocio (order.orderId)
-        updateOrderStatus(order.id, order.orderId, newStatus);
-      });
-    }
+    // No hay event listeners para botones ya que no hay botones de acción
 
     return card;
   }
 
-  // Función para actualizar el estado de un pedido en MockAPI.io y enviar al Webhook (reutilizada)
-  async function updateOrderStatus(mockApiOrderId, businessOrderId, newStatus) {
-    try {
-      const response = await fetch(`${MOCKAPI_URL}/${mockApiOrderId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ status: newStatus })
-      });
+  // La función updateOrderStatus ha sido eliminada ya que no se permiten cambios de estado
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      console.log(`Pedido ${mockApiOrderId} actualizado a ${newStatus} en MockAPI.`);
-
-      // Determinar el estado legible para el Webhook
-      let webhookStatus;
-      if (newStatus === 'preparing') {
-        webhookStatus = 'preparando envio';
-      } else if (newStatus === 'shipped') {
-        webhookStatus = 'enviado';
-      }
-
-      // Llamar al Webhook después de la actualización exitosa en MockAPI
-      if (webhookStatus) {
-        await sendWebhookUpdate(businessOrderId, webhookStatus);
-      }
-
-      // Volver a ejecutar la búsqueda para reflejar el cambio en la UI
-      searchOrders();
-    } catch (error) {
-      console.error('Error al actualizar el estado del pedido o enviar webhook:', error);
-      alert('Error al actualizar el estado del pedido. Por favor, intente de nuevo.');
-    }
-  }
-
-  // Función principal para buscar pedidos por cliente
+  // Función principal para buscar pedidos por cliente o ID
   async function searchOrders() {
-    const customerName = document.getElementById('customerSearchInput').value.trim();
+    const searchTerm = document.getElementById('customerSearchInput').value.trim();
     searchResultsContainer.innerHTML = ''; // Limpiar resultados anteriores
     noResultsMessage.style.display = 'none'; // Ocultar mensaje de no resultados
 
-    if (customerName === '') {
-      alert('Por favor, ingrese un nombre de cliente para buscar.');
+    if (searchTerm === '') {
+      alert('Por favor, ingrese un nombre o ID de cliente para buscar.');
       return;
     }
 
@@ -460,9 +331,11 @@
       }
       const allOrders = await response.json();
 
-      const filteredOrders = allOrders.filter(order =>
-        order.customerName && order.customerName.toLowerCase().includes(customerName.toLowerCase())
-      );
+      const filteredOrders = allOrders.filter(order => {
+        const customerNameMatch = order.customerName && order.customerName.toLowerCase().includes(searchTerm.toLowerCase());
+        const customerIDMatch = order.customerID && String(order.customerID).toLowerCase().includes(searchTerm.toLowerCase());
+        return customerNameMatch || customerIDMatch;
+      });
 
       if (filteredOrders.length > 0) {
         filteredOrders.forEach(order => {
