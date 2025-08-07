@@ -1,0 +1,601 @@
+{
+  "Generic": {
+      "name": "meeting-summary-bold",
+      "color": "grey",
+      "iconSet": "preferMomentumDesign"
+  },
+  "Chat": {
+      "name": "icon-chat-active_16",
+      "color": "cobalt"
+  },
+  "Messenger": {
+      "name": "icon-messenger_16",
+      "color": "cobalt"
+  },
+  "Activity": {
+      "name": "icon-meetings_16",
+      "color": "grey"
+  },
+  "Email": {
+      "name": "icon-email-active_16",
+      "color": "violet"
+  },
+  "SMS": {
+      "name": "icon-sms_16",
+      "color": "mint"
+  },
+  "Telephony": {
+      "name": "icon-handset-active_16",
+      "color": "green"
+  },
+  "Voice": {
+      "name": "icon-handset-active_16",
+      "color": "green"
+  },
+  "Call": {
+      "name": "icon-handset-active_16",
+      "color": "green"
+  },
+  "outbound-call": {
+      "name": "icon-outgoing-call-active_16",
+      "color": "green"
+  },
+  "inbound-call": {
+      "name": "icon-incoming-call-active_16",
+      "color": "green"
+  },
+  "Phone": {
+      "name": "icon-handset-active_16",
+      "color": "green"
+  },
+  "wrapup": {
+      "name": "icon-close-space_18",
+      "color": "red"
+  },
+  "agent": {
+      "name": "icon-headset_16",
+      "color": "pink"
+  },
+  "social": {
+      "name": "icon-contact-group_16",
+      "color": "mint"
+  },
+  "task": {
+      "name": "icon-tasks_16",
+      "color": "yellow"
+  },
+  "Login": {
+      "name": "icon-sign-in_24",
+      "color": "gold"
+  },
+  "Page Visit": {
+      "name": "icon-mouse-cursor_16",
+      "color": "grey"
+  },
+  "Entered ZipCode": {
+      "name": "icon-location_16",
+      "color": "cyan"
+  },
+  "Identify": {
+      "name": "icon-user_16",
+      "color": "blue"
+  },
+  "Quote": {
+      "name": "icon-file-spreadsheet_16",
+      "color": "cobalt"
+  },
+  "NPS.*": {
+      "name": "icon-analysis_16",
+      "color": "red"
+  },
+  "Initiated Walk In": {
+      "name": "icon-audio-video_16",
+      "color": "orange"
+  },
+  "IMI_Inbound": {
+      "name": "icon-call-incoming_16",
+      "color": "green"
+  },
+  "IMI_Outbound": {
+      "name": "icon-call-outgoing_16",
+      "color": "darkmint"
+  },
+  "Trigger Sent to Server": {
+      "name": "icon-event_16",
+      "color": "violet"
+  },
+  "Survey Response Collected": {
+      "name": "icon-report_16",
+      "color": "gold"
+  },
+  "multi events single day": {
+      "name": "icon-calendar-day_12",
+      "color": "yellow"
+  },
+  "social": {
+    "name": "icon-contact-group_16",
+    "color": "mint"
+  },
+  "SMS": {
+    "name": "icon-sms_16",
+    "color": "mint"
+  },
+  "Telephony": {
+    "name": "icon-handset-active_16",
+    "color": "green"
+  },
+  "Voice": {
+    "name": "icon-handset-active_16",
+    "color": "green"
+  },
+  "Chat": {
+    "name": "icon-chat-active_16",
+    "color": "cobalt"
+  },
+  "Email": {
+    "name": "icon-email-active_16",
+    "color": "violet"
+  },
+  "Messenger": {
+    "name": "icon-messenger_16",
+    "color": "cobalt"
+  },
+  "appleMessages": {
+    "name": "apple-business-chat-colored_16",
+    "color": "yellow"
+  },
+  "task": {
+    "name": "icon-tasks_16",
+    "color": "yellow"
+  },
+  "Login": {
+    "name": "icon-pen_16",
+    "color": "yellow"
+  },
+  "Page Visit": {
+    "name": "icon-mouse-cursor_16",
+    "color": "grey"
+  },
+  "Entered ZipCode": {
+    "name": "icon-location_16",
+    "color": "cyan"
+  },
+  "Identify": {
+    "name": "icon-user_16",
+    "color": "blue"
+  },
+  "Quote": {
+    "name": "icon-file-spreadsheet_16",
+    "color": "cobalt",
+    "showcase": "firstName"
+  },
+  "NPS.*": {
+    "name": "icon-analysis_16",
+    "color": "red"
+  },
+  "Initiated Walk In": {
+    "name": "icon-audio-video_16",
+    "color": "orange"
+  },
+  "IMI_Inbound": {
+    "name": "icon-call-incoming_16",
+    "color": "green"
+  },
+  "IMI_Outbound": {
+    "name": "icon-call-outgoing_16",
+    "color": "darkmint"
+  },
+  "Trigger Sent to Server": {
+    "name": "icon-event_16",
+    "color": "violet",
+    "showcase": "user"
+  },
+  "Survey Response Collected": {
+    "name": "icon-report_16",
+    "color": "gold"
+  },
+  "whatsApp": {
+    "name": "icon-whatsApp_16",
+    "color": "green"
+  },
+  "calendarDate": {
+    "name": "icon-calendar-month_16",
+    "color": "green"
+  },
+  "emoticon-passive": {
+    "name": "icon-emoticon-passive_24",
+    "color": "yellow"
+  },
+  "emoticon-sad": {
+    "name": "icon-emoticon-sad_24",
+    "color": "red"
+  },
+  "emoticon-mad": {
+    "name": "icon-emoticons_16",
+    "color": "green"
+  },
+  "OTP-pass": {
+    "name": "icon-private-circle_16",
+    "color": "green"
+  },
+  "OTP-fail": {
+    "name": "icon-private-circle_16",
+    "color": "red"
+  },
+  "Information": {
+    "name": "icon-info_16",
+    "color": "gold"
+  },
+  "Webex": {
+    "name": "icon-webex-teams_16",
+    "color": "purple"
+  },
+  "FBbot": {
+    "name": "icon-bot-customer-assistant_16",
+    "color": "blue"
+  },
+  "bot": {
+    "name": "icon-bot-customer-assistant_16",
+    "color": "orange"
+  },
+  "botmad": {
+    "name": "icon-bot-expert-assistant_16",
+    "color": "red"
+  },
+  "Callback": {
+    "name": "icon-icon-callback_16",
+    "color": "purple"
+  },
+  "CallbackDigital": {
+    "name": "icon-icon-callback_16",
+    "color": "blue"
+  },
+  "CallbackRetry": {
+    "name": "icon-icon-callback_16",
+    "color": "orange"
+  },
+  "CallbackFail": {
+    "name": "icon-icon-callback_16",
+    "color": "red"
+  },
+  "WrapCode": {
+    "name": "icon-favorite-active_16",
+    "color": "orange"
+  },
+  "Location": {
+    "name": "icon-location_16",
+    "color": "green"
+  },
+  "Pending": {
+    "name": "icon-pen_16",
+    "color": "blue"
+  },
+  "Review": {
+    "name": "icon-pen_16",
+    "color": "red"
+  },
+  "In Progress": {
+    "name": "icon-pen_16",
+    "color": "yellow"
+  },
+  "Completed": {
+    "name": "icon-pen_16",
+    "color": "green"
+  },
+  "Weather": {
+    "name": "icon-cloud_16",
+    "color": "blue"
+  },
+  "Bill Pay Success": {
+    "name": "icon-pen_16",
+    "color": "green"
+  },
+  "Bill Pay Fail": {
+    "name": "icon-pen_16",
+    "color": "red"
+  },
+  "Payment": {
+    "name": "icon-pen_16",
+    "color": "blue"
+  },
+  "Payment Paid": {
+    "name": "icon-check-circle_16",
+    "color": "green"
+  },
+  "Payment Notify": {
+    "name": "icon-pen_16",
+    "color": "red"
+  },
+  "Attendance": {
+    "name": "icon-calendar-month_16",
+    "color": "yellow"
+  },
+  "WebexInquiry": {
+    "name": "icon-webex-teams_16",
+    "color": "blue"
+  },
+  "WebexInquiryCompleted": {
+    "name": "icon-webex-teams_16",
+    "color": "yellow"
+  },
+  "WebexInquiryAnswered": {
+    "name": "icon-webex-teams_16",
+    "color": "green"
+  },
+  "Status Change": {
+    "name": "icon-pen_16",
+    "color": "red"
+  },
+  "Notes": {
+    "name": "icon-pen_16",
+    "color": "yellow"
+  },
+  "Reported Spam": {
+    "name": "icon-participant-blocked_14",
+    "color": "red"
+  },
+  "email-sad": {
+    "name": "icon-emoticon-sad_24",
+    "color": "red"
+  },
+  "email-happy": {
+    "name": "icon-emoticons_16",
+    "color": "green"
+  },
+  "email-neutral": {
+    "name": "icon-emoticon-passive_24",
+    "color": "yellow"
+  },
+  "email-template": {
+    "name": "icon-email-active_16",
+    "color": "yellow"
+  },
+  "survey-sad": {
+    "name": "icon-emoticon-sad_24",
+    "color": "red"
+  },
+  "survey-happy": {
+    "name": "icon-emoticons_16",
+    "color": "green"
+  },
+  "survey-neutral": {
+    "name": "icon-emoticon-passive_24",
+    "color": "yellow"
+  },
+  "outage-alert": {
+    "name": "icon-alert_16",
+    "color": "yellow"
+  },
+  "outage-active": {
+    "name": "icon-alert_16",
+    "color": "red"
+  },
+  "outage-fixed": {
+    "name": "icon-alert_16",
+    "color": "blue"
+  },
+  "outage-agent": {
+    "name": "icon-angellist_16",
+    "color": "green"
+  },
+  "analyze": {
+    "name": "icon-analysis_16",
+    "color": "pink"
+  },
+  "Test 5": {
+    "name": "icon-apps_16",
+    "color": "cobalt"
+  },
+  "QueueCallHappy": {
+    "name": "icon-emoticons_16",
+    "color": "cobalt"
+  },
+  "QueueCallMad": {
+    "name": "icon-emoticon-sad_24",
+    "color": "red"
+  },
+  "QueueCallNeutral": {
+    "name": "icon-emoticon-passive_24",
+    "color": "yellow"
+  },
+  "AgentNotesHappy": {
+    "name": "icon-emoticons_16",
+    "color": "cobalt"
+  },
+  "AgentNotesSad": {
+    "name": "icon-emoticon-sad_24",
+    "color": "red"
+  },
+  "AgentNotesNeutral": {
+    "name": "icon-emoticon-passive_24",
+    "color": "yellow"
+  },
+  "Agent-Notes Happy Customer": {
+    "name": "icon-emoticons_16",
+    "color": "cobalt"
+  },
+  "Agent-Notes Sad Customer": {
+    "name": "icon-emoticon-sad_24",
+    "color": "red"
+  },
+  "Agent-Notes Customer": {
+    "name": "icon-emoticon-passive_24",
+    "color": "yellow"
+  },
+  "LastMinuteDeals": {
+    "name": "icon-add-question_16",
+    "color": "yellow"
+  },
+  "Vacations": {
+    "name": "icon-add-question_16",
+    "color": "blue"
+  },
+  "AirMiles": {
+    "name": "icon-pto_16",
+    "color": "yellow"
+  },
+  "Immediate Departure": {
+    "name": "icon-pto_16",
+    "color": "blue"
+  },
+  "Cruise": {
+    "name": "icon-blur_12",
+    "color": "blue"
+  },
+  "AlternativeFlight": {
+    "name": "icon-pto_16",
+    "color": "red"
+  },
+  "RebookedFlight": {
+    "name": "icon-pto_16",
+    "color": "green"
+  },
+  "RandomWeb": {
+    "name": "icon-language_16",
+    "color": "yellow"
+  },
+  "IdentifiedWeb": {
+    "name": "icon-language_16",
+    "color": "green"
+  },
+  "Barry Test 5": {
+    "name": "icon-bitmoji-connect_16",
+    "color": "orange"
+  },
+  "passwordChange": {
+    "name": "icon-private-circle_16",
+    "color": "yellow"
+  },
+  "passwordChange-pass": {
+    "name": "icon-private-circle_16",
+    "color": "green"
+  },
+  "passwordChange-fail": {
+    "name": "icon-private-circle_16",
+    "color": "red"
+  },
+  "Queue-Record": {
+    "name": "icon-record_16",
+    "color": "green"
+  },
+  "Queue-NoRecord": {
+    "name": "icon-record_16",
+    "color": "yellow"
+  },
+  "Serviced By Agent": {
+    "name": "icon-headset_16",
+    "color": "green"
+  },
+  "Used Self Service": {
+    "name": "icon-bot-customer-assistant_16",
+    "color": "orange"
+  },
+  "Answered Quickly": {
+    "name": "icon-emoticons_16",
+    "color": "cobalt"
+  },
+  "Waited In Queue Too Long": {
+    "name": "icon-emoticon-sad_24",
+    "color": "red"
+  },
+  "Acceptable Queue Wait-time": {
+    "name": "icon-emoticon-passive_24",
+    "color": "yellow"
+  },
+  "Abandoned While Waiting": {
+    "name": "icon-emoticon-sad_24",
+    "color": "red"
+  },
+  "DUO Verified": {
+    "name": "icon-private-circle_16",
+    "color": "green"
+  },
+  "DUO Authentication Failed": {
+    "name": "icon-private-circle_16",
+    "color": "red"
+  },
+  "Add Option": {
+    "name": "icon-add-option_16",
+    "color": "green"
+  },
+  "Upgrade": {
+    "name": "icon-upgrade_20",
+    "color": "green"
+  },
+  "Instant-Video": {
+    "name": "icon-telepresence_16",
+    "color": "yellow"
+  },
+  "Deflection": {
+    "name": "icon-forward-message_16",
+    "color": "yellow"
+  },
+  "Voice_Mail": {
+    "name": "icon-new-voicemail_20",
+    "color": "blue"
+  },
+  "Change Address": {
+    "name": "icon-contact-card_16",
+    "color": "blue"
+  },
+  "Form Filled": {
+    "name": "icon-pen_16",
+    "color": "green"
+  },
+  "Information Given": {
+    "name": "icon-info_16",
+    "color": "purple"
+  },
+  "Pages Visited": {
+    "name": "icon-open-pages_16",
+    "color": "blue"
+  },
+  "Information Ready": {
+    "name": "icon-report_16",
+    "color": "gold"
+  },
+  "Chat Website": {
+    "name": "icon-language_16",
+    "color": "green"
+  },
+  "Announcement": {
+    "name": "icon-announcement_16",
+    "color": "purple"
+  },
+  "audioCall": {
+    "name": "icon-audio-call_16",
+    "color": "green"
+  },
+  "audioCallFail": {
+    "name": "icon-audio-call_16",
+    "color": "red"
+  },
+  "confirmAppointment": {
+    "name": "icon-check-circle_16",
+    "color": "gold"
+  },
+  "cancelAppointment": {
+    "name": "icon-check-circle-active_16",
+    "color": "red"
+  },
+  "changeAppointment": {
+    "name": "icon-check-refresh_16",
+    "color": "purple"
+  },
+  "salesforce": {
+    "name": "icon-cloud_16",
+    "color": "blue"
+  },
+  "patient": {
+    "name": "icon-accessibility_16",
+    "color": "blue"
+  },
+  "thumbsDown": {
+    "name": "icon-dislike_16",
+    "color": "blue"
+  },
+  "thumbsUp": {
+    "name": "icon-like_16",
+    "color": "yellow"
+  }
+}

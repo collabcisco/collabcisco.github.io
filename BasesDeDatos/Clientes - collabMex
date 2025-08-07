@@ -1,0 +1,58 @@
+Clientes - collabMex
+
+[
+  {
+    "name": "Veronica Diaz",
+    "email": "vdiazrod@cisco.com",
+    "number": "525544491355",
+    "customerID": "C01",
+    "zip": "72000",
+    "whatsapp": "5215544491355",
+    "id": "1"
+  },
+  {
+    "name": "Jacob Toala",
+    "email": "jtoala@cisco.com",
+    "number": "525579409869",
+    "customerID": "C02",
+    "zip": "05120",
+    "whatsapp": "5215579409869",
+    "id": "2"
+  },
+  {
+    "name": "Andres Corral",
+    "email": "ancorral@cisco.com",
+    "number": "525545941928",
+    "customerID": "C03",
+    "zip": "05120",
+    "whatsapp": "5215545941928",
+    "id": "3"
+  },
+  {
+    "name": "Luz Morfin",
+    "email": "mmorfink@cisco.com",
+    "number": "525651178030",
+    "customerID": "C04",
+    "zip": "05120",
+    "whatsapp": "5215651178030",
+    "id": "4"
+  },
+  {
+    "name": "Jesus Gutierrez",
+    "email": "jesuguti@cisco.com",
+    "number": "525551743794",
+    "customerID": "C05",
+    "zip": "05120",
+    "whatsapp": "5215551743794",
+    "id": "5"
+  },
+  {
+    "name": "Jorge Salgado",
+    "email": "jorgsalg@cisco.com",
+    "number": "525579293549",
+    "customerID": "C06",
+    "zip": "05120",
+    "whatsapp": "5215579293549",
+    "id": "6"
+  }
+]

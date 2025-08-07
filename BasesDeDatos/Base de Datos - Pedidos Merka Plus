@@ -1,0 +1,58 @@
+Base de Datos - Pedidos Merka Plus
+
+[
+  {
+    "orderId": "MERK1",
+    "customerName": "Veronica Diaz",
+    "items": "Audífonos inalámbricos ZenAir",
+    "costo": 799,
+    "status": "received",
+    "customerID": "C01",
+    "id": "1"
+  },
+  {
+    "orderId": "MERK2",
+    "customerName": "Jacob Toala",
+    "items": "Bocina portátil SoundMini, Mochila escolar NeoStyle",
+    "costo": 1048,
+    "status": "preparing",
+    "customerID": "C02",
+    "id": "2"
+  },
+  {
+    "orderId": "MERK3",
+    "customerName": "Andres Corral",
+    "items": "Licuadora PowerMix 500W, Celular NovaX Pro 128GB",
+    "costo": 6598,
+    "status": "received",
+    "customerID": "C03",
+    "id": "3"
+  },
+  {
+    "orderId": "MERK4",
+    "customerName": "Luz Morfin",
+    "items": "Tenis Urban Run Mujer",
+    "costo": 699,
+    "status": "received",
+    "customerID": "C04",
+    "id": "4"
+  },
+  {
+    "orderId": "MERK5",
+    "customerName": "Jesus Gutierrez",
+    "items": "Juego de sábanas Doble Confort, Camisa casual Merka Hombre",
+    "costo": 1298,
+    "status": "shipped",
+    "customerID": "C05",
+    "id": "5"
+  },
+  {
+    "orderId": "MERK6",
+    "customerName": "Jorge Salgado",
+    "items": "Cafetera Aroma Express",
+    "costo": 649,
+    "status": "preparing",
+    "customerID": "C06",
+    "id": "6"
+  }
+]

@@ -287,50 +287,10 @@
 <script>
   // ¡¡¡IMPORTANTE!!! REEMPLAZA ESTA URL CON LA TUYA DE MOCKAPI.IO
   const MOCKAPI_URL = 'https://686f1c1891e85fac429fcd60.mockapi.io/pedidos'; // Ejemplo: 'https://66a2f7c09673f37d7a469792.mockapi.io/api/v1/orders'
-  const WEBHOOK_URL = 'https://hooks.us.webexconnect.io/events/QW1I70QW3Y'; // Tu URL de Webhook
 
   const receivedColumn = document.getElementById('received-column');
   const preparingColumn = document.getElementById('preparing-column');
   const shippedColumn = document.getElementById('shipped-column');
-
-  /**
-   * Envía una solicitud POST al Webhook con el ID de pedido y el estado.
-   * @param {string} orderId - El ID del pedido (el que se muestra al usuario, e.g., "PEDIDO_XYZ_123").
-   * @param {string} status - El nuevo estado del pedido (ej. "preparando envio", "enviado").
-   */
-  async function sendWebhookUpdate(orderId, status) {
-      if (!orderId) {
-          console.error('Error: El ID de pedido para el Webhook no está definido.');
-          return;
-      }
-
-      const payload = {
-          orderId: orderId,
-          status: status
-      };
-
-      try {
-          const response = await fetch(WEBHOOK_URL, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(payload)
-          });
-
-          if (response.ok) {
-              console.log(`Webhook enviado exitosamente para el pedido ${orderId} con estado: ${status}.`);
-              // alert(`Estado del pedido ${orderId} actualizado a "${status}" exitosamente vía Webhook.`); // Puedes descomentar esto si quieres una alerta
-          } else {
-              const errorText = await response.text();
-              console.error(`Error al enviar el Webhook para el pedido ${orderId}: ${response.status} ${response.statusText} - ${errorText}`);
-              alert(`Error al enviar el Webhook para el pedido ${orderId}. Código: ${response.status}`);
-          }
-      } catch (error) {
-          console.error(`Error de red al enviar el Webhook para el pedido ${orderId}:`, error);
-          alert(`Error de conexión al enviar el Webhook para el pedido ${orderId}.`);
-      }
-  }
 
   // Función para crear una tarjeta de pedido HTML
   function createOrderCard(order) {
@@ -387,13 +347,12 @@
       ${buttonHtml}
     `;
 
-    // Añadir el event listener al botón si existe y no está deshabilitado
+    // Añadir el event listener al botón si existe
     const button = card.querySelector('button:not([disabled])');
     if (button) {
       button.addEventListener('click', () => {
         const newStatus = button.dataset.nextStatus;
-        // Pasa tanto el ID de MockAPI (order.id) como el ID de negocio (order.orderId)
-        updateOrderStatus(order.id, order.orderId, newStatus);
+        updateOrderStatus(order.id, newStatus);
       });
     }
 
@@ -434,10 +393,10 @@
     }
   }
 
-  // Función para actualizar el estado de un pedido en MockAPI.io y enviar al Webhook
-  async function updateOrderStatus(mockApiOrderId, businessOrderId, newStatus) {
+  // Función para actualizar el estado de un pedido en MockAPI.io
+  async function updateOrderStatus(orderId, newStatus) {
     try {
-      const response = await fetch(`${MOCKAPI_URL}/${mockApiOrderId}`, {
+      const response = await fetch(`${MOCKAPI_URL}/${orderId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -449,24 +408,10 @@
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      console.log(`Pedido ${mockApiOrderId} actualizado a ${newStatus} en MockAPI.`);
-
-      // Determinar el estado legible para el Webhook
-      let webhookStatus;
-      if (newStatus === 'preparing') {
-        webhookStatus = 'preparing';
-      } else if (newStatus === 'shipped') {
-        webhookStatus = 'shipped';
-      }
-
-      // Llamar al Webhook después de la actualización exitosa en MockAPI
-      if (webhookStatus) {
-        await sendWebhookUpdate(businessOrderId, webhookStatus);
-      }
-
+      console.log(`Pedido ${orderId} actualizado a ${newStatus}`);
       fetchOrders(); // Volver a cargar los pedidos para reflejar el cambio
     } catch (error) {
-      console.error('Error al actualizar el estado del pedido o enviar webhook:', error);
+      console.error('Error al actualizar el estado del pedido:', error);
       // Podrías mostrar un mensaje de error en la UI
     }
   }

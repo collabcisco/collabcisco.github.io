@@ -1,0 +1,69 @@
+Nuevo Pedido
+{
+"id": "$(transID)",
+"specversion": "1.0",
+"type": "Online",
+"source": "Website",
+"identity": "$(n2.aiAgent.telefono)",
+"identitytype": "temporaryId",
+"datacontenttype": "application/json",
+"data": {
+    "ID Pedido": "$(pedido)",
+    "Productos": "$(n2.aiAgent.productos)",
+    "Costo": "$(n2.aiAgent.costo) MXN",
+    "Estado": "Recibido",
+"uiData": {
+"title": "Pedidos",
+"iconType": "confirmAppointment",
+"subTitle": "Nuevo Pedido",
+"filterTags":["Nuevo Pedido"]
+}
+}
+}
+
+Preparando Envio
+{
+"id": "$(transID)",
+"specversion": "1.0",
+"type": "Online",
+"source": "Website",
+"identity": "$(n6.number)",
+"identitytype": "temporaryId",
+"datacontenttype": "application/json",
+"data": {
+    "ID Pedido": "$(n2.inboundWebhook.orderId)",
+    "Productos": "$(n5.items)",
+    "Costo": "$(n5.costo) MXN",
+    "Estado": "Preparando Envio",
+"uiData": {
+"title": "Pedidos",
+"iconType": "In Progress",
+"subTitle": "Preparando Pedido",
+"filterTags":["Preparando Pedido"]
+}
+}
+}
+
+
+Enviado
+{
+"id": "$(transID)",
+"specversion": "1.0",
+"type": "Online",
+"source": "Website",
+"identity": "$(n6.number)",
+"identitytype": "temporaryId",
+"datacontenttype": "application/json",
+"data": {
+    "ID Pedido": "$(n2.inboundWebhook.orderId)",
+    "Productos": "$(n5.items)",
+    "Costo": "$(n5.costo) MXN",
+    "Estado": "Pedido Enviado",
+"uiData": {
+"title": "Pedidos",
+"iconType": "Completed",
+"subTitle": "Pedido Enviado",
+"filterTags":["Pedido Enviado"]
+}
+}
+}
