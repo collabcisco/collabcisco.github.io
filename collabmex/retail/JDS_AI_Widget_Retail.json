@@ -1,8 +1,8 @@
 {
   "agent": {
     "version": "0.1.0",
-    "appTitle": "Webex Contact Center",
-    "logo": "https://collabcisco.github.io/demo/scitum/logo.png",
+    "appTitle": "Webex Contact Center - Retail",
+    "logo": "https://collabcisco.github.io/collabmex/retail/logo.jpg",
     "stopNavigateOnAcceptTask": false,
     "dragDropEnabled": true,
     "notificationTimer": 8,
@@ -338,8 +338,8 @@
         },
         {
           "nav": {
-            "label": "Tickets",
-            "icon": "https://collabcisco.github.io/demo/scitum/logo.png",
+            "label": "Clientes",
+            "icon": "https://collabcisco.github.io/collabmex/intro/iconcustomer.png",
             "iconType": "other",
             "navigateTo": "clientes",
             "align": "top"
@@ -353,10 +353,10 @@
                 "width": 5,
                 "height": 13,
                 "attributes": {
-                  "src": "https://collabcisco.github.io/demo/scitum/Tickets.html"
+                  "src": "https://collabcisco.github.io/collabmex/retail/consultarpedidos.html"
                 },
                   "wrapper": {
-                                    "title": "Tickets",
+                                    "title": "Clientes",
                                     "maximizeAreaName": "app-maximize-area"
                                 }
               }
@@ -370,43 +370,7 @@
             }
           },
           "visibility": "PEDIDOSWXCC"
-        },
-
-        {
-          "nav": {
-            "label": "Calculadora",
-            "icon": "https://cdn.glitch.global/b72ec31b-4b15-4293-8d58-c1e1389586e7/calculator.png?v=1739997920566",
-            "iconType": "other",
-            "navigateTo": "calculadora",
-            "align": "top"
-          },
-          "page": {
-            "id": "mycalculator",
-            "useFlexLayout": true,
-            "widgets": {
-              "comp1": {
-                "comp": "agentx-wc-iframe",
-                "width": 5,
-                "height": 15,
-                "attributes": {
-                  "src": "https://www.farmaciasguadalajara.com/"
-                },
-                  "wrapper": {
-                                    "title": "Productos",
-                                    "maximizeAreaName": "app-maximize-area"
-                                }
-              }
-            },
-            "layout": {
-              "areas": [["comp1"]],
-              "size": {
-                "cols": [1],
-                "rows": [1]
-              }
-            }
-          },
-          "visibility": "CALCULADORAWXCC"
-        }        
+        }   
 
       ]
     }
