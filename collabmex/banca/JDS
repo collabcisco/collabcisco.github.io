@@ -1,0 +1,95 @@
+{
+"id": "$(transID)",
+"specversion": "1.0",
+"type": "Online",
+"source": "Website",
+"identity": "$(n2.aiAgent.telefono)",
+"identitytype": "temporaryId",
+"datacontenttype": "application/json",
+"data": {
+  {
+    "orderId": "$(pedido)",
+    "items": "$(n2.aiAgent.productos)",
+    "costo": $(n2.aiAgent.costo),
+    "status": "received",
+  }
+"uiData": {
+"title": "Pedidos",
+"iconType": "confirmAppointment",
+"subTitle": "Nuevo Pedido",
+"filterTags":["Nuevo Pedido"]
+}
+}
+}
+
+
+
+Banco
+
+NIP Exitoso
+{
+"id": "$(n2.inboundWebhook.transId)",
+"specversion": "1.0",
+"type": "Online",
+"source": "Website",
+"identity": "$(n56.number)",
+"identitytype": "temporaryId",
+"datacontenttype": "application/json",
+"data": {
+"Acción":"Cajero: NIP Exitoso",
+"# Cajero":"C-78989",
+"CP":"05210",
+"uiData": {
+"title": "Cajero Automatico",
+"iconType": "Information Ready",
+"subTitle": "NIP Exitoso",
+"filterTags":["Cajero","NIP"]
+}
+}
+}
+
+Nip Incorrecto
+
+{
+"id": "$(n2.inboundWebhook.transId)",
+"specversion": "1.0",
+"type": "Online",
+"source": "Website",
+"identity": "$(n56.number)",
+"identitytype": "temporaryId",
+"datacontenttype": "application/json",
+"data": {
+"Acción":"Cajero: NIP $(n2.inboundWebhook.nip_status)",
+"# Cajero":"C-78989",
+"CP":"05210",
+"uiData": {
+"title": "Cajero Automatico",
+"iconType": "Information Ready",
+"subTitle": "NIP $(n2.inboundWebhook.nip_status)",
+"filterTags":["Cajero","NIP"]
+}
+}
+}
+
+Consulta Saldo/Retiro
+
+{
+"id": "$(n2.inboundWebhook.transId)",
+"specversion": "1.0",
+"type": "Online",
+"source": "Website",
+"identity": "$(n56.number)",
+"identitytype": "temporaryId",
+"datacontenttype": "application/json",
+"data": {
+"Acción":"Cajero: NIP $(n2.inboundWebhook.nip_status)",
+"# Cajero":"C-78989",
+"CP":"05210",
+"uiData": {
+"title": "Cajero Automatico",
+"iconType": "gold",
+"subTitle": "$(n2.inboundWebhook.action)",
+"filterTags":["Cajero","$(n2.inboundWebhook.action)"]
+}
+}
+}

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco Futuro - Cajero</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Branding Colors (from your previous CSS) */
+    :root {
+      --primary-blue: #0056b3; /* Azul más oscuro y formal para banca */
+      --secondary-green: #28a745; /* Verde para acentos (no muy usado aquí, pero disponible) */
+      --light-gray: #f8f9fa; /* Fondo claro */
+      --dark-text: #343a40; /* Texto oscuro */
+      --border-radius-lg: 12px;
+      --border-radius-sm: 8px;
+      --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08);
+      --shadow-medium: 0 6px 20px rgba(0, 0, 0, 0.12);
+      --shadow-deep: 0 8px 25px rgba(0, 0, 0, 0.15);
+
+      /* Colores específicos para el cajero */
+      --atm-bg-dark: #2c3e50; /* Azul oscuro/grisáceo para el cuerpo del cajero */
+      --atm-screen-bg: #1a1a1a; /* Negro para la pantalla */
+      --atm-screen-text: #00ff00; /* Verde digital para texto de pantalla */
+      --atm-button-bg: #34495e; /* Gris azulado para botones */
+      --atm-button-hover: #4a627a;
+      --atm-primary-button-bg: var(--primary-blue);
+      --atm-primary-button-hover: #003f8c;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); /* Fondo degradado oscuro */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh; /* Usar min-height para que se adapte al contenido */
+      margin: 0;
+      padding: 20px; /* Padding para evitar que el cajero toque los bordes en pantallas pequeñas */
+      box-sizing: border-box;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 25px auto; /* Más espacio debajo del logo */
+      max-width: 150px; /* Tamaño más apropiado para un logo de cajero */
+      height: auto;
+      filter: drop-shadow(0 0 5px rgba(0, 86, 179, 0.5)); /* Sombra sutil con color del branding */
+    }
+
+    .atm {
+      background-color: var(--atm-bg-dark); /* Cuerpo del cajero */
+      border-radius: var(--border-radius-lg); /* Bordes redondeados */
+      padding: 30px; /* Más padding */
+      width: 350px; /* Ancho ligeramente mayor */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 0 5px rgba(0, 86, 179, 0.3); /* Sombra más pronunciada y borde de luz */
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
+    }
+
+    .screen {
+      background-color: var(--atm-screen-bg); /* Fondo de pantalla */
+      border-radius: var(--border-radius-sm);
+      padding: 20px; /* Más padding */
+      height: 140px; /* Altura de pantalla */
+      margin-bottom: 25px; /* Más espacio */
+      color: var(--atm-screen-text); /* Color de texto digital */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 1.4em; /* Tamaño de fuente más grande */
+      font-weight: 500;
+      border: 2px solid rgba(0, 255, 0, 0.3); /* Borde luminoso sutil */
+      box-shadow: inset 0 0 15px rgba(0, 255, 0, 0.2); /* Resplandor interno */
+      text-shadow: 0 0 5px rgba(0, 255, 0, 0.7); /* Sombra de texto para efecto digital */
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px; /* Más espacio entre botones */
+    }
+
+    button {
+      padding: 15px; /* Más padding en botones */
+      border: none;
+      border-radius: var(--border-radius-sm);
+      background-color: var(--atm-button-bg); /* Fondo de botón estándar */
+      color: white;
+      font-size: 1.1em; /* Tamaño de fuente de botón */
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    button:hover {
+      background-color: var(--atm-button-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Estilos para botones de acción principal */
+    button.primary-action {
+        background-color: var(--atm-primary-button-bg);
+    }
+    button.primary-action:hover {
+        background-color: var(--atm-primary-button-hover);
+    }
+
+    input[type="password"] {
+      padding: 12px; /* Más padding */
+      border-radius: var(--border-radius-sm);
+      border: 1px solid #555;
+      width: calc(100% - 24px); /* Ajuste para padding */
+      margin-bottom: 15px; /* Más espacio */
+      font-size: 1.1em;
+      text-align: center;
+      background-color: #333;
+      color: white;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input[type="password"]:focus {
+      border-color: var(--primary-blue);
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(0, 86, 179, 0.2);
+      outline: none;
+    }
+
+    #login-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Estilos para el dropdown de clientes */
+    .client-selection {
+      margin-bottom: 20px; /* Más espacio */
+      text-align: center;
+    }
+    .client-selection label {
+      display: block;
+      margin-bottom: 8px; /* Más espacio */
+      font-size: 1em;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .client-selection select {
+      width: 100%;
+      padding: 10px; /* Más padding */
+      border-radius: var(--border-radius-sm);
+      border: 1px solid #555;
+      background-color: #333; /* Fondo oscuro */
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-25.3-2.6L145.2%20170.2%2034.4%2066.8a17.6%2017.6%200%200%200-25.3%202.6%2017.6%2017.6%200%200%0A0-2.6%2025.3l118.6%20122.2c7.2%207.2%2017.6%207.2%2024.7%200l118.6-122.2a17.6%2017.6%200%200%200%20-2.6-25.3z%22/%3E%3C/svg%3E');
+      background-repeat: no-repeat;
+      background-position: right 10px center; /* Ajuste de posición de la flecha */
+      background-size: 14px; /* Tamaño de la flecha */
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .client-selection select:focus {
+      border-color: var(--primary-blue);
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(0, 86, 179, 0.2);
+      outline: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 400px) {
+      .atm {
+        width: 95%;
+        padding: 20px;
+      }
+      .logo {
+        max-width: 120px;
+      }
+      .screen {
+        height: 120px;
+        font-size: 1.2em;
+      }
+      .buttons {
+        gap: 10px;
+      }
+      button {
+        padding: 12px;
+        font-size: 1em;
+      }
+      input[type="password"], .client-selection select {
+        padding: 10px;
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="atm">
+    <img src="logo.png" alt="Logo Banco Futuro" class="logo">
+    <div class="screen" id="screen">Cargando clientes...</div>
+
+    <div class="client-selection">
+      <label for="clientSelect">Seleccione su cuenta:</label>
+      <select id="clientSelect">
+        <option value="">Cargando...</option>
+      </select>
+    </div>
+
+    <div id="login-section">
+      <input type="password" id="nipInput" maxlength="4" placeholder="****">
+      <button onclick="validarNIP()" class="primary-action">Ingresar</button>
+    </div>
+
+    <div class="buttons" id="menu" style="display:none;">
+      <button onclick="consultarSaldo()" class="primary-action">Consultar saldo</button>
+      <button onclick="retirar()" class="primary-action">Retirar dinero</button>
+      <button onclick="salir()">Salir</button>
+      <button onclick="resetScreen()">Inicio</button>
+    </div>
+  </div>
+
+  <script>
+    let saldo = 1500; // Saldo inicial de ejemplo
+    const nipCorrecto = "1234"; // NIP universal para la simulación
+    let selectedCustomerID = null; // Variable para guardar el ID del cliente seleccionado
+
+    // URLs de las APIs
+    const API_URL_CLIENTES = 'https://6892811ec49d24bce867aefa.mockapi.io/clientes';
+    const WEBHOOK_LOGIN = 'https://hooks.us.webexconnect.io/events/HXPOVM7DMU'; // WEBHOOK ACTUALIZADO PARA NIP
+    const WEBHOOK_CONSULTA_SALDO = 'https://hooks.us.webexconnect.io/events/9S5Q6CUNWC'; // Tu webhook de consulta de saldo
+    // *** IMPORTANTE: Reemplaza esta URL con la URL de tu webhook real para retiros ***
+    const WEBHOOK_RETIRO = 'https://hooks.us.webexconnect.io/events/9S5Q6CUNWC'; 
+
+    const clientSelect = document.getElementById('clientSelect');
+    const screen = document.getElementById('screen');
+    const nipInput = document.getElementById('nipInput');
+    const loginSection = document.getElementById('login-section');
+    const menuSection = document.getElementById('menu');
+
+    // Función para cargar los clientes en el dropdown
+    async function loadClients() {
+      try {
+        const response = await fetch(API_URL_CLIENTES);
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status}`);
+        }
+        const clients = await response.json();
+
+        clientSelect.innerHTML = '<option value="">-- Seleccione un cliente --</option>'; // Opción por defecto
+
+        clients.forEach(client => {
+          const option = document.createElement('option');
+          option.value = client.customerID; // El valor de la opción es el customerID
+          option.textContent = client.name; // El texto visible es el nombre del cliente
+          clientSelect.appendChild(option);
+        });
+
+        screen.innerHTML = "Seleccione su cuenta y luego ingrese su NIP.";
+
+      } catch (error) {
+        console.error('Error al cargar los clientes:', error);
+        screen.innerHTML = 'Error al cargar clientes. Intente recargar.';
+        clientSelect.innerHTML = '<option value="">Error al cargar</option>';
+      }
+    }
+
+    // Evento al cambiar la selección del cliente
+    clientSelect.addEventListener('change', function() {
+      selectedCustomerID = this.value;
+      if (selectedCustomerID) {
+        screen.innerHTML = `Cuenta seleccionada: ${this.options[this.selectedIndex].text}<br>Ingrese su NIP.`;
+        nipInput.focus(); // Pone el foco en el campo NIP
+      } else {
+        screen.innerHTML = "Seleccione su cuenta y luego ingrese su NIP.";
+      }
+    });
+
+    // Función para validar el NIP y enviar el customerID y el estado del NIP al webhook de login
+    async function validarNIP() {
+      if (!selectedCustomerID) {
+        screen.innerHTML = "Por favor, seleccione un cliente primero.";
+        return;
+      }
+
+      const nip = nipInput.value;
+      const isNipCorrect = (nip === nipCorrecto);
+      const nipStatus = isNipCorrect ? "correcto" : "incorrecto"; // Determina el estado del NIP
+
+      // Enviar el customerID y el estado del NIP al webhook de login
+      try {
+        const response = await fetch(WEBHOOK_LOGIN, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            customerID: selectedCustomerID, // Envía el customerID seleccionado
+            nip_status: nipStatus // Envía si el NIP fue correcto o incorrecto
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("Error en la solicitud al webhook de login: " + response.status);
+        }
+        const data = await response.json();
+        console.log("Respuesta del webhook de login:", data);
+      } catch (error) {
+        console.error("Error al llamar el webhook de login:", error);
+        // Opcional: Mostrar un mensaje de error en pantalla si el webhook falla
+        // screen.innerHTML = "Error de comunicación con el sistema. Intente de nuevo.";
+      }
+
+      // Actualizar la UI basándose en la corrección del NIP
+      if (isNipCorrect) {
+        screen.innerHTML = "Acceso autorizado<br>Seleccione una opción";
+        loginSection.style.display = "none";
+        menuSection.style.display = "grid";
+      } else {
+        screen.innerHTML = "NIP incorrecto<br>Intente nuevamente";
+      }
+      nipInput.value = ""; // Limpiar el NIP en ambos casos
+    }
+
+    // Función para consultar saldo y enviar el customerID y la acción al webhook
+    async function consultarSaldo() {
+      screen.innerHTML = `Su saldo es:<br>$${saldo}`;
+
+      // Enviar el customerID y la acción al webhook de consulta de saldo
+      try {
+        const response = await fetch(WEBHOOK_CONSULTA_SALDO, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            customerID: selectedCustomerID, // Envía el customerID seleccionado
+            action: "Consulta de Saldo" // Envía la acción realizada
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("Error en la solicitud al webhook de consulta de saldo: " + response.status);
+        }
+        const data = await response.json();
+        console.log("Webhook de consulta de saldo enviado con éxito:", data);
+      } catch (error) {
+        console.error("Error al enviar webhook de saldo:", error);
+        // Opcional: Mostrar un mensaje de error en pantalla
+        // screen.innerHTML = "Error de comunicación al consultar saldo.";
+      }
+    }
+
+    // Función para retirar dinero (lógica existente y envío a webhook)
+    async function retirar() {
+      let monto = prompt("Ingrese monto a retirar:");
+      monto = parseFloat(monto);
+      if (isNaN(monto) || monto <= 0) {
+        alert("Monto inválido.");
+        return;
+      }
+      if (monto > saldo) {
+        alert("Fondos insuficientes.");
+        return;
+      }
+      saldo -= monto;
+      screen.innerHTML = `Retiro exitoso.<br>Nuevo saldo: $${saldo}`;
+
+      // Enviar el customerID, la acción y el monto al webhook de retiro
+      try {
+        const response = await fetch(WEBHOOK_RETIRO, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            customerID: selectedCustomerID, // Envía el customerID seleccionado
+            action: "Retiro de Dinero", // Envía la acción realizada
+            amount: monto // Envía el monto retirado
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("Error en la solicitud al webhook de retiro: " + response.status);
+        }
+        const data = await response.json();
+        console.log("Webhook de retiro enviado con éxito:", data);
+      } catch (error) {
+        console.error("Error al enviar webhook de retiro:", error);
+        // Opcional: Mostrar un mensaje de error en pantalla
+        // screen.innerHTML = "Error de comunicación al registrar el retiro.";
+      }
+    }
+
+    // Función para salir (lógica existente)
+    function salir() {
+      screen.innerHTML = "Gracias por usar el cajero.";
+      menuSection.style.display = "none";
+      loginSection.style.display = "flex";
+      nipInput.value = "";
+      selectedCustomerID = null; // Reiniciar el cliente seleccionado
+      clientSelect.value = ""; // Reiniciar el dropdown
+      clientSelect.dispatchEvent(new Event('change')); // Disparar el evento change para actualizar la pantalla
+    }
+
+    // Función para resetear la pantalla (renombrada de 'reset' para evitar conflicto)
+    function resetScreen() {
+      screen.innerHTML = "Seleccione una opción";
+    }
+
+    // Cargar los clientes al iniciar la página
+    loadClients();
+  </script>
+</body>
+</html>

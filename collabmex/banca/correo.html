@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado de Cuenta de Banco Futuro</title>
+    <style>
+        /* Reset CSS para compatibilidad de email */
+        body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; }
+
+        /* Estilos generales */
+        body {
+            font-family: 'Inter', sans-serif; /* Usar Inter si está disponible, sino una sans-serif genérica */
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* light-gray de tu branding */
+            color: #343a40; /* dark-text de tu branding */
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px; /* border-radius-lg */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* shadow-light */
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #0056b3; /* primary-blue */
+            padding: 20px 25px;
+            text-align: center; /* Centrar el texto "Banco Futuro" */
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        /* Eliminado: .header img {} */
+
+        .content {
+            padding: 30px 25px;
+            text-align: left; /* Alineado a la izquierda para mejor lectura */
+        }
+
+        .content h1 {
+            color: #0056b3; /* primary-blue */
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center; /* Título centrado */
+        }
+
+        .content p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .attachment-info {
+            background-color: #e0f7fa; /* Un tono claro para resaltar */
+            border: 1px solid #b3e5fc; /* Borde sutil */
+            padding: 20px;
+            margin: 25px auto;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: #0056b3; /* primary-blue */
+        }
+
+        .footer {
+            background-color: #343a40; /* dark-text */
+            color: #ffffff;
+            padding: 20px 25px;
+            text-align: center;
+            font-size: 12px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100% !important;
+                margin: 0 !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+            }
+            .content, .header, .footer {
+                padding: 15px !important;
+            }
+            .header {
+                font-size: 20px !important;
+            }
+            .content h1 {
+                font-size: 24px !important;
+            }
+            .attachment-info {
+                font-size: 16px !important;
+                padding: 15px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            Banco Futuro
+        </div>
+        <div class="content">
+            <h1>Tu Estado de Cuenta Mensual</h1>
+            <p>Estimado(a) $(n11.name),</p>
+            <p>Adjunto a este correo electrónico encontrarás tu estado de cuenta de Banco Futuro</strong>.</p>
+
+            <div class="attachment-info">
+                Por favor, revisa el archivo PDF adjunto a este mensaje.
+            </div>
+
+            <p>
+                Te invitamos a revisar detalladamente todos los movimientos de tu cuenta. Si tienes alguna duda o detectas alguna irregularidad, por favor, contáctanos a la brevedad posible.
+            </p>
+            <p>
+                Recuerda que Banco Futuro nunca te solicitará información confidencial como contraseñas o NIPs por correo electrónico. Protege siempre tus datos.
+            </p>
+            <p>
+                Para más detalles sobre tu cuenta o para acceder a otros servicios, visita nuestra banca en línea o contáctanos.
+            </p>
+          </div>
+        <div class="footer">
+            &copy; 2025 Banco Futuro. Todos los derechos reservados. | <a href="#">Aviso de Privacidad</a> | <a href="#">Términos y Condiciones</a>
+        </div>
+    </div>
+</body>
+</html>
