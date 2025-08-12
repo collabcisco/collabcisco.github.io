@@ -87,7 +87,7 @@ Consulta Saldo/Retiro
 "CP":"05210",
 "uiData": {
 "title": "Cajero Automatico",
-"iconType": "gold",
+"iconType": "Information Given",
 "subTitle": "$(n2.inboundWebhook.action)",
 "filterTags":["Cajero","$(n2.inboundWebhook.action)"]
 }

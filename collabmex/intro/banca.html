@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo Banca | Webex CC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --webex-blue: #005ede;
+      --webex-green: #06c8ae;
+      --webex-dark: #23272f;
+      --webex-gray-bg: #f6f9fb;
+      --webex-card: #fff;
+      --webex-header: #f7fafc;
+      --webex-link: #005ede;
+      --webex-link-hover: #06c8ae;
+      --webex-border: #e5eef7;
+      --webex-shadow: 0 4px 24px rgba(0,0,0,0.05);
+      --webex-radius: 18px;
+
+      /* Colores específicos del branding de Banco Futuro para consistencia */
+      --primary-bank-blue: #0056b3; /* Azul más oscuro y formal para banca */
+      --secondary-bank-green: #28a745; /* Verde para acentos */
+    }
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--webex-gray-bg);
+      margin: 0;
+      color: #23272f;
+    }
+    header {
+      background: var(--webex-header);
+      color: var(--primary-bank-blue); /* Usar azul del banco */
+      padding: 2.1rem 1rem 1.6rem 1rem;
+      text-align: center;
+      border-bottom: 2px solid var(--webex-border);
+    }
+    .logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--webex-shadow);
+      border: 2px solid var(--primary-bank-blue); /* Borde con color del banco */
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    h1 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--primary-bank-blue); /* Usar azul del banco */
+      margin-bottom: 0.3rem;
+      margin-top: 0.5rem;
+    }
+    .vertical-title {
+      font-size: 1.23rem;
+      font-weight: 600;
+      color: var(--secondary-bank-green); /* Usar verde del banco */
+      margin-bottom: 1.1rem;
+      letter-spacing: .01em;
+    }
+    main {
+      max-width: 720px;
+      margin: 2rem auto;
+      background: var(--webex-card);
+      border-radius: var(--webex-radius);
+      box-shadow: var(--webex-shadow);
+      padding: 2.5rem 2rem;
+      border: 1.5px solid var(--webex-border);
+    }
+    ol {
+      padding-left: 1.2em;
+      margin-bottom: 2.5rem;
+    }
+    li {
+      margin-bottom: 1.15rem;
+      font-size: 1.09rem;
+      line-height: 1.7;
+    }
+    li ul { /* Estilo para listas anidadas */
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      padding-left: 1.5em;
+    }
+    li ul li { /* Estilo para elementos de listas anidadas */
+      margin-bottom: 0.5rem;
+      font-size: 1em; /* Hereda el tamaño del padre o lo ajusta */
+      line-height: 1.5;
+    }
+    .note-text {
+      font-size: 0.9em;
+      margin-top: 0.5em;
+      color: #555;
+      display: block; /* Para que ocupe su propia línea */
+    }
+    .contact-description-img {
+      display: inline; /* Para que la imagen esté en línea con el texto */
+      vertical-align: middle; /* Alineación vertical */
+      margin: 0 5px; /* Pequeño margen a los lados para separar del texto */
+    }
+    .back-link {
+      color: var(--primary-bank-blue); /* Usar azul del banco */
+      text-decoration: underline;
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-block;
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+      transition: color .18s;
+    }
+    .back-link:hover {
+      color: var(--secondary-bank-green); /* Usar verde del banco */
+    }
+    /* Nuevo estilo para los elementos de contacto con íconos */
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px; /* Espacio entre el ícono y el texto */
+      flex-wrap: wrap; /* Permite que el contenido se ajuste si la línea es muy larga */
+    }
+    .contact-item svg {
+      flex-shrink: 0; /* Evita que el ícono se encoja */
+    }
+    .contact-item .inline-note {
+      font-size: 0.9em;
+      color: #555;
+    }
+    /* Estilos para el elemento details/summary */
+    details {
+      margin-bottom: 0.5rem;
+      border: 1px solid var(--webex-border);
+      border-radius: 5px;
+      padding: 0.5rem 1rem;
+      background-color: #fcfdff;
+    }
+    summary {
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--primary-bank-blue); /* Usar azul del banco */
+      padding: 0.5rem 0;
+      outline: none; /* Elimina el contorno al hacer clic */
+    }
+    summary:hover {
+      color: var(--secondary-bank-green); /* Usar verde del banco */
+    }
+    details ul {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding-left: 20px; /* Ajusta el sangrado de la lista dentro del details */
+    }
+    details p {
+      margin-top: 10px;
+      margin-bottom: 5px;
+      font-size: 0.95em;
+    }
+
+    @media (max-width: 600px) {
+      main { padding: 1.2rem 0.5rem; }
+      h1 { font-size: 1.2rem; }
+      .contact-item .inline-note {
+        white-space: normal; /* Asegura que la nota se rompa en varias líneas en pantallas pequeñas */
+        margin-left: 0; /* Elimina el margen en pantallas pequeñas si no hay espacio */
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Logo Banco Futuro">
+    </div>
+    <h1>🏦 Escenario: Banca</h1>
+    <div class="vertical-title">Pasos para la demostración de Banca</div>
+  </header>
+  <main>
+    <ol>
+      <li><b>Inicia sesión</b> como agente y supervisor en el portal: <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" style="color:var(--webex-link);">desktop.wxcc-us1.cisco.com</a>. Selecciona el equipo: <b>"Team-Banco"</b> y Gestiona las llamadas como: <b>"Desktop"</b> para utilizar WebRTC. Las credenciales se encuentran en <a href="index.html" target="_blank" style="color:var(--webex-link);">la página de inicio</a>.</li>
+      <li><b>Simula una interacción de cliente</b> a través de los siguientes medios:
+        <ul>
+          <li>
+            <div class="contact-item">
+              <!-- Ícono de Chat/Página Web -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="var(--primary-bank-blue)"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+              <b>Página Web (Chat):</b> <a href="https://collabcisco.github.io/collabmex/banca/index.html" target="_blank" style="color:var(--webex-link);">https://collabcisco.github.io/collabmex/banca/index.html</a>
+              <span class="inline-note">
+                <i>(Encontrarás el botón de chat en la parte inferior derecha de la página.)</i>
+              </span>
+            </div>
+          </li>
+          <li>
+            <div class="contact-item">
+              <!-- Ícono de Teléfono -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="var(--primary-bank-blue)"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.21-2.21a1 1 0 0 1 1.09-.27 11.41 11.41 0 0 0 3.57.92 1 1 0 0 1 1 .91v3.5a1 1 0 0 1-1 1A19 19 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 .91 1 11.41 11.41 0 0 0 .92 3.57 1 1 0 0 1-.27 1.09z"/></svg>
+              <b>Teléfono:</b> +52 55 9088 6970 (opción 3 - Banca)
+            </div>
+          </li>
+          <li>
+            <div class="contact-item">
+              <!-- Ícono de WhatsApp (verde) -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="var(--secondary-bank-green)"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.35 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm3.39 13.9a.74.74 0 0 1-1.05.04l-1.74-1.44a.74.74 0 0 0-.96-.06c-.6.37-1.28.6-1.99.6-1.59 0-2.88-1.29-2.88-2.88 0-1.04.55-1.92 1.39-2.45a.74.74 0 0 1 .96.06l1.74 1.44a.74.74 0 0 0 .96.06c.6-.37 1.28-.6 1.99-.6 1.59 0 2.88 1.29 2.88 2.88 0 1.04-.55 1.92-1.39 2.45z"/></svg>
+              <b>WhatsApp:</b> +1 408 676 4583 (collabmex → Banca)
+              <!-- Código QR de WhatsApp directamente al lado -->
+              <img src="qr-code.png" alt="QR Code" style="width: 70px; height: 70px;">
+            </div>
+          </li>
+          <li>
+            <div class="contact-item">
+              <!-- Ícono de Correo Electrónico -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="var(--primary-bank-blue)"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              <b>Email:</b> wxconnect.demo@gmail.com
+            </div>
+          </li>
+        </ul>
+        <span class="note-text"><i>Para estas interacciones, recuerda utilizar tu número de celular y correo electrónico de Cisco.</i></span>
+      </li>
+      <li>
+        <b>Muestra cómo el Agente de IA responde y automatiza tareas </b>(lo puedes hacer vía telefónica, WhatsApp y web chat):</b>
+        <ul>
+          <li>
+            <details>
+              <summary>Respuestas a preguntas frecuentes</summary>
+              <ul>
+                <li>¿Cómo puedo abrir una cuenta de ahorro/cheques?</li>
+                <li>¿Cuáles son los requisitos para solicitar un préstamo hipotecario/personal?</li>
+                <li>¿Cómo reporto una tarjeta de crédito/débito robada o extraviada?</li>
+                <li>¿Cómo puedo consultar mi saldo?</li>
+              </ul>
+              <p>Descarga el documento completo: <a href="https://collabcisco.github.io/collabmex/banca/FAQ-banca.docx" download style="color:var(--webex-link);">Descargar</a></p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Información de Productos y Servicios Bancarios</summary>
+              <ul>
+                <li><b>Cuentas:</b> Ahorro, Cheques, Nómina.</li>
+                <li><b>Créditos:</b> Hipotecarios, Personales, Automotrices.</li>
+                <li><b>Tarjetas:</b> Clásica, Oro, Platino, Black.</li>
+                <li><b>Inversiones:</b> Fondos de Inversión, Pagarés.</li>
+              </ul>
+              <p>Descarga el catálogo completo de productos: <a href="https://collabcisco.github.io/collabmex/banca/productos-banca.xlsx" download style="color:var(--webex-link);">Descargar</a></p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Envío de OTP (One-Time Password) por Correo/WhatsApp</summary>
+              <p>Demuestra cómo el AI Agent puede enviar un OTP para verificación de identidad o confirmación de transacciones. Puedes simularlo utilizando el cajero automático:</p>
+              <ul>
+                <li>Accede al <a href="simulador-cajero.html" target="_blank" style="color:var(--webex-link);">Simulador de Cajero Automático</a>.</li>
+                <li>Selecciona un cliente (ej. C01, C02).</li>
+                <li>Ingresa el NIP (<b>1234</b>) y observa cómo se envía el estado del NIP al webhook.</li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Envío de Estado de Cuenta por Correo</summary>
+              <p>Muestra cómo el AI Agent puede enviar el estado de cuenta mensual al correo electrónico del cliente.</p>
+              <ul>
+                <li>Simula una solicitud de estado de cuenta por parte del cliente.</li>
+                <li>El AI Agent confirmará el envío al correo registrado.</li>
+                <li>(Este paso no tiene una demo interactiva en esta página, solo se describe la funcionalidad.)</li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <b>Escala la interacción al Agente Humano y demuestra las tareas simplificadas:</b>
+        <ul>
+          <li>
+            <details>
+              <summary>Personalización de la pantalla del agente</summary>
+              <p>La interfaz del agente puede ser personalizada con el nombre y logo de la empresa para una experiencia de marca consistente.</p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Transcripción y resumen con AI Assistant</summary>
+              <p>Visualiza la transcripción de la interacción del AI Agent con el cliente y visualizar el resumen de la conversación con el AI Assistant.</p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Información del Cliente (CRM/Base de Datos)</summary>
+              <p>El agente tendrá la información completa del cliente, incluyendo sus tarjetas de crédito y créditos contratados. Esta información se toma de un CRM o base de datos de clientes.</p>
+              <ul>
+                <li>Accede al <a href="busqueda-clientes.html" target="_blank" style="color:var(--webex-link);">Portal de Búsqueda de Clientes</a>.</li>
+                <li>Busca un cliente por su ID (ej. <b>C01, C02, C03</b>).</li>
+                <li>Observa cómo se cargan sus datos personales, tarjetas y créditos.</li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Botones de control de llamada/interacción digitales</summary>
+              <ul>
+                <li>Funcionalidades de los botones de control de llamada:
+                  <ul>
+                    <li>Poner en espera</li>
+                    <li>Realizar conferencias</li>
+                    <li>Transferir llamadas</li>
+                    <li>Pausar la grabación</li>
+                  </ul>
+                </li>
+                <li>Para canales digitales, se incluyen botones de conferencia y transferencia.</li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Integración de sistemas y páginas web</summary>
+              <p>La interfaz del agente integra sistemas y páginas web relevantes, como el portal de búsqueda de clientes o el simulador de cajero, para una atención eficiente.</p>
+            </details>
+          </li>
+            <li>
+            <details>
+              <summary>Customer Journey del cliente y Notificaciones Proactivas</summary>
+              <ul>
+                <li>Visualiza el historial completo de interacciones del cliente a través de distintos canales y las actividades relacionadas con sus productos bancarios (solicitudes de crédito, reportes de tarjetas, etc.).</li>
+                <li>(Este paso no tiene una demo interactiva en esta página, solo se describe la funcionalidad.)</li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Correo electrónico de salida</summary>
+              <p>Envía correos electrónicos directamente desde la plataforma para una comunicación fluida con el cliente (ej. confirmación de trámites, envío de documentos).</p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Reportes de Desempeño de los Agentes</summary>
+              <p>El Agente podrá acceder al widget de APS (esta información es tomada del Analyzer) para visualizar los reportes de desempeño de los agentes</p>
+            </details>
+          </li>
+        </ul>
+      </li>
+      <li><b>Muestra la experiencia del Supervisor</b> y demuestra la visibilidad de la operación en tiempo real.</b>
+        <ul>
+          <li>
+            <details>
+              <summary>Dashboard Inicial</summary>
+              <p>Muestra en tiempo real las interacciones de los clientes en las distintas colas y el nivel de servicio.</p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Monitoreo de Agentes</summary>
+              <p>Monitorea actividades de los agentes. En las interacciones de voz podrás escuchar las conversaciones o hacer barge in y tambien escuchar las grabaciones. También podrás ver el customer journey del cliente.</p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Reportes de Desempeño de los Agentes </summary>
+              <p>El Supervisor podrá acceder al widget de APS (esta información es tomada del Analyzer) para visualizar los reportes de desempeño de los agentes</p>
+            </details>
+          </li>
+        </ul></li>
+      <li><b>Accede al panel de reportes</b> para mostrar cómo se visualiza la actividad y la eficiencia operativa.
+        <p>Accede a <a href="https://analyzer-v2.wxcc-us1.cisco.com/analyzer/home?ciClusterId=P0A1&orgId=a2dd2327-7083-4a0e-8fd8-8ccfdbaef9a8" target="_blank" style="color:var(--webex-link);">Analyzer</a> con tus credenciales de Supervisor</p></li>
+    </ol>
+    <a href="index.html" class="back-link">&larr; Volver a la página principal</a>
+  </main>
+</body>
+</html>
