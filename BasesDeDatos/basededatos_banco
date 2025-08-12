@@ -1,0 +1,109 @@
+[
+  {
+    "name": "Veronica Diaz",
+    "email": "vdiazrod@cisco.com",
+    "number": "+525544491355",
+    "accountname": "C05",
+    "product": "",
+    "zip": "72000",
+    "reserva": [
+      {
+        "hotel": "The Grand Mayan Vallarta",
+        "fecha_entrada": "2025-04-10",
+        "fecha_salida": "2025-04-20",
+        "huespedes": 2,
+        "numerodereserva": 673829
+      }
+    ],
+    "poliza": [
+      {
+        "numero": "P-879",
+        "tipo": "Seguro de Auto",
+        "Coberturas": "Responsabilidad Civil, Gastos Médicos, Robo Total, Asistencia Vial",
+        "Vencimiento": "2025-12-20"
+      }
+    ],
+    "OfficeDepotorden": [
+      {
+        "orden": "OD-7678",
+        "fechacompra": "2025-03-01",
+        "productos": [
+          {
+            "producto": "Mouse Inalámbrico Essential Perfect Choice",
+            "cantidad": 2,
+            "costo": 300
+          },
+          {
+            "producto": "Silla Ejecutiva",
+            "cantidad": 1,
+            "costo": 1500
+          }
+        ]
+      }
+    ],
+    "order": "O-250",
+    "order2": "ORD-1700921728877",
+    "vuelos": [
+      {
+        "numero_vuelo": "AMX123",
+        "aerolinea": "Aeromexico",
+        "origen": "CDMX",
+        "destino": "GDL",
+        "fecha_salida": "2025-03-01 08:00:00",
+        "fecha_llegada": "2025-03-01 09:20:00",
+        "clase": "Ejecutiva"
+      },
+      {
+        "numero_vuelo": "VIV209",
+        "aerolinea": "VivaAerobus",
+        "origen": "GDL",
+        "destino": "CDMX",
+        "fecha_salida": "2025-04-01 13:00:00",
+        "fecha_llegada": "2025-04-01 14:20:00",
+        "clase": "Turista"
+      }
+    ],
+    "cards": [
+      {
+        "card": "platino",
+        "amount": "300",
+        "limit": "20000"
+      },
+      {
+        "card": "oro",
+        "amount": "3500",
+        "limit": "50000"
+      }
+    ],
+    "credits": [
+      {
+        "credit": "personal",
+        "amount": "60000"
+      }
+    ],
+    "ordenticketmaster": "WO12820",
+    "ordenandrea": "O-250",
+    "andrea": [
+      {
+        "orden": "O-250",
+        "amount": "448",
+        "product": "2"
+      }
+    ],
+    "servicios": [
+      {
+        "servicio": "Lounge",
+        "descripcion": "Acceso a salon VIP",
+        "aeropuerto": "CDMX",
+        "fecha_servicio": "2025-03-01 08:00:00"
+      },
+      {
+        "servicio": "Estacionamiento",
+        "descripcion": "Reserva de 2 días",
+        "aeropuerto": "CDMX",
+        "fecha_servicio": "2025-03-01 08:00:00"
+      }
+    ],
+    "id": "1"
+  }
+]
