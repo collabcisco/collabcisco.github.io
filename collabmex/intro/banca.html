@@ -230,10 +230,9 @@
             <details>
               <summary>Respuestas a preguntas frecuentes</summary>
               <ul>
-                <li>¿Cómo puedo abrir una cuenta de ahorro/cheques?</li>
-                <li>¿Cuáles son los requisitos para solicitar un préstamo hipotecario/personal?</li>
-                <li>¿Cómo reporto una tarjeta de crédito/débito robada o extraviada?</li>
-                <li>¿Cómo puedo consultar mi saldo?</li>
+                <li>¿Qué tipos de cuentas puedo abrir en Banco Futuro?</li>
+                <li>¿Cómo puedo solicitar una tarjeta de crédito?</li>
+                <li>¿Cuánto tiempo tarda la aprobación de un préstamo?</li>
               </ul>
               <p>Descarga el documento completo: <a href="https://collabcisco.github.io/collabmex/banca/FAQ-banca.docx" download style="color:var(--webex-link);">Descargar</a></p>
             </details>
@@ -241,34 +240,48 @@
           <li>
             <details>
               <summary>Información de Productos y Servicios Bancarios</summary>
-              <ul>
-                <li><b>Cuentas:</b> Ahorro, Cheques, Nómina.</li>
-                <li><b>Créditos:</b> Hipotecarios, Personales, Automotrices.</li>
-                <li><b>Tarjetas:</b> Clásica, Oro, Platino, Black.</li>
-                <li><b>Inversiones:</b> Fondos de Inversión, Pagarés.</li>
-              </ul>
-              <p>Descarga el catálogo completo de productos: <a href="https://collabcisco.github.io/collabmex/banca/productos-banca.xlsx" download style="color:var(--webex-link);">Descargar</a></p>
+              <details>
+                <summary>Tarjetas de Crédito y Débito</summary>
+                <ul>
+                  <li><strong>Tarjeta Futuro Básica:</strong> Crédito, $10,000 - $30,000 MXN, sin anualidad el primer año.</li>
+                  <li><strong>Tarjeta Futuro Oro:</strong> Crédito, $50,000 - $150,000 MXN, acumulación de puntos, acceso a salas VIP.</li>
+                  <li><strong>Tarjeta Futuro Digital:</strong> Débito, sin comisiones, pagos móviles, control desde app.</li>
+                </ul>
+                <p>Descarga la información detallada de tarjetas: <a href="https://collabcisco.github.io/collabmex/banca/TarjetasCredito.xlsx" download style="color:var(--webex-link);">Descargar</a></p>
+              </details>
+              <details>
+                <summary>Opciones de Crédito</summary>
+                <ul>
+                  <li><strong>Crédito Personal Flexible:</strong> $10,000 - $100,000 MXN, hasta 36 meses, 18.50% T.I.A.</li>
+                  <li><strong>Crédito Auto Express:</strong> $50,000 - $500,000 MXN, hasta 60 meses, 12.90% T.I.A.</li>
+                  <li><strong>Crédito Hipotecario Inicial:</strong> $500,000 - $5,000,000 MXN, hasta 240 meses, 9.75% T.I.A.</li>
+                </ul>
+                <p>Descarga la información detallada de créditos: <a href="https://collabcisco.github.io/collabmex/banca/Creditos.xlsx" download style="color:var(--webex-link);">Descargar</a></p>
+              </details>
+         
             </details>
           </li>
           <li>
             <details>
               <summary>Envío de OTP (One-Time Password) por Correo/WhatsApp</summary>
-              <p>Demuestra cómo el AI Agent puede enviar un OTP para verificación de identidad o confirmación de transacciones. Puedes simularlo utilizando el cajero automático:</p>
+              <p>Demuestra cómo el AI Agent puede enviar un OTP para verificación de identidad o confirmación de transacciones.</p>
               <ul>
-                <li>Accede al <a href="simulador-cajero.html" target="_blank" style="color:var(--webex-link);">Simulador de Cajero Automático</a>.</li>
-                <li>Selecciona un cliente (ej. C01, C02).</li>
-                <li>Ingresa el NIP (<b>1234</b>) y observa cómo se envía el estado del NIP al webhook.</li>
+                <li>Puedes consultar el saldo de tus tarjetas o el saldo de tu crédito</li>
+                <li>El Agente de AI te pedirá identificarte con tu número de teléfono, proporciona el número de tu celular.</li>
+                <li>Te llegará un OTP a tu correo electrónico y por Whatsapp</li>
+                <li>Proporciona el OTP al agente de AI y con esto te identificará y te proporcionará la información solicitada</li>
+                <li>Puedes validar tu información en el portal de <a href="https://collabcisco.github.io/collabmex/banca/clientes.html" target="_blank" style="color:var(--webex-link);">Búsqueda de Clientes</a></li>
               </ul>
             </details>
           </li>
           <li>
             <details>
               <summary>Envío de Estado de Cuenta por Correo</summary>
-              <p>Muestra cómo el AI Agent puede enviar el estado de cuenta mensual al correo electrónico del cliente.</p>
+              <p>Muestra cómo el AI Agent puede enviar el estado de cuenta mensual por Correo/Whatsapp.</p>
               <ul>
-                <li>Simula una solicitud de estado de cuenta por parte del cliente.</li>
+                <li>Solicita tu estado de cuenta, pedirá autenticarte con tu número teléfonico y el OTP enviado por correo/whatsapp</li>
+                <li>Una vez autenticado te enviará el estado de cuenta por correo y whatsapp</li>
                 <li>El AI Agent confirmará el envío al correo registrado.</li>
-                <li>(Este paso no tiene una demo interactiva en esta página, solo se describe la funcionalidad.)</li>
               </ul>
             </details>
           </li>
@@ -292,12 +305,8 @@
           <li>
             <details>
               <summary>Información del Cliente (CRM/Base de Datos)</summary>
-              <p>El agente tendrá la información completa del cliente, incluyendo sus tarjetas de crédito y créditos contratados. Esta información se toma de un CRM o base de datos de clientes.</p>
-              <ul>
-                <li>Accede al <a href="busqueda-clientes.html" target="_blank" style="color:var(--webex-link);">Portal de Búsqueda de Clientes</a>.</li>
-                <li>Busca un cliente por su ID (ej. <b>C01, C02, C03</b>).</li>
-                <li>Observa cómo se cargan sus datos personales, tarjetas y créditos.</li>
-              </ul>
+              <p>El agente tendrá la información completa del cliente. Esta información se toma de un CRM o base de datos de clientes.</p>
+
             </details>
           </li>
           <li>
@@ -320,14 +329,21 @@
             <details>
               <summary>Integración de sistemas y páginas web</summary>
               <p>La interfaz del agente integra sistemas y páginas web relevantes, como el portal de búsqueda de clientes o el simulador de cajero, para una atención eficiente.</p>
+                     <li>Encontrarás el <a href="https://collabcisco.github.io/collabmex/banca/clientes.html" target="_blank" style="color:var(--webex-link);">Portal de Búsqueda de Clientes</a> dentro de la pantalla del agente</li>
+                <li>Busca un cliente por su ID (ej. <b>C01, C02, C03</b>).</li>
+                <li>Observa cómo se cargan sus datos personales, tarjetas y créditos.</li>
             </details>
           </li>
             <li>
             <details>
-              <summary>Customer Journey del cliente y Notificaciones Proactivas</summary>
+              <summary>Customer Journey del cliente</summary>
               <ul>
-                <li>Visualiza el historial completo de interacciones del cliente a través de distintos canales y las actividades relacionadas con sus productos bancarios (solicitudes de crédito, reportes de tarjetas, etc.).</li>
-                <li>(Este paso no tiene una demo interactiva en esta página, solo se describe la funcionalidad.)</li>
+                <li>Visualiza el historial completo de interacciones del cliente a través de distintos canales y las actividades relacionadas</li>
+                <li>Accede al <a href="https://collabcisco.github.io/collabmex/banca/cajero.html" target="_blank" style="color:var(--webex-link);">Simulador de Cajero Automático</a>.</li>
+                <li>Selecciona un cliente.</li>
+                <li>Ingresa el NIP (<b>1234</b>) y observa cómo se muestra esta actividad en el Customer Journey.</li>
+                <li>Puedes ingresar NIP invalido, consultar tu saldo o hacer un retiro. Observa estas actividades en el Customer Journey del cliente.</li>
+        
               </ul>
             </details>
           </li>
