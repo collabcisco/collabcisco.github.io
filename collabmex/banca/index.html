@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Banco Futuro - Búsqueda de Clientes</title>
+  <title>Banco Futuro</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <!-- Font Awesome para los iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    /* Reutilizar los estilos proporcionados */
     :root {
       --primary-blue: #0056b3; /* Azul más oscuro y formal para banca */
       --secondary-green: #28a745; /* Verde para acentos */
@@ -41,13 +40,13 @@
       background-color: #ffffff;
       padding: 1rem 2.5rem;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
       box-shadow: var(--shadow-light);
       position: sticky;
       top: 0;
       z-index: 1000;
-      gap: 1rem;
+      gap: 1rem; /* Espacio entre el logo, la navegación y los elementos */
     }
 
     header .logo {
@@ -66,218 +65,306 @@
       border-radius: var(--border-radius-sm);
     }
 
-    /* Nuevos estilos para la Página de Búsqueda de Clientes */
-    .customer-search-section {
-      padding: 3rem 2.5rem;
-      max-width: 900px;
-      margin: 2rem auto;
-      background-color: white;
-      border-radius: var(--border-radius-lg);
-      box-shadow: var(--shadow-medium);
+    nav {
+      flex-grow: 1;
       text-align: center;
     }
 
-    .customer-search-section h1 {
-      font-size: 2.5rem;
-      color: var(--primary-blue);
-      margin-bottom: 1.5rem;
-      font-weight: 700;
-    }
-
-    .search-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-
-    .search-form label {
-      font-size: 1.1rem;
+    nav a {
+      color: var(--dark-text);
+      margin: 0 1rem;
+      text-decoration: none;
       font-weight: 500;
-      color: var(--dark-text);
+      transition: color 0.3s ease;
     }
 
-    .search-form input[type="text"] {
-      width: 100%;
-      max-width: 400px;
-      padding: 0.8rem 1rem;
-      border: 1px solid #ced4da;
-      border-radius: var(--border-radius-sm);
-      font-size: 1rem;
-      color: var(--dark-text);
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    nav a:hover {
+      color: var(--primary-blue);
     }
 
-    .search-form input[type="text"]:focus {
-      border-color: var(--primary-blue);
-      box-shadow: 0 0 0 0.2rem rgba(0, 86, 179, 0.25);
-      outline: none;
+    /* Sección de Contacto con Dropdown */
+    .contact-dropdown {
+      position: relative;
+      display: inline-block;
+      margin-left: 2rem; /* Espacio entre la navegación y el botón de contacto */
     }
 
-    .search-form button {
-      background-color: var(--secondary-green); /* Usar el verde para el botón de búsqueda */
+    .btn-contact {
+      background-color: var(--primary-blue); /* Botón azul */
       color: white;
-      padding: 0.9rem 2.5rem;
+      padding: 0.8rem 1.5rem;
       border: none;
       border-radius: var(--border-radius-sm);
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1.1rem; /* Aumentado el tamaño de la letra */
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.2s ease;
-      box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+      box-shadow: 0 4px 10px rgba(0, 86, 179, 0.3); /* Sombra azul */
     }
 
-    .search-form button:hover {
-      background-color: #218838; /* Verde más oscuro al pasar el ratón */
+    .btn-contact:hover {
+      background-color: #003f8c; /* Azul más oscuro al pasar el ratón */
       transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(40, 167, 69, 0.4);
+      box-shadow: 0 6px 12px rgba(0, 86, 179, 0.4); /* Sombra azul más pronunciada */
     }
 
-    .customer-results {
-      text-align: left;
-      margin-top: 2rem;
-      padding-top: 2rem;
-      border-top: 1px solid #e9ecef;
-      display: none; /* Ocultar por defecto, se mostrará con JS */
-    }
-
-    .customer-results.show {
-        display: block;
-    }
-
-    .customer-results h2 {
-      font-size: 1.8rem;
-      color: var(--primary-blue);
-      margin-bottom: 1rem;
-    }
-
-    .customer-info p {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      color: #555;
-    }
-
-    .customer-info strong {
-      color: var(--dark-text);
-    }
-
-    .cards-and-credits {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      margin-top: 1.5rem;
-    }
-
-    .cards-section, .credits-section {
-      background-color: var(--light-gray);
-      padding: 1.5rem;
-      border-radius: var(--border-radius-sm);
-      box-shadow: var(--shadow-light);
-    }
-
-    .cards-section h3, .credits-section h3 {
-      font-size: 1.5rem;
-      color: var(--primary-blue);
-      margin-bottom: 1rem;
-      border-bottom: 2px solid var(--primary-blue);
-      padding-bottom: 0.5rem;
-    }
-
-    .card-item, .credit-item {
+    .dropdown-content {
+      display: none; /* Oculto por defecto */
+      position: absolute;
       background-color: #ffffff;
-      padding: 1rem;
+      min-width: 280px; /* Ancho mínimo para el contenido */
+      box-shadow: var(--shadow-medium);
+      z-index: 1;
+      right: 0; /* Alineado a la derecha del botón */
       border-radius: var(--border-radius-sm);
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      overflow: hidden;
+      margin-top: 10px; /* Espacio entre el botón y el menú */
+      transform-origin: top right;
+      transform: scale(0.95);
+      opacity: 0;
+      transition: all 0.3s ease-out;
+      border: 1px solid #eee;
     }
 
-    .card-item:last-child, .credit-item:last-child {
-      margin-bottom: 0;
+    .dropdown-content.show {
+      display: block;
+      transform: scale(1);
+      opacity: 1;
     }
 
-    .card-item p, .credit-item p {
-      margin-bottom: 0.3rem;
-      font-size: 0.95rem;
-    }
-
-    .card-item p strong, .credit-item p strong {
+    .dropdown-item { /* Estilos para cada opción del menú desplegable */
       color: var(--dark-text);
+      padding: 12px 16px;
+      text-decoration: none;
+      display: flex; /* Usar flex para organizar contenido */
+      flex-direction: column; /* Apilar contenido verticalmente */
+      align-items: center; /* Centrar horizontalmente */
+      transition: background-color 0.2s ease;
+      position: relative; /* Para posicionar el feedback de copiado */
+      border-bottom: 1px solid #f0f0f0; /* Separador sutil */
+      gap: 5px; /* Espacio entre elementos apilados */
     }
 
-    /* Mensajes de no datos */
-    .no-data-placeholder {
-        font-style: italic;
-        color: #777;
-        text-align: center;
-        padding: 1rem 0;
+    .dropdown-item:last-child {
+        border-bottom: none;
     }
 
-    /* Ajustes Responsivos para la nueva sección */
-    @media (max-width: 992px) {
-      .customer-search-section {
-        padding: 2.5rem 2rem;
-        margin: 1.5rem auto;
-      }
-      .customer-search-section h1 {
-        font-size: 2.2rem;
-      }
+    .dropdown-item:hover {
+      background-color: var(--light-gray);
+      color: var(--primary-blue);
     }
 
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 1rem;
-      }
-      .customer-search-section {
-        padding: 2rem 1.5rem;
-        margin: 1rem auto;
-      }
-      .customer-search-section h1 {
-        font-size: 2rem;
-      }
-      .search-form {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      .search-form input[type="text"] {
-        max-width: 100%;
-      }
-      .cards-and-credits {
-        grid-template-columns: 1fr;
-      }
-      .cards-section, .credits-section {
-        padding: 1rem;
-      }
-      .cards-section h3, .credits-section h3 {
-        font-size: 1.3rem;
-      }
+    .dropdown-item-content { /* Contenedor para texto y botón de copiar en horizontal */
+      display: flex;
+      align-items: center;
+      gap: 8px; /* Espacio entre el texto y el botón de copiar */
+      white-space: nowrap; /* Mantiene el texto y el botón en una sola línea */
+      color: var(--dark-text); /* Asegura que el color del texto sea oscuro */
     }
 
-    @media (max-width: 480px) {
-      header .logo {
-        font-size: 1.5rem;
-      }
-      header .logo img {
-        height: 35px;
-      }
-      .customer-search-section {
-        padding: 1.5rem 1rem;
-      }
-      .customer-search-section h1 {
-        font-size: 1.8rem;
-      }
-      .search-form button {
-        padding: 0.7rem 1.8rem;
-        font-size: 1rem;
-      }
-      .customer-results h2 {
-        font-size: 1.6rem;
-      }
-      .cards-section h3, .credits-section h3 {
-        font-size: 1.2rem;
-      }
+    .dropdown-item-content .fas, .dropdown-item-content .fab { /* Estilo para los iconos dentro del dropdown */
+      font-size: 1.1em; /* Tamaño del icono */
+      color: var(--primary-blue); /* Color del icono */
+      flex-shrink: 0; /* Evita que el icono se encoja */
+    }
+
+    .dropdown-item-content span {
+      flex-shrink: 0; /* Evita que el texto se encoja */
+    }
+
+    .dropdown-item-content a { /* Estilo específico para el enlace dentro del dropdown-item-content */
+      color: var(--dark-text); /* Color del texto del enlace */
+      text-decoration: none;
+      margin-left: 0; /* Resetear margen */
+      white-space: nowrap; /* Asegura que el texto del enlace no se envuelva */
+    }
+
+    .dropdown-item-content a:hover {
+      color: var(--primary-blue); /* Cambia de color al pasar el ratón */
+    }
+
+    /* Estilos del botón de copiar */
+    .copy-button {
+      background: none;
+      border: none;
+      color: #777; /* Color del icono de copiar */
+      cursor: pointer;
+      font-size: 0.9em; /* Tamaño del icono de copiar */
+      padding: 4px;
+      border-radius: 4px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .copy-button:hover {
+      background-color: #e0e0e0;
+      color: var(--primary-blue);
+    }
+
+    /* Estilos del feedback de copiado */
+    .copy-feedback {
+      position: absolute;
+      top: -25px; /* Posicionar encima del dropdown-item */
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #5cb85c; /* Verde para éxito */
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8em;
+      opacity: 0;
+      transition: opacity 0.3s ease, top 0.3s ease;
+      pointer-events: none; /* Para que no bloquee clics */
+      white-space: nowrap;
+      z-index: 1002;
+    }
+
+    .copy-feedback.show {
+      opacity: 1;
+      top: -35px; /* Se mueve ligeramente hacia arriba al mostrarse */
+    }
+
+    /* Estilos para el QR de WhatsApp */
+    .whatsapp-qr-code {
+      max-width: 100px; /* Tamaño del QR */
+      height: auto;
+      margin-top: 5px; /* Espacio entre el texto y el QR */
+      border-radius: var(--border-radius-sm);
+      background-color: white; /* Fondo blanco para el QR */
+      padding: 5px; /* Pequeño padding alrededor del QR */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sombra suave */
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 2rem;
+      background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 100%);
+      min-height: 380px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 200px;
+      height: 200px;
+      background: rgba(0, 86, 179, 0.1); /* Azul más oscuro */
+      border-radius: 50%;
+      filter: blur(80px);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      right: -50px;
+      width: 250px;
+      height: 250px;
+      background: rgba(40, 167, 69, 0.1);
+      border-radius: 50%;
+      filter: blur(100px);
+    }
+
+    .hero-content {
+      max-width: 800px;
+      z-index: 1;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-blue);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .hero-content p {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      color: #555;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary-blue);
+      color: white;
+      padding: 0.9rem 2.2rem;
+      border-radius: var(--border-radius-sm);
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0, 86, 179, 0.3);
+    }
+
+    .btn:hover {
+      background-color: #003f8c;
+      transform: translateY(-2px);
+    }
+
+    /* Sections / Cards */
+    .sections-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-card {
+      background-color: white;
+      padding: 2.5rem;
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-light);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .section-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .section-card h2 {
+      margin-bottom: 1rem;
+      color: var(--primary-blue);
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .section-card p {
+      font-size: 1.05rem;
+      color: #666;
+      flex-grow: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-card img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: var(--border-radius-sm);
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
     /* Footer */
@@ -289,187 +376,264 @@
       margin-top: 2rem;
       font-size: 0.9rem;
     }
+
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+      .hero-content h1 {
+        font-size: 2.8rem;
+      }
+      .hero-content p {
+        font-size: 1.1rem;
+      }
+      header {
+        padding: 1rem 1.5rem;
+      }
+      nav a {
+        margin: 0 0.8rem;
+      }
+      .sections-container {
+        padding: 1.5rem 1.5rem;
+      }
+      .section-card {
+        padding: 2rem;
+      }
+      .contact-dropdown {
+        margin-left: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+      }
+      header nav {
+        margin-top: 1rem;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+      }
+      nav a {
+        margin: 0 0.5rem;
+        font-size: 0.9rem;
+      }
+      .contact-dropdown {
+        width: 100%; /* Ocupa el ancho completo */
+        margin-top: 1rem;
+        text-align: center; /* Centra el botón */
+      }
+      .contact-dropdown .btn-contact {
+        width: auto; /* Ajusta el botón al contenido */
+        font-size: 1rem; /* Ajuste para móviles */
+      }
+      .dropdown-content {
+        left: 50%; /* Centrar el dropdown */
+        transform: translateX(-50%) scale(0.95);
+        right: auto; /* Desactivar alineación a la derecha */
+        transform-origin: top center; /* Origen de la transformación para el centrado */
+      }
+      .dropdown-content.show {
+        transform: translateX(-50%) scale(1);
+      }
+      .hero {
+        padding: 2.5rem 1rem;
+        min-height: 300px;
+      }
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+      .hero-content p {
+        font-size: 1rem;
+      }
+      .sections-container {
+        grid-template-columns: 1fr;
+        padding: 1rem 1rem;
+      }
+      .section-card {
+        padding: 1.5rem;
+      }
+      .dropdown-item {
+        padding: 10px 12px; /* Ajuste de padding para móviles */
+      }
+      .dropdown-item-content {
+        flex-wrap: wrap; /* Permitir que el contenido se envuelva en móviles */
+        justify-content: center;
+      }
+      .dropdown-item-content span, .dropdown-item-content a {
+        white-space: normal; /* Permitir el salto de línea */
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header .logo {
+        font-size: 1.5rem;
+      }
+      header .logo img {
+        height: 35px;
+      }
+      nav a {
+        font-size: 0.85rem;
+        margin: 0 0.3rem;
+      }
+      .hero-content h1 {
+        font-size: 1.8rem;
+      }
+      .hero-content p {
+        font-size: 0.9rem;
+      }
+      .btn {
+        padding: 0.7rem 1.8rem;
+        font-size: 0.9rem;
+      }
+      .section-card h2 {
+        font-size: 1.5rem;
+      }
+      .contact-dropdown .btn-contact {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+      }
+      .dropdown-content {
+        min-width: 250px;
+      }
+      .whatsapp-qr-code {
+        max-width: 80px; /* QR más pequeño en móviles */
+      }
+    }
   </style>
 </head>
 <body>
 
 <header>
   <a href="#" class="logo">
+    <!-- Puedes reemplazar 'logo.jpg' con una imagen de logo de banco si tienes una -->
     <img src="logo.png" alt="Logo Banco Futuro">
     Banco Futuro
   </a>
+  <nav>
+    <a href="#cuentas">Cuentas</a>
+    <a href="#prestamos">Préstamos</a>
+    <a href="#tarjetas">Tarjetas</a>
+    <a href="#inversiones">Inversiones</a>
+  </nav>
+  <!-- Botón de Contáctanos con Dropdown -->
+  <div class="contact-dropdown">
+    <button class="btn-contact" id="contactBtn">Contáctanos</button>
+    <div class="dropdown-content" id="contactDropdown">
+      <a href="tel:+525590886970,3" class="dropdown-item">
+        <div class="dropdown-item-content">
+          <i class="fas fa-phone"></i> <!-- Icono de teléfono -->
+          <span>Llámanos: +52 55 9088 6970 (opción 3)</span>
+          <button class="copy-button" data-copy-target="+525590886970,3">
+            <i class="fas fa-copy"></i>
+          </button>
+        </div>
+        <span class="copy-feedback">¡Copiado!</span>
+      </a>
+      <a href="mailto:wxconnect.demo@gmail.com" class="dropdown-item">
+        <div class="dropdown-item-content">
+          <i class="fas fa-envelope"></i> <!-- Icono de email -->
+          <span>Email: wxconnect.demo@gmail.com</span>
+          <button class="copy-button" data-copy-target="wxconnect.demo@gmail.com">
+            <i class="fas fa-copy"></i>
+          </button>
+        </div>
+        <span class="copy-feedback">¡Copiado!</span>
+      </a>
+      <a href="https://wa.me/14086764583?text=collabmex" target="_blank" class="dropdown-item">
+        <div class="dropdown-item-content">
+          <i class="fab fa-whatsapp"></i> <!-- Icono de WhatsApp -->
+          <span>WhatsApp: +1 408 676 4583 (collabmex --> Banca)</span>
+          <button class="copy-button" data-copy-target="+14086764583">
+            <i class="fas fa-copy"></i>
+          </button>
+        </div>
+        <!-- Aquí va tu imagen de QR de WhatsApp. Puedes usar 'qr-code.png' si la tienes. -->
+        <img src="qr-code.png" alt="WhatsApp QR Code" class="whatsapp-qr-code">
+        <span class="copy-feedback">¡Copiado!</span>
+      </a>
+    </div>
+  </div>
 </header>
 
-<main>
-  <section class="customer-search-section">
-    <h1>Búsqueda de Clientes</h1>
-    <form class="search-form" onsubmit="event.preventDefault(); displayCustomerResults();">
-      <label for="customerSearchInput">Introduce ID de Cliente (Ej: C01, C02):</label>
-      <input type="text" id="customerSearchInput" placeholder="Ej: C01">
-      <button type="submit">Buscar Cliente</button>
-    </form>
+<section class="hero">
+  <div class="hero-content">
+    <h1>Bienvenido a Banco Futuro</h1>
+    <p>Tu aliado financiero para alcanzar tus metas. Soluciones bancarias personalizadas y seguras para tu futuro.</p>
+    <a href="#servicios" class="btn">Explorar Servicios</a>
+  </div>
+</section>
 
-    <div class="customer-results" id="customerResults">
-      <h2>Información del Cliente: <span id="customerName"></span></h2>
-      <div class="customer-info">
-        <p><strong>ID de Cliente:</strong> <span id="customerDisplayID"></span></p>
-        <p><strong>Email:</strong> <span id="customerEmail"></span></p>
-        <p><strong>Teléfono:</strong> <span id="customerPhone"></span></p>
-        <p><strong>Código Postal:</strong> <span id="customerZip"></span></p>
-      </div>
-
-      <div class="cards-and-credits">
-        <div class="cards-section">
-          <h3>Tarjetas de Crédito</h3>
-          <div id="creditCardsList">
-            <!-- Las tarjetas se cargarán aquí dinámicamente -->
-            <p class="no-data-placeholder">Realiza una búsqueda para ver las tarjetas.</p>
-          </div>
-        </div>
-
-        <div class="credits-section">
-          <h3>Créditos Contratados</h3>
-          <div id="creditsList">
-            <!-- Los créditos se cargarán aquí dinámicamente -->
-            <p class="no-data-placeholder">Realiza una búsqueda para ver los créditos.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="sections-container" id="servicios">
+  <section class="section-card" id="cuentas">
+    <h2>Cuentas y Ahorros</h2>
+    <p>Administra tu dinero con nuestras cuentas de ahorro y cheques, diseñadas para tu día a día y tus metas futuras.</p>
+    <img src="ahorros.png" alt="Persona revisando su estado de cuenta bancario">
   </section>
-</main>
+
+  <section class="section-card" id="prestamos">
+    <h2>Créditos y Préstamos</h2>
+    <p>Financia tus proyectos con nuestras opciones de crédito flexibles: hipotecarios, personales y automotrices.</p>
+    <img src="cuentas.png" alt="Pareja celebrando la compra de una casa">
+  </section>
+
+  <section class="section-card" id="tarjetas">
+    <h2>Tarjetas de Crédito</h2>
+    <p>Descubre el poder de compra y los beneficios exclusivos con nuestras tarjetas de crédito, con recompensas y seguridad.</p>
+    <img src="tarjetas.png" alt="Mano sosteniendo una tarjeta de crédito">
+  </section>
+</div>
 
 <footer>
   &copy; 2025 Banco Futuro. Todos los derechos reservados. | Aviso de Privacidad | Términos y Condiciones
 </footer>
 
-<!-- Script para la funcionalidad de búsqueda de clientes -->
+<!-- Script para la funcionalidad del dropdown y el botón de copiar -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const API_URL_CUSTOMER_DETAILS = 'https://6892811ec49d24bce867aefa.mockapi.io/clientes';
-    const API_URL_BANK_PRODUCTS = 'https://67f48026cbef97f40d2e5fbd.mockapi.io/customerBanco';
+    const contactBtn = document.getElementById('contactBtn');
+    const contactDropdown = document.getElementById('contactDropdown');
+    const copyButtons = document.querySelectorAll('.copy-button');
 
-    const customerResultsDiv = document.getElementById('customerResults');
-    const customerNameSpan = document.getElementById('customerName');
-    const customerDisplayIDSpan = document.getElementById('customerDisplayID');
-    const customerEmailSpan = document.getElementById('customerEmail');
-    const customerPhoneSpan = document.getElementById('customerPhone');
-    const customerZipSpan = document.getElementById('customerZip');
-    const creditCardsList = document.getElementById('creditCardsList');
-    const creditsList = document.getElementById('creditsList');
-
-    // Formateador para pesos mexicanos
-    const mxnFormatter = new Intl.NumberFormat('es-MX', {
-      style: 'currency',
-      currency: 'MXN',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
+    // Funcionalidad del Dropdown "Contáctanos"
+    contactBtn.addEventListener('click', function(event) {
+      contactDropdown.classList.toggle('show');
+      event.stopPropagation(); // Evita que el clic se propague y cierre el dropdown inmediatamente
     });
 
-    // Función auxiliar para formatear valores monetarios
-    function formatCurrency(value) {
-      // Intenta convertir el valor a número. Si no es un número (ej. '*****'), devuelve el valor original.
-      const numValue = parseFloat(value);
-      return isNaN(numValue) ? value : mxnFormatter.format(numValue);
-    }
-
-    window.displayCustomerResults = async function() {
-      const searchTerm = document.getElementById('customerSearchInput').value.trim();
-
-      // Limpiar y ocultar resultados anteriores
-      customerNameSpan.textContent = '';
-      customerDisplayIDSpan.textContent = '';
-      customerEmailSpan.textContent = '';
-      customerPhoneSpan.textContent = '';
-      customerZipSpan.textContent = '';
-      creditCardsList.innerHTML = '<p class="no-data-placeholder">Realiza una búsqueda para ver las tarjetas.</p>';
-      creditsList.innerHTML = '<p class="no-data-placeholder">Realiza una búsqueda para ver los créditos.</p>';
-      customerResultsDiv.classList.remove('show');
-
-      if (!searchTerm) {
-        alert('Por favor, introduce un ID de cliente para buscar.');
-        return;
+    // Cerrar el dropdown si se hace clic fuera de él
+    window.addEventListener('click', function(event) {
+      if (!event.target.matches('#contactBtn') && !event.target.closest('.dropdown-content')) {
+        if (contactDropdown.classList.contains('show')) {
+          contactDropdown.classList.remove('show');
+        }
       }
+    });
 
-      try {
-        // 1. Buscar detalles del cliente
-        const customerDetailsResponse = await fetch(API_URL_CUSTOMER_DETAILS);
-        if (!customerDetailsResponse.ok) {
-          throw new Error(`Error HTTP al obtener detalles del cliente: ${customerDetailsResponse.status}`);
-        }
-        const customerDetailsData = await customerDetailsResponse.json();
-        const foundCustomerDetails = customerDetailsData.find(customer => customer.customerID.toLowerCase() === searchTerm.toLowerCase());
+    // Manejo del botón de copiar
+    copyButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.stopPropagation(); // Evita que el clic cierre el dropdown o active el enlace
 
-        if (!foundCustomerDetails) {
-          alert(`Cliente con ID "${searchTerm}" no encontrado en la base de datos de clientes.`);
-          return;
-        }
+        const textToCopy = this.dataset.copyTarget;
+        // El feedback span ahora es un hermano del div.dropdown-item-content dentro del a.dropdown-item
+        const feedbackSpan = this.closest('.dropdown-item').querySelector('.copy-feedback'); 
 
-        // Rellenar información básica del cliente
-        customerNameSpan.textContent = foundCustomerDetails.name;
-        customerDisplayIDSpan.textContent = foundCustomerDetails.customerID;
-        customerEmailSpan.textContent = foundCustomerDetails.email;
-        customerPhoneSpan.textContent = foundCustomerDetails.number;
-        customerZipSpan.textContent = foundCustomerDetails.zip;
-
-        // 2. Buscar productos bancarios del cliente
-        const bankProductsResponse = await fetch(API_URL_BANK_PRODUCTS);
-        if (!bankProductsResponse.ok) {
-          throw new Error(`Error HTTP al obtener productos bancarios: ${bankProductsResponse.status}`);
-        }
-        const bankProductsData = await bankProductsResponse.json();
-        const foundBankProducts = bankProductsData.find(product => product.customerID.toLowerCase() === searchTerm.toLowerCase());
-
-        // Limpiar placeholders antes de añadir datos
-        creditCardsList.innerHTML = '';
-        creditsList.innerHTML = '';
-
-        if (foundBankProducts) {
-          // Rellenar tarjetas de crédito
-          if (foundBankProducts.cards && foundBankProducts.cards.length > 0) {
-            foundBankProducts.cards.forEach(card => {
-              const cardItem = document.createElement('div');
-              cardItem.classList.add('card-item');
-              cardItem.innerHTML = `
-                <p><strong>Tipo:</strong> ${card.card}</p>
-                <p><strong>Monto:</strong> ${formatCurrency(card.amount)}</p>
-                <p><strong>Límite:</strong> ${formatCurrency(card.limit)}</p>
-              `;
-              creditCardsList.appendChild(cardItem);
-            });
-          } else {
-            creditCardsList.innerHTML = '<p class="no-data-placeholder">No se encontraron tarjetas de crédito para este cliente.</p>';
-          }
-
-          // Rellenar créditos contratados
-          if (foundBankProducts.credits && foundBankProducts.credits.length > 0) {
-            foundBankProducts.credits.forEach(credit => {
-              const creditItem = document.createElement('div');
-              creditItem.classList.add('credit-item');
-              creditItem.innerHTML = `
-                <p><strong>Tipo de Crédito:</strong> ${credit.credit}</p>
-                <p><strong>Monto:</strong> ${formatCurrency(credit.amount)}</p>
-              `;
-              creditsList.appendChild(creditItem);
-            });
-          } else {
-            creditsList.innerHTML = '<p class="no-data-placeholder">No se encontraron créditos contratados para este cliente.</p>';
-          }
-        } else {
-            // Si el cliente existe en la base de datos de clientes pero no tiene productos bancarios
-            creditCardsList.innerHTML = '<p class="no-data-placeholder">No se encontraron tarjetas de crédito para este cliente.</p>';
-            creditsList.innerHTML = '<p class="no-data-placeholder">No se encontraron créditos contratados para este cliente.</p>';
-        }
-
-        customerResultsDiv.classList.add('show');
-
-      } catch (error) {
-        console.error('Error al obtener datos del cliente:', error);
-        customerResultsDiv.classList.remove('show');
-        alert('Hubo un error al buscar el cliente. Por favor, inténtalo de nuevo más tarde.');
-      }
-    };
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          // Mostrar feedback de copiado
+          feedbackSpan.classList.add('show');
+          setTimeout(() => {
+            feedbackSpan.classList.remove('show');
+          }, 1500); // Ocultar después de 1.5 segundos
+        }).catch(err => {
+          console.error('Error al copiar: ', err);
+          alert('Error al copiar el texto. Por favor, inténtalo de nuevo o cópialo manualmente.');
+        });
+      });
+    });
   });
 </script>
+<div id="divicw" data-bind="1C4C3F4D-249E-4FB7-9452-8A0880551448" data-org=""></div><script>var i={t:function(t){var e="https://media.imi.chat/widget/js/imichatinit.js";try{var o=new XMLHttpRequest;o.onreadystatechange=function(){if(this.readyState==4){var t=document.getElementById("divicw");if(this.status==0){i.o(t);return}var e=document.createElement("script");e.innerHTML=this.responseText;t.parentNode.insertBefore(e,t.nextSibling)}};o.open("GET",e,true);o.send()}catch(s){console.error(s)}},o:function(t){t.insertAdjacentHTML("afterend",'<iframe id="tls_al_frm" frameborder="0" style="overflow: hidden;height: 208px;width: 394px;position: fixed;display: block;right: 48px;bottom: 12px;z-index: 99999; display:none;"></iframe>');var e=document.getElementById("tls_al_frm");var o=e.contentWindow||(e.contentDocument.document||e.contentDocument);o.document.open();o.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Untitled Document</title><style>body{font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;color: #99a0b0;font-size: 14px;}.popover__content{background-color: #fbfbfe; padding: 1.5rem; border-radius: 5px; width: 300px; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);position: relative;}.popover__message{font-weight: 600;color:#56627c;font-size: 16px;}.pull-left{float:left;}.clearfix{clear: both;}.hdr-txt{width: 218px; margin-top: 3px;}.para-txt a{text-decoration: none;color: #005cde;}.close-btn{position: absolute;right:15px;top:15px;}.close-btn a{text-decoration: none;font-weight: 400; color: #56627c; font-size: 16px;}</style></head><body><div class="popover__content"><div class="close-btn"><a href="#" onclick="closeTLSAlert();">X</a></div><div class="popover__message"><div class="pull-left hdr-txt">This browser version is not supported on LiveChat.</div></div><div class="clearfix"></div><p class="para-txt">Please update your browser to the latest version and re-open the website to access the widget. </p></div><script>function closeTLSAlert(){window.parent.postMessage({key: "close_tls_alert",value: "close_tls_alert",action: "close_tls_alert"}, "*");}<\/script></body></html>');o.document.close();e.style.display="block";window.addEventListener("message",function(t){if(t.data.action=="close_tls_alert"){i.s()}})},s:function(){var t=document.getElementById("tls_al_frm");t.remove()}};i.t(function(t){});</script>
 </body>
 </html>
