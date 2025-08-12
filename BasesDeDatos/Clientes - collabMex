@@ -8,6 +8,7 @@ Clientes - collabMex
     "customerID": "C01",
     "zip": "72000",
     "whatsapp": "5215544491355",
+    "OTP": "7567",
     "id": "1"
   },
   {
@@ -17,6 +18,7 @@ Clientes - collabMex
     "customerID": "C02",
     "zip": "05120",
     "whatsapp": "5215579409869",
+    "OTP": "7268",
     "id": "2"
   },
   {
@@ -26,6 +28,7 @@ Clientes - collabMex
     "customerID": "C03",
     "zip": "05120",
     "whatsapp": "5215545941928",
+    "OTP": "3527",
     "id": "3"
   },
   {
@@ -35,6 +38,7 @@ Clientes - collabMex
     "customerID": "C04",
     "zip": "05120",
     "whatsapp": "5215651178030",
+    "OTP": "7389",
     "id": "4"
   },
   {
@@ -44,6 +48,7 @@ Clientes - collabMex
     "customerID": "C05",
     "zip": "05120",
     "whatsapp": "5215551743794",
+    "OTP": "6523",
     "id": "5"
   },
   {
@@ -53,6 +58,17 @@ Clientes - collabMex
     "customerID": "C06",
     "zip": "05120",
     "whatsapp": "5215579293549",
+    "OTP": "2019",
     "id": "6"
+  },
+  {
+    "name": "Arturo Prieto",
+    "email": "arprieto@cisco.com",
+    "number": "523315208592",
+    "customerID": "C07",
+    "zip": "05120",
+    "whatsapp": "5213315208592",
+    "OTP": "5928",
+    "id": "7"
   }
 ]
