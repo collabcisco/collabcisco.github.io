@@ -162,21 +162,21 @@
       color: var(--dark-text);
     }
 
-    .cards-and-credits {
+    .cards-and-credits { /* Renombrado para reflejar los datos */
       display: grid;
       grid-template-columns: 1fr;
       gap: 2rem;
       margin-top: 1.5rem;
     }
 
-    .cards-section, .credits-section {
+    .cards-section, .credits-section { /* Renombrado */
       background-color: var(--light-gray);
       padding: 1.5rem;
       border-radius: var(--border-radius-sm);
       box-shadow: var(--shadow-light);
     }
 
-    .cards-section h3, .credits-section h3 {
+    .cards-section h3, .credits-section h3 { /* Renombrado */
       font-size: 1.5rem;
       color: var(--primary-blue);
       margin-bottom: 1rem;
@@ -184,7 +184,7 @@
       padding-bottom: 0.5rem;
     }
 
-    .card-item, .credit-item {
+    .card-item, .credit-item { /* Renombrado */
       background-color: #ffffff;
       padding: 1rem;
       border-radius: var(--border-radius-sm);
@@ -192,16 +192,16 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
-    .card-item:last-child, .credit-item:last-child {
+    .card-item:last-child, .credit-item:last-child { /* Renombrado */
       margin-bottom: 0;
     }
 
-    .card-item p, .credit-item p {
+    .card-item p, .credit-item p { /* Renombrado */
       margin-bottom: 0.3rem;
       font-size: 0.95rem;
     }
 
-    .card-item p strong, .credit-item p strong {
+    .card-item p strong, .credit-item p strong { /* Renombrado */
       color: var(--dark-text);
     }
 
@@ -244,13 +244,13 @@
       .search-form input[type="text"] {
         max-width: 100%;
       }
-      .cards-and-credits {
+      .cards-and-credits { /* Renombrado */
         grid-template-columns: 1fr;
       }
-      .cards-section, .credits-section {
+      .cards-section, .credits-section { /* Renombrado */
         padding: 1rem;
       }
-      .cards-section h3, .credits-section h3 {
+      .cards-section h3, .credits-section h3 { /* Renombrado */
         font-size: 1.3rem;
       }
     }
@@ -275,7 +275,7 @@
       .customer-results h2 {
         font-size: 1.6rem;
       }
-      .cards-section h3, .credits-section h3 {
+      .cards-section h3, .credits-section h3 { /* Renombrado */
         font-size: 1.2rem;
       }
     }
@@ -312,10 +312,9 @@
     <div class="customer-results" id="customerResults">
       <h2>Información del Cliente: <span id="customerName"></span></h2>
       <div class="customer-info">
-        <p><strong>ID de Cliente:</strong> <span id="customerDisplayID"></span></p>
-        <p><strong>Email:</strong> <span id="customerEmail"></span></p>
-        <p><strong>Teléfono:</strong> <span id="customerPhone"></span></p>
-        <p><strong>Código Postal:</strong> <span id="customerZip"></span></p>
+        <p><strong>ID de Cliente (Interno):</strong> <span id="customerInternalID"></span></p>
+        <p><strong>Email:</strong> <span id="customerEmail">N/A</span></p>
+        <p><strong>Teléfono:</strong> <span id="customerPhone">N/A</span></p>
       </div>
 
       <div class="cards-and-credits">
@@ -346,45 +345,22 @@
 <!-- Script para la funcionalidad de búsqueda de clientes -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const API_URL_CUSTOMER_DETAILS = 'https://6892811ec49d24bce867aefa.mockapi.io/clientes';
-    const API_URL_BANK_PRODUCTS = 'https://67f48026cbef97f40d2e5fbd.mockapi.io/customerBanco';
-
+    const API_URL = 'https://67f48026cbef97f40d2e5fbd.mockapi.io/customerBanco';
     const customerResultsDiv = document.getElementById('customerResults');
     const customerNameSpan = document.getElementById('customerName');
-    const customerDisplayIDSpan = document.getElementById('customerDisplayID');
-    const customerEmailSpan = document.getElementById('customerEmail');
-    const customerPhoneSpan = document.getElementById('customerPhone');
-    const customerZipSpan = document.getElementById('customerZip');
+    const customerInternalIDSpan = document.getElementById('customerInternalID');
     const creditCardsList = document.getElementById('creditCardsList');
-    const creditsList = document.getElementById('creditsList');
-
-    // Formateador para pesos mexicanos
-    const mxnFormatter = new Intl.NumberFormat('es-MX', {
-      style: 'currency',
-      currency: 'MXN',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-
-    // Función auxiliar para formatear valores monetarios
-    function formatCurrency(value) {
-      // Intenta convertir el valor a número. Si no es un número (ej. '*****'), devuelve el valor original.
-      const numValue = parseFloat(value);
-      return isNaN(numValue) ? value : mxnFormatter.format(numValue);
-    }
+    const creditsList = document.getElementById('creditsList'); // Renombrado
 
     window.displayCustomerResults = async function() {
       const searchTerm = document.getElementById('customerSearchInput').value.trim();
 
-      // Limpiar y ocultar resultados anteriores
-      customerNameSpan.textContent = '';
-      customerDisplayIDSpan.textContent = '';
-      customerEmailSpan.textContent = '';
-      customerPhoneSpan.textContent = '';
-      customerZipSpan.textContent = '';
-      creditCardsList.innerHTML = '<p class="no-data-placeholder">Realiza una búsqueda para ver las tarjetas.</p>';
-      creditsList.innerHTML = '<p class="no-data-placeholder">Realiza una búsqueda para ver los créditos.</p>';
+      // Limpiar resultados anteriores
+      creditCardsList.innerHTML = '';
+      creditsList.innerHTML = '';
       customerResultsDiv.classList.remove('show');
+      customerNameSpan.textContent = '';
+      customerInternalIDSpan.textContent = '';
 
       if (!searchTerm) {
         alert('Por favor, introduce un ID de cliente para buscar.');
@@ -392,48 +368,29 @@
       }
 
       try {
-        // 1. Buscar detalles del cliente
-        const customerDetailsResponse = await fetch(API_URL_CUSTOMER_DETAILS);
-        if (!customerDetailsResponse.ok) {
-          throw new Error(`Error HTTP al obtener detalles del cliente: ${customerDetailsResponse.status}`);
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status}`);
         }
-        const customerDetailsData = await customerDetailsResponse.json();
-        const foundCustomerDetails = customerDetailsData.find(customer => customer.customerID.toLowerCase() === searchTerm.toLowerCase());
+        const data = await response.json();
 
-        if (!foundCustomerDetails) {
-          alert(`Cliente con ID "${searchTerm}" no encontrado en la base de datos de clientes.`);
-          return;
-        }
+        // Buscar el cliente por customerID (case-insensitive)
+        const foundCustomer = data.find(customer => customer.customerID.toLowerCase() === searchTerm.toLowerCase());
 
-        // Rellenar información básica del cliente
-        customerNameSpan.textContent = foundCustomerDetails.name;
-        customerDisplayIDSpan.textContent = foundCustomerDetails.customerID;
-        customerEmailSpan.textContent = foundCustomerDetails.email;
-        customerPhoneSpan.textContent = foundCustomerDetails.number;
-        customerZipSpan.textContent = foundCustomerDetails.zip;
+        if (foundCustomer) {
+          // Rellenar información del cliente
+          customerNameSpan.textContent = foundCustomer.customerID; // Usamos customerID como "nombre" visible
+          customerInternalIDSpan.textContent = foundCustomer.id; // El ID interno de la API
 
-        // 2. Buscar productos bancarios del cliente
-        const bankProductsResponse = await fetch(API_URL_BANK_PRODUCTS);
-        if (!bankProductsResponse.ok) {
-          throw new Error(`Error HTTP al obtener productos bancarios: ${bankProductsResponse.status}`);
-        }
-        const bankProductsData = await bankProductsResponse.json();
-        const foundBankProducts = bankProductsData.find(product => product.customerID.toLowerCase() === searchTerm.toLowerCase());
-
-        // Limpiar placeholders antes de añadir datos
-        creditCardsList.innerHTML = '';
-        creditsList.innerHTML = '';
-
-        if (foundBankProducts) {
           // Rellenar tarjetas de crédito
-          if (foundBankProducts.cards && foundBankProducts.cards.length > 0) {
-            foundBankProducts.cards.forEach(card => {
+          if (foundCustomer.cards && foundCustomer.cards.length > 0) {
+            foundCustomer.cards.forEach(card => {
               const cardItem = document.createElement('div');
               cardItem.classList.add('card-item');
               cardItem.innerHTML = `
                 <p><strong>Tipo:</strong> ${card.card}</p>
-                <p><strong>Monto:</strong> ${formatCurrency(card.amount)}</p>
-                <p><strong>Límite:</strong> ${formatCurrency(card.limit)}</p>
+                <p><strong>Monto:</strong> $${card.amount}</p>
+                <p><strong>Límite:</strong> ${card.limit}</p>
               `;
               creditCardsList.appendChild(cardItem);
             });
@@ -442,26 +399,25 @@
           }
 
           // Rellenar créditos contratados
-          if (foundBankProducts.credits && foundBankProducts.credits.length > 0) {
-            foundBankProducts.credits.forEach(credit => {
+          if (foundCustomer.credits && foundCustomer.credits.length > 0) {
+            foundCustomer.credits.forEach(credit => {
               const creditItem = document.createElement('div');
               creditItem.classList.add('credit-item');
               creditItem.innerHTML = `
                 <p><strong>Tipo de Crédito:</strong> ${credit.credit}</p>
-                <p><strong>Monto:</strong> ${formatCurrency(credit.amount)}</p>
+                <p><strong>Monto:</strong> ${credit.amount}</p>
               `;
               creditsList.appendChild(creditItem);
             });
           } else {
             creditsList.innerHTML = '<p class="no-data-placeholder">No se encontraron créditos contratados para este cliente.</p>';
           }
-        } else {
-            // Si el cliente existe en la base de datos de clientes pero no tiene productos bancarios
-            creditCardsList.innerHTML = '<p class="no-data-placeholder">No se encontraron tarjetas de crédito para este cliente.</p>';
-            creditsList.innerHTML = '<p class="no-data-placeholder">No se encontraron créditos contratados para este cliente.</p>';
-        }
 
-        customerResultsDiv.classList.add('show');
+          customerResultsDiv.classList.add('show');
+        } else {
+          customerResultsDiv.classList.remove('show');
+          alert(`Cliente con ID "${searchTerm}" no encontrado.`);
+        }
 
       } catch (error) {
         console.error('Error al obtener datos del cliente:', error);
