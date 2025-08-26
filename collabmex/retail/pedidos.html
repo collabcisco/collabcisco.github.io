@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Merka+ - Gestión de Pedidos</title>
+  <!-- Información del Autor -->
+  <!-- Desarrollado por: [Tu Nombre/Nombre de la Empresa] -->
+  <!-- Fecha de Creación: [Fecha de Creación] -->
+  <!-- Versión: 1.0 -->
+  <!-- Contacto: [Tu Correo Electrónico o Información de Contacto] -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -279,7 +284,8 @@
 </main>
 
 <footer>
-  &copy; 2025 Merka+. Todos los derechos reservados.
+  &copy; 2025 Merka+. Todos los derechos reservados.<br>
+  Desarrollado por <a href="mailto:vdiazrod@cisco.com">Veronica Diaz</a> (vdiazrod@cisco.com)
 </footer>
 
 <script>
@@ -424,7 +430,21 @@
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const orders = await response.json();
+      let orders = await response.json();
+
+      // --- INICIO DE LA MODIFICACIÓN PARA EL ORDENAMIENTO CORRECTO ---
+      orders.sort((a, b) => {
+        // Extraer el número del orderId (ej. "MERK#14" -> 14)
+        // Usamos match(/\d+/g) para encontrar todos los números y .pop() para tomar el último.
+        // Esto asume que el número relevante siempre es el último grupo de dígitos.
+        const numA = parseInt(a.orderId.match(/\d+/g).pop());
+        const numB = parseInt(b.orderId.match(/\d+/g).pop());
+
+        // Ordenar en orden descendente (el número más grande primero)
+        return numB - numA;
+      });
+      // --- FIN DE LA MODIFICACIÓN ---
+
       renderOrders(orders);
     } catch (error) {
       console.error('Error al obtener los pedidos:', error);
