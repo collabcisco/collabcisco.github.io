@@ -368,20 +368,19 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
-    /* Footer */
-    footer {
-      background-color: var(--dark-text);
-      color: white;
+    /* Estilo para el texto del copyright sin el footer */
+    .copyright-info {
       text-align: center;
       padding: 1.4rem; /* Ajustado */
       margin-top: 1.4rem; /* Ajustado */
       font-size: 0.88rem; /* Ajustado */
+      color: var(--dark-text); /* Color de texto para que se vea sobre el fondo claro */
     }
 
     .author-info-footer {
       margin-top: 0.7rem; /* Ajustado */
       font-size: 0.82rem; /* Ajustado */
-      color: rgba(255, 255, 255, 0.7);
+      color: #666; /* Un gris más oscuro para el texto del autor */
     }
 
     .author-info-footer a {
@@ -586,13 +585,14 @@
   </section>
 </div>
 
-<footer>
+<!-- Contenido del footer sin la etiqueta footer y con un div simple para el estilo -->
+<div class="copyright-info">
   <p>&copy; 2025 Todos los derechos reservados</p>
   <!-- Información de autoría en el pie de página -->
   <div class="author-info-footer">
     Por <a href="mailto:vdiazrod@cisco.com">Veronica Diaz</a> (vdiazrod@cisco.com)
   </div>
-</footer>
+</div>
 
 <!-- Script para la funcionalidad del dropdown y el botón de copiar -->
 <script>
