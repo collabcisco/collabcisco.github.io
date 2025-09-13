@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Demo WxCC by Veronica Diaz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --webex-blue: #005ede;
+      --webex-green: #06c8ae;
+      --webex-dark: #23272f;
+      --webex-gray-bg: #f6f9fb;
+      --webex-card: #fff;
+      --webex-header: #f7fafc;
+      --webex-link: #005ede;
+      --webex-link-hover: #06c8ae;
+      --webex-border: #e5eef7;
+      --webex-shadow: 0 4px 24px rgba(0,0,0,0.05);
+      --webex-radius: 18px;
+      --webex-text: #23272f;
+      --webex-secondary: #525c6a;
+    }
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--webex-gray-bg);
+      margin: 0;
+      color: var(--webex-text);
+    }
+    header {
+      background: var(--webex-header);
+      color: var(--webex-blue);
+      padding: 2.2rem 1rem 2rem 1rem;
+      text-align: center;
+      border-bottom: 2px solid var(--webex-border);
+      position: relative;
+      padding-top: 3.5rem;
+    }
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--webex-shadow);
+      margin: 0 auto;
+      background: #ffffff;
+      border: 2.5px solid var(--webex-blue);
+    }
+    .logo img {
+      height: 64px;
+      width: auto;
+      display: block;
+    }
+    main {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1.2rem;
+    }
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin: 0.5rem 0 0.2rem 0;
+      letter-spacing: 0.01em;
+      color: var(--webex-blue);
+    }
+    .subtitle {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #06c8ae;
+      margin-top: 0.3rem;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+    .author-info-top-right {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.2rem;
+      color: var(--webex-secondary);
+      text-align: right;
+    }
+    .author-info-top-right a {
+      color: var(--webex-blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .author-info-top-right a:hover {
+      color: var(--webex-green);
+      text-decoration: underline;
+    }
+    h2 {
+      color: var(--webex-blue);
+      font-size: 1.4rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    .credenciales-section {
+      background: var(--webex-card);
+      box-shadow: var(--webex-shadow);
+      border-radius: var(--webex-radius);
+      padding: 1.6rem 1.2rem 1.2rem 1.2rem;
+      margin: 2.5rem 0 2.5rem 0;
+      text-align: center;
+      border: 1.5px solid var(--webex-border);
+    }
+    #calendlyWidget {
+      min-width: 280px;
+      height: 400px;
+      margin-top: 2rem;
+      display: none; /* Initially hidden */
+    }
+    button#showCalendlyBtn {
+      background: var(--webex-green);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.2rem;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-size: 1rem;
+    }
+    button#showCalendlyBtn:hover {
+      background: var(--webex-blue);
+    }
+    /* Escenarios */
+    .escenarios {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.7rem;
+      justify-content: center;
+    }
+    .escenario {
+      background: var(--webex-card);
+      border-radius: var(--webex-radius);
+      box-shadow: var(--webex-shadow);
+      padding: 1.3rem 1.2rem 1.5rem 1.2rem;
+      flex: 1 1 260px;
+      min-width: 260px;
+      max-width: 325px;
+      transition: transform 0.2s, box-shadow 0.2s, border-top 0.2s, border-left 0.2s;
+      position: relative;
+      margin-bottom: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-top: 2.5px solid var(--webex-blue);
+      border-left: 2.5px solid var(--webex-green);
+      align-items: flex-start;
+    }
+    .escenario:hover {
+      border-top: 2.5px solid var(--webex-green);
+      border-left: 2.5px solid var(--webex-blue);
+      box-shadow: 0 8px 28px rgba(0, 94, 222, 0.12);
+      transform: translateY(-7px) scale(1.03);
+    }
+    .escenario h3 {
+      color: var(--webex-blue);
+      margin-top: 0;
+      font-size: 1.19rem;
+      font-weight: 700;
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .escenario p {
+      color: var(--webex-secondary);
+      font-size: 1.01rem;
+      margin-bottom: 0.8rem;
+      line-height: 1.55;
+    }
+    .escenario-link {
+      background: var(--webex-green);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 0.45rem 1.1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 0.5rem;
+      transition: background 0.18s;
+      box-shadow: 0 1.5px 8px rgba(0,94,222,0.09);
+      display: inline-block;
+    }
+    .escenario-link:hover {
+      background: var(--webex-blue);
+      color: #fff;
+      text-decoration: underline;
+    }
+    footer {
+      background: var(--webex-header);
+      color: var(--webex-secondary);
+      text-align: center;
+      padding: 1.5rem 1rem;
+      margin-top: 3rem;
+      border-top: 2px solid var(--webex-border);
+      font-size: 0.95rem;
+    }
+    footer a {
+      color: var(--webex-blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    footer a:hover {
+      color: var(--webex-green);
+      text-decoration: underline;
+    }
+    @media (max-width: 900px) {
+      main {
+        padding: 0 0.4rem;
+      }
+      .credenciales-section {
+        max-width: 98vw;
+      }
+      .escenarios {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .escenario {
+        align-items: stretch;
+      }
+      .author-info-top-right {
+        position: static;
+        text-align: center;
+        margin-bottom: 1rem;
+        padding: 0 1rem;
+      }
+      header {
+        padding-top: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="author-info-top-right">
+      Creado por <a href="mailto:vdiazrod@cisco.com">Veronica Diaz</a><br />(vdiazrod@cisco.com)
+    </div>
+    <div class="logo-container">
+      <div class="logo">
+        <img src="logo.png" alt="Mi Logo" style="height:64px" />
+      </div>
+    </div>
+    <h1>
+      Demostraciones<br />
+      <span style="font-weight:700; color:#005ede;">Webex Contact Center</span>
+    </h1>
+    <span class="subtitle">Jaguar Collaboration Team</span>
+    <p style="font-size:1.2rem; margin-top: 0.5rem;">
+    </p>
+  </header>
+  <main>
+    <section class="credenciales-section">
+      <h2>Reservar un Agente y un Supervisor</h2>
+      <button id="showCalendlyBtn" type="button">Reservar</button>
+      <div id="calendlyWidget">
+        <div class="calendly-inline-widget" data-url="https://calendly.com/jaguarwxcc/30min" style="min-width:280px; height:400px;"></div>
+      </div>
+    </section>
+
+    <!-- Escenarios de demo -->
+    <section>
+      <h2>Escenarios disponibles</h2>
+      <div class="escenarios">
+        <div class="escenario">
+          <h3>🛒 Retail</h3>
+          <p>Automatiza consultas, seguimiento de pedidos y atención al cliente para mejorar la experiencia de compra.</p>
+          <a href="retail.html" class="escenario-link" target="_blank">Ver pasos de demo</a>
+        </div>
+        <div class="escenario">
+          <h3>🏦 Banca</h3>
+          <p>Automatiza operaciones bancarias y soporte, permitiendo asesoría personalizada en casos especiales.</p>
+          <a href="banca.html" class="escenario-link" target="_blank">Ver pasos de demo</a>
+        </div>
+        <div class="escenario">
+          <h3>💊 Salud/Farmacia</h3>
+          <p>Atiende consultas frecuentes, gestiona recetas y disponibilidad usando agentes virtuales y automatización.</p>
+          <a href="salud.html" class="escenario-link" target="_blank">Próximamente</a>
+        </div>
+        <div class="escenario">
+          <h3>🛠️ Soporte</h3>
+          <p>Resuelve incidencias y gestiona tickets automáticamente, priorizando la atención rápida y eficiente.</p>
+          <a href="soporte.html" class="escenario-link" target="_blank">Próximamente</a>
+        </div>
+        <div class="escenario">
+          <h3>🎓 Educación</h3>
+          <p>Automatiza inscripciones, consultas y soporte tecnológico para alumnos y personal escolar.</p>
+          <a href="educacion.html" class="escenario-link" target="_blank">Próximamente</a>
+        </div>
+        <div class="escenario">
+          <h3>🛡️ Seguros</h3>
+          <p>Gestiona pólizas y reclamaciones con autoservicio, redirigiendo casos complejos a agentes expertos.</p>
+          <a href="seguros.html" class="escenario-link" target="_blank">Próximamente</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  <script>
+    document.getElementById('showCalendlyBtn').addEventListener('click', function() {
+      var widget = document.getElementById('calendlyWidget');
+      if (widget.style.display === 'block') {
+        widget.style.display = 'none';
+        this.innerText = 'Reservar';
+      } else {
+        widget.style.display = 'block';
+        this.innerText = 'Cerrar Calendario';
+      }
+    });
+  </script>
+</body>
+</html>
