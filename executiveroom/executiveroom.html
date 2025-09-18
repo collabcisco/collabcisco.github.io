@@ -43,13 +43,30 @@
       margin: 0;
       letter-spacing: 1.2px;
       text-shadow: 1px 1px 3px rgba(0, 74, 153, 0.3);
+      line-height: 1.2;
     }
-    #consultas {
+    header h1 span {
+      display: block;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+    main {
       max-width: 900px;
       width: 100%;
+    }
+    .content-container {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    #consultas {
+      flex: 1;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 25px;
+      text-align: left; /* Alinear texto a la izquierda */
     }
     .consulta-item {
       background: #ffffff;
@@ -79,9 +96,14 @@
       font-size: 1.05rem;
       line-height: 1.6;
       color: #34495e;
-      white-space: pre-wrap;
       font-weight: 500;
       letter-spacing: 0.02em;
+    }
+    /* Style for bullet lists inside instrucciones */
+    .instrucciones ul {
+      padding-left: 20px;
+      margin: 0;
+      list-style-type: disc;
     }
     .error-message {
       color: #d93025;
@@ -91,9 +113,26 @@
       max-width: 900px;
       margin: 0 auto;
     }
+    .gif-container {
+      display: flex;
+      justify-content: flex-end;
+      flex-shrink: 0;
+      width: 280px; /* tamaño un poco más pequeño que antes */
+    }
+    .gif-container img {
+      width: 280px; /* ajustar tamaño del gif */
+      height: auto;
+      display: block;
+      background: none;
+      box-shadow: none;
+      border-radius: 0;
+    }
     @media (max-width: 480px) {
       header h1 {
         font-size: 2rem;
+      }
+      header h1 span {
+        font-size: 1.6rem;
       }
       .consulta-item {
         padding: 20px;
@@ -110,6 +149,21 @@
       .logo-container img {
         height: 45px;
       }
+      .content-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .gif-container {
+        width: 100%;
+        margin-top: 20px;
+        justify-content: center;
+      }
+      .gif-container img {
+        width: 180px; /* tamaño más pequeño en móvil */
+      }
+      #consultas {
+        text-align: left; /* mantener alineación izquierda en móvil */
+      }
     }
   </style>
 </head>
@@ -119,12 +173,20 @@
       <img src="webex.png" alt="Cisco Webex Logo" />
       <img src="ciscoconnect.png" alt="Cisco Connect Logo" />
     </div>
-    <h1>Asistencia para Sala Ejecutiva</h1>
+    <h1>
+      Asistencia a Usuarios
+      <span>Sala Ejecutiva</span>
+    </h1>
   </header>
 
   <main>
-    <div id="consultas">
-      <p>Cargando consultas e instrucciones...</p>
+    <div class="content-container">
+      <div id="consultas">
+        <p>Cargando consultas e instrucciones...</p>
+      </div>
+      <div class="gif-container">
+        <img src="RobotSaludando.gif" alt="Robot Saludando" />
+      </div>
     </div>
   </main>
 
@@ -146,12 +208,15 @@
           const div = document.createElement('div');
           div.classList.add('consulta-item');
 
+          const instruccionesArray = item.Instrucciones.split('. ').map(s => s.trim()).filter(s => s.length > 0);
+          const instruccionesHTML = '<ul><li>' + instruccionesArray.join('</li><li>') + '</li></ul>';
+
           div.innerHTML = `
             <div class="consulta-title">Consulta:</div>
             <div class="instrucciones">${item.Consulta}</div>
             <hr style="margin: 15px 0; border: none; border-top: 1px solid #e1e8f0;">
             <div class="consulta-title">Instrucciones:</div>
-            <div class="instrucciones">${item.Instrucciones}</div>
+            <div class="instrucciones">${instruccionesHTML}</div>
           `;
 
           contenedor.appendChild(div);
