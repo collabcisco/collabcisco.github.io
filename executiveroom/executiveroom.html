@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Asistencia para Sala Ejecutiva</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&display=swap');
+
+    body {
+      font-family: 'Open Sans', Arial, sans-serif;
+      background: linear-gradient(135deg, #e0f0ff, #ffffff);
+      margin: 0;
+      padding: 30px 20px;
+      color: #2c3e50;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      max-width: 900px;
+      width: 100%;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 20px;
+    }
+    .logo-container img {
+      height: 60px;
+      object-fit: contain;
+    }
+    header h1 {
+      font-family: 'Montserrat', sans-serif;
+      color: #004a99;
+      font-weight: 800;
+      font-size: 3rem;
+      margin: 0;
+      letter-spacing: 1.2px;
+      text-shadow: 1px 1px 3px rgba(0, 74, 153, 0.3);
+    }
+    #consultas {
+      max-width: 900px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+    }
+    .consulta-item {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 74, 153, 0.1);
+      padding: 25px 30px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      border-left: 6px solid #0078d7;
+    }
+    .consulta-item:hover {
+      box-shadow: 0 12px 30px rgba(0, 74, 153, 0.2);
+      transform: translateY(-5px);
+    }
+    .consulta-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #005aab;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #0078d7;
+      padding-bottom: 6px;
+    }
+    .instrucciones {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #34495e;
+      white-space: pre-wrap;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .error-message {
+      color: #d93025;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      .consulta-item {
+        padding: 20px;
+      }
+      .consulta-title {
+        font-size: 1.2rem;
+      }
+      .instrucciones {
+        font-size: 1rem;
+      }
+      .logo-container {
+        gap: 15px;
+      }
+      .logo-container img {
+        height: 45px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="webex.png" alt="Cisco Webex Logo" />
+      <img src="ciscoconnect.png" alt="Cisco Connect Logo" />
+    </div>
+    <h1>Asistencia para Sala Ejecutiva</h1>
+  </header>
+
+  <main>
+    <div id="consultas">
+      <p>Cargando consultas e instrucciones...</p>
+    </div>
+  </main>
+
+  <script>
+    const apiURL = 'https://68cc4bf9716562cf50772e08.mockapi.io/executiveroom';
+
+    async function cargarConsultas() {
+      try {
+        const response = await fetch(apiURL);
+        if (!response.ok) {
+          throw new Error('Error al obtener los datos');
+        }
+        const datos = await response.json();
+
+        const contenedor = document.getElementById('consultas');
+        contenedor.innerHTML = '';
+
+        datos.forEach(item => {
+          const div = document.createElement('div');
+          div.classList.add('consulta-item');
+
+          div.innerHTML = `
+            <div class="consulta-title">Consulta:</div>
+            <div class="instrucciones">${item.Consulta}</div>
+            <hr style="margin: 15px 0; border: none; border-top: 1px solid #e1e8f0;">
+            <div class="consulta-title">Instrucciones:</div>
+            <div class="instrucciones">${item.Instrucciones}</div>
+          `;
+
+          contenedor.appendChild(div);
+        });
+      } catch (error) {
+        document.getElementById('consultas').innerHTML = `<p class="error-message">Error cargando las consultas: ${error.message}</p>`;
+      }
+    }
+
+    window.onload = cargarConsultas;
+  </script>
+</body>
+</html>
