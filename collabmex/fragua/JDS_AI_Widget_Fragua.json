@@ -1,8 +1,8 @@
 {
   "agent": {
     "version": "0.1.0",
-    "appTitle": "Webex Contact Center - Retail",
-    "logo": "https://collabcisco.github.io/collabmex/retail/logo.jpg",
+    "appTitle": "Webex Contact Center - Farmacias Guadalajara",
+    "logo": "https://collabcisco.github.io/collabmex/fragua/logo.jpg",
     "stopNavigateOnAcceptTask": false,
     "dragDropEnabled": true,
     "notificationTimer": 8,
@@ -353,7 +353,7 @@
                 "width": 5,
                 "height": 13,
                 "attributes": {
-                  "src": "https://collabcisco.github.io/collabmex/retail/consultarpedidos.html"
+                  "src": "https://collabcisco.github.io/collabmex/fragua/consultarpedidos.html"
                 },
                   "wrapper": {
                                     "title": "Clientes",
