@@ -149,35 +149,32 @@
       .logo-container img {
         height: 45px;
       }
- .content-container {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-  justify-content: flex-start; /* Align items to the left to allow space on the right */
-}
-
-#consultas {
-  flex: 2; /* Increase flex grow to make it wider */
-  max-width: 650px; /* Optional: set a max width */
-  text-align: left;
-}
-
-.gif-container {
-  display: flex;
-  justify-content: flex-end;
-  flex-shrink: 0;
-  width: 320px; /* Increase width to move it more right */
-  margin-left: 20px; /* Add some space between consultas and gif */
-}
-
-.gif-container img {
-  width: 200px; /* Keep the gif size as you prefer */
-  height: auto;
-  display: block;
-  background: none;
-  box-shadow: none;
-  border-radius: 0;
-}
+      .content-container {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        justify-content: flex-start; /* Align items to the left to allow space on the right */
+      }
+      #consultas {
+        flex: 2; /* Increase flex grow to make it wider */
+        max-width: 650px; /* Optional: set a max width */
+        text-align: left;
+      }
+      .gif-container {
+        display: flex;
+        justify-content: flex-end;
+        flex-shrink: 0;
+        width: 320px; /* Increase width to move it more right */
+        margin-left: 20px; /* Add some space between consultas and gif */
+      }
+      .gif-container img {
+        width: 200px; /* Keep the gif size as you prefer */
+        height: auto;
+        display: block;
+        background: none;
+        box-shadow: none;
+        border-radius: 0;
+      }
     }
   </style>
 </head>
@@ -216,18 +213,25 @@
         const datos = await response.json();
 
         const contenedor = document.getElementById('consultas');
-        contenedor.innerHTML = '';
+        contenedor.innerHTML = ''; // Limpiar el contenido existente
+
+        if (datos.length === 0) {
+          contenedor.innerHTML = '<p class="error-message">No hay consultas disponibles en este momento.</p>';
+          return;
+        }
 
         datos.forEach(item => {
           const div = document.createElement('div');
           div.classList.add('consulta-item');
 
-          const instruccionesArray = item.Instrucciones.split('. ').map(s => s.trim()).filter(s => s.length > 0);
-          const instruccionesHTML = '<ul><li>' + instruccionesArray.join('</li><li>') + '</li></ul>';
+          // Asegurarse de que item.Instrucciones sea una cadena antes de usar split
+          const instruccionesTexto = String(item.Instrucciones || '');
+          const instruccionesArray = instruccionesTexto.split('. ').map(s => s.trim()).filter(s => s.length > 0);
+          const instruccionesHTML = instruccionesArray.length > 0 ? '<ul><li>' + instruccionesArray.join('</li><li>') + '</li></ul>' : '<p>No hay instrucciones.</p>';
 
           div.innerHTML = `
             <div class="consulta-title">Consulta:</div>
-            <div class="instrucciones">${item.Consulta}</div>
+            <div class="instrucciones">${item.Consulta || 'N/A'}</div>
             <hr style="margin: 15px 0; border: none; border-top: 1px solid #e1e8f0;">
             <div class="consulta-title">Instrucciones:</div>
             <div class="instrucciones">${instruccionesHTML}</div>
@@ -240,7 +244,12 @@
       }
     }
 
+    // Cargar las consultas cuando la página se carga por primera vez
     window.onload = cargarConsultas;
+
+    // Actualizar las consultas cada 10 segundos (10000 milisegundos)
+    // Puedes ajustar este valor según la frecuencia de actualización deseada
+    setInterval(cargarConsultas, 10000);
   </script>
 </body>
 </html>
