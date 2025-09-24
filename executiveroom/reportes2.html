@@ -23,7 +23,6 @@
     .header {
       display: flex;
       align-items: center;
-      justify-content: space-between; /* Cambiado para distribuir elementos */
       background: var(--table-header-bg);
       color: #fff;
       padding: 16px 32px;
@@ -31,25 +30,10 @@
       border-bottom-right-radius: 16px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-    .header-left {
-      display: flex;
-      align-items: center;
-    }
-    .header-right {
-      display: flex;
-      align-items: center;
-    }
     .logo {
       height: 48px;
       width: auto;
       margin-right: 20px;
-      border-radius: 8px;
-      padding: 6px 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    }
-    .logo-right {
-      height: 48px;
-      width: auto;
       border-radius: 8px;
       padding: 6px 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.04);
@@ -145,22 +129,9 @@
     @media (max-width: 900px) {
       .container { padding: 12px 2vw; }
       th, td { font-size: 0.98rem; padding: 8px 6px; }
-      .header { 
-        flex-direction: column; 
-        align-items: center; 
-        padding: 10px; 
-      }
-      .header-left {
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 10px;
-      }
-      .header-right {
-        margin-top: 10px;
-      }
+      .header { flex-direction: column; align-items: flex-start; padding: 10px 10px; }
       .header-title { font-size: 1.2rem; }
       .logo { height: 40px; margin-right: 0; margin-bottom: 5px; }
-      .logo-right { height: 40px; }
     }
     @media (max-width: 600px) {
       table, thead, tbody, th, td, tr { display: block; }
@@ -189,15 +160,9 @@
 </head>
 <body>
   <div class="header">
-    <!-- Logo izquierdo (actual) -->
-    <div class="header-left">
-      <img class="logo" src="logo.png" alt="Logo">
-      <span class="header-title">Reportes: Sala Ejecutiva</span>
-    </div>
-    <!-- Nuevo logo derecho -->
-    <div class="header-right">
-      <img class="logo-right" src="ciscoconnect.png" alt="Logo Empresa">
-    </div>
+    <!-- LOGO: Reemplaza src por la URL de tu logo si lo deseas -->
+    <img class="logo" src="logo.png" alt="Logo">
+    <span class="header-title">Reportes: Sala Ejecutiva</span>
   </div>
   <div class="container">
     <h2>Incidencias Reportadas</h2>
