@@ -8,7 +8,7 @@
     "notificationTimer": 8,
     "maximumNotificationCount": 3,
     "browserNotificationTimer": 8,
-    "taskPageIllustration": "",
+    "taskPageIllustration": "https://collabcisco.github.io/collabmex/banca/logo.png",
     "wxmConfigured": false,
     "desktopChatApp": {
       "webexConfigured": true
