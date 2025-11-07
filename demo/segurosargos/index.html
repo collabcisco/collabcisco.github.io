@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bachoco</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome para los iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --primary-blue: #0056b3; /* Azul más oscuro y formal para banca */
+      --secondary-green: #28a745; /* Verde para acentos */
+      --light-gray: #f8f9fa; /* Fondo claro */
+      --dark-text: #343a40; /* Texto oscuro */
+      --border-radius-lg: 12px;
+      --border-radius-sm: 8px;
+      --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08);
+      --shadow-medium: 0 6px 20px rgba(0, 0, 0, 0.12);
+      --shadow-deep: 0 8px 25px rgba(0, 8, 25, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%; /* Asegura que el body ocupe toda la altura de la ventana */
+      overflow: hidden; /* Evita el scroll si el contenido es mínimo y el fondo es fijo */
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--dark-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+
+      /* Estilos para la imagen de fondo */
+      background-image: url('fondo.png'); /* REEMPLAZA CON LA URL DE TU CAPTURA DE PANTALLA */
+      background-size: cover; /* Cubre todo el viewport */
+      background-position: center; /* Centra la imagen */
+      background-repeat: no-repeat; /* No repite la imagen */
+      background-attachment: fixed; /* Mantiene la imagen de fondo fija al hacer scroll (si hubiera contenido scrollable) */
+      background-color: #f8f9fa; /* Color de fallback si la imagen no carga */
+    }
+
+    /* Estilos para el botón de "Contáctanos" y su menú desplegable */
+    .contact-dropdown {
+      position: fixed; /* Posición fija en la ventana */
+      top: 20px; /* Distancia desde la parte superior */
+      right: 20px; /* Distancia desde la derecha */
+      z-index: 1001; /* Asegura que esté por encima de otros elementos */
+      display: inline-block;
+    }
+
+    .btn-contact {
+      background-color: var(--primary-blue);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: var(--border-radius-sm);
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0, 86, 179, 0.3);
+    }
+
+    .btn-contact:hover {
+      background-color: #003f8c;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 86, 179, 0.4);
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #ffffff;
+      min-width: 280px;
+      box-shadow: var(--shadow-medium);
+      z-index: 1;
+      right: 0; /* Alineado a la derecha del botón */
+      border-radius: var(--border-radius-sm);
+      overflow: hidden;
+      margin-top: 10px;
+      transform-origin: top right;
+      transform: scale(0.95);
+      opacity: 0;
+      transition: all 0.3s ease-out;
+      border: 1px solid #eee;
+    }
+
+    .dropdown-content.show {
+      display: block;
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .dropdown-item {
+      color: var(--dark-text);
+      padding: 12px 16px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background-color 0.2s ease;
+      position: relative;
+      border-bottom: 1px solid #f0f0f0;
+      gap: 5px;
+    }
+
+    .dropdown-item:last-child {
+        border-bottom: none;
+    }
+
+    .dropdown-item:hover {
+      background-color: var(--light-gray);
+      color: var(--primary-blue);
+    }
+
+    .dropdown-item-content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      color: var(--dark-text);
+    }
+
+    .dropdown-item-content .fas, .dropdown-item-content .fab {
+      font-size: 1.1em;
+      color: var(--primary-blue);
+      flex-shrink: 0;
+    }
+
+    .dropdown-item-content span {
+      flex-shrink: 0;
+    }
+
+    .dropdown-item-content a {
+      color: var(--dark-text);
+      text-decoration: none;
+      margin-left: 0;
+      white-space: nowrap;
+    }
+
+    .dropdown-item-content a:hover {
+      color: var(--primary-blue);
+    }
+
+    .copy-button {
+      background: none;
+      border: none;
+      color: #777;
+      cursor: pointer;
+      font-size: 0.9em;
+      padding: 4px;
+      border-radius: 4px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .copy-button:hover {
+      background-color: #e0e0e0;
+      color: var(--primary-blue);
+    }
+
+    .copy-feedback {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #5cb85c;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8em;
+      opacity: 0;
+      transition: opacity 0.3s ease, top 0.3s ease;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 1002;
+    }
+
+    .copy-feedback.show {
+      opacity: 1;
+      top: -35px;
+    }
+
+    .whatsapp-qr-code {
+      max-width: 100px;
+      height: auto;
+      margin-top: 5px;
+      border-radius: var(--border-radius-sm);
+      background-color: white;
+      padding: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* Ajustes responsivos para el botón de contacto */
+    @media (max-width: 768px) {
+      .contact-dropdown {
+        top: 10px;
+        right: 10px;
+      }
+      .contact-dropdown .btn-contact {
+        font-size: 1rem;
+        padding: 0.7rem 1.2rem;
+      }
+      .dropdown-content {
+        min-width: 250px;
+        right: 0;
+        left: auto;
+        transform: scale(0.95);
+        transform-origin: top right;
+      }
+      .dropdown-content.show {
+        transform: scale(1);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .contact-dropdown {
+        top: 5px;
+        right: 5px;
+      }
+      .contact-dropdown .btn-contact {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+      .whatsapp-qr-code {
+        max-width: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Botón de Contáctanos con Dropdown -->
+  <div class="contact-dropdown">
+    <button class="btn-contact" id="contactBtn">Contáctanos</button>
+    <div class="dropdown-content" id="contactDropdown">
+      <a href="tel:+525590886970,3" class="dropdown-item">
+        <div class="dropdown-item-content">
+          <i class="fas fa-phone"></i> <!-- Icono de teléfono -->
+          <span>Llámanos: +52 55 9088 6970 (opción 3)</span>
+          <button class="copy-button" data-copy-target="+525590886970,3">
+            <i class="fas fa-copy"></i>
+          </button>
+        </div>
+        <span class="copy-feedback">¡Copiado!</span>
+      </a>
+      <a href="mailto:wxconnect.demo@gmail.com" class="dropdown-item">
+        <div class="dropdown-item-content">
+          <i class="fas fa-envelope"></i> <!-- Icono de email -->
+          <span>Email: wxconnect.demo@gmail.com</span>
+          <button class="copy-button" data-copy-target="wxconnect.demo@gmail.com">
+            <i class="fas fa-copy"></i>
+          </button>
+        </div>
+        <span class="copy-feedback">¡Copiado!</span>
+      </a>
+      <a href="https://wa.me/14086764583?text=collabmex" target="_blank" class="dropdown-item">
+        <div class="dropdown-item-content">
+          <i class="fab fa-whatsapp"></i> <!-- Icono de WhatsApp -->
+          <span>WhatsApp: +1 408 676 4583</span>
+          <button class="copy-button" data-copy-target="+14086764583">
+            <i class="fas fa-copy"></i>
+          </button>
+        </div>
+        <!-- Aquí va tu imagen de QR de WhatsApp. Puedes usar 'qr-code.png' si la tienes. -->
+        <img src="qr-code.png" alt="WhatsApp QR Code" class="whatsapp-qr-code">
+        <span class="copy-feedback">¡Copiado!</span>
+      </a>
+    </div>
+  </div>
+
+<!-- Script para la funcionalidad del dropdown y el botón de copiar -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const contactBtn = document.getElementById('contactBtn');
+    const contactDropdown = document.getElementById('contactDropdown');
+    const copyButtons = document.querySelectorAll('.copy-button');
+
+    // Funcionalidad del Dropdown "Contáctanos"
+    contactBtn.addEventListener('click', function(event) {
+      contactDropdown.classList.toggle('show');
+      event.stopPropagation(); // Evita que el clic se propague y cierre el dropdown inmediatamente
+    });
+
+    // Cerrar el dropdown si se hace clic fuera de él
+    window.addEventListener('click', function(event) {
+      if (!event.target.matches('#contactBtn') && !event.target.closest('.dropdown-content')) {
+        if (contactDropdown.classList.contains('show')) {
+          contactDropdown.classList.remove('show');
+        }
+      }
+    });
+
+    // Manejo del botón de copiar
+    copyButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.stopPropagation(); // Evita que el clic cierre el dropdown o active el enlace
+
+        const textToCopy = this.dataset.copyTarget;
+        const feedbackSpan = this.closest('.dropdown-item').querySelector('.copy-feedback');
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          feedbackSpan.classList.add('show');
+          setTimeout(() => {
+            feedbackSpan.classList.remove('show');
+          }, 1500); // Ocultar después de 1.5 segundos
+        }).catch(err => {
+          console.error('Error al copiar: ', err);
+          alert('Error al copiar el texto. Por favor, inténtalo de nuevo o cópialo manualmente.');
+        });
+      });
+    });
+  });
+</script>
+<!-- Script del Live Chat -->
+<div id="divicw" data-bind="7DD709FF-F018-464D-A9E9-3D79E3BDAFA2" data-org=""></div><script>var i={t:function(t){var e="https://media.imi.chat/widget/js/imichatinit.js";try{var o=new XMLHttpRequest;o.onreadystatechange=function(){if(this.readyState==4){var t=document.getElementById("divicw");if(this.status==0){i.o(t);return}var e=document.createElement("script");e.innerHTML=this.responseText;t.parentNode.insertBefore(e,t.nextSibling)}};o.open("GET",e,true);o.send()}catch(s){console.error(s)}},o:function(t){t.insertAdjacentHTML("afterend",'<iframe id="tls_al_frm" frameborder="0" style="overflow: hidden;height: 208px;width: 394px;position: fixed;display: block;right: 48px;bottom: 12px;z-index: 99999; display:none;"></iframe>');var e=document.getElementById("tls_al_frm");var o=e.contentWindow||(e.contentDocument.document||e.contentDocument);o.document.open();o.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Untitled Document</title><style>body{font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;color: #99a0b0;font-size: 14px;}.popover__content{background-color: #fbfbfe; padding: 1.5rem; border-radius: 5px; width: 300px; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);position: relative;}.popover__message{font-weight: 600;color:#56627c;font-size: 16px;}.pull-left{float:left;}.clearfix{clear: both;}.hdr-txt{width: 218px; margin-top: 3px;}.para-txt a{text-decoration: none;color: #005cde;}.close-btn{position: absolute;right:15px;top:15px;}.close-btn a{text-decoration: none;font-weight: 400; color: #56627c; font-size: 16px;}</style></head><body><div class="popover__content"><div class="close-btn"><a href="#" onclick="closeTLSAlert();">X</a></div><div class="popover__message"><div class="pull-left hdr-txt">This browser version is not supported on LiveChat.</div></div><div class="clearfix"></div><p class="para-txt">Please update your browser to the latest version and re-open the website to access the widget. </p></div><script>function closeTLSAlert(){window.parent.postMessage({key: "close_tls_alert",value: "close_tls_alert",action: "close_tls_alert"}, "*");}<\/script></body></html>');o.document.close();e.style.display="block";window.addEventListener("message",function(t){if(t.data.action=="close_tls_alert"){i.s()}})},s:function(){var t=document.getElementById("tls_al_frm");t.remove()}};i.t(function(t){});</script>
+</body>
+</html>
