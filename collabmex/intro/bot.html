@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Instrucciones Bot AskCollab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --webex-blue: #005ede;
+      --webex-green: #06c8ae;
+      --webex-dark: #23272f;
+      --webex-gray-bg: #f6f9fb;
+      --webex-card: #fff;
+      --webex-header: #f7fafc;
+      --webex-link: #005ede;
+      --webex-link-hover: #06c8ae;
+      --webex-border: #e5eef7;
+      --webex-shadow: 0 4px 24px rgba(0,0,0,0.05);
+      --webex-radius: 18px;
+    }
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--webex-gray-bg);
+      margin: 0;
+      color: #23272f;
+    }
+    header {
+      background: var(--webex-header);
+      color: var(--webex-blue);
+      padding: 2.1rem 1rem 1.6rem 1rem;
+      text-align: center;
+      border-bottom: 2px solid var(--webex-border);
+    }
+    .logo {
+      width: 54px; /* Ajusta si tu imagen tiene otras dimensiones */
+      height: 54px; /* Ajusta si tu imagen tiene otras dimensiones */
+      border-radius: 50%;
+      background: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--webex-shadow);
+      border: 2px solid var(--webex-blue);
+      margin-bottom: 1rem;
+      overflow: hidden; /* Para que la imagen se recorte si es más grande que el contenedor */
+    }
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+      border-radius: 50%; /* Para que la imagen también sea redonda */
+    }
+    h1 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--webex-blue);
+      margin-bottom: 0.3rem;
+      margin-top: 0.5rem;
+    }
+    main {
+      max-width: 720px;
+      margin: 2rem auto;
+      background: var(--webex-card);
+      border-radius: var(--webex-radius);
+      box-shadow: var(--webex-shadow);
+      padding: 2.5rem 2rem;
+      border: 1.5px solid var(--webex-border);
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--webex-blue);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--webex-dark);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      font-size: 1.05rem;
+    }
+    ul {
+      padding-left: 1.5em;
+      margin-bottom: 1.5rem;
+    }
+    li {
+      margin-bottom: 0.8rem;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+    a {
+      color: var(--webex-link);
+      text-decoration: none;
+    }
+    a:hover {
+      color: var(--webex-link-hover);
+      text-decoration: underline;
+    }
+    .bot-email {
+      font-weight: 700;
+      color: var(--webex-green);
+      word-break: break-all; /* Para que el email se rompa en varias líneas si es muy largo */
+    }
+    @media (max-width: 600px) {
+      main { padding: 1.2rem 0.5rem; }
+      h1 { font-size: 1.2rem; }
+      h2 { font-size: 1.3rem; }
+      h3 { font-size: 1.1rem; }
+      p, li { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <!-- Reemplaza "logo-askcollab.png" con la ruta a tu logo de AskCollab -->
+      <img src="logo.png" alt="Logo AskCollab">
+    </div>
+    <h1>🤖 Bot AskCollab</h1>
+  </header>
+  <main>
+    <h2>Instrucciones para la Interacción Inicial con el Bot AskCollab</h2>
+
+    <p>Para comenzar a utilizar el bot AskCollab y explorar sus capacidades dentro de Webex, tienes dos opciones muy sencillas:</p>
+
+    <h3>1. Agregar el bot a un espacio de Webex:</h3>
+    <ul>
+      <li>Crea un nuevo espacio de Webex o selecciona uno existente.</li>
+      <li>Invita al bot a ese espacio utilizando su dirección de correo electrónico: <span class="bot-email">askcollab@webex.bot</span>.</li>
+      <li>Una vez que el bot se una al espacio, podrás interactuar con él junto con otros participantes.</li>
+    </ul>
+
+    <h3>2. Enviar un mensaje directo al bot:</h3>
+    <ul>
+      <li>Busca <span class="bot-email">askcollab@webex.bot</span> en Webex.</li>
+      <li>Inicia una conversación directa con el bot, como si le escribieras a una persona.</li>
+    </ul>
+
+    <p>Una vez que hayas establecido la comunicación, el bot AskCollab estará listo para responder a tus preguntas respecto al portafolio de Colaboración.</p>
+  </main>
+</body>
+</html>
