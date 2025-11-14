@@ -2,13 +2,13 @@
   "agent": {
     "version": "0.1.0",
     "appTitle": "Webex Contact Center - Seguros Argos",
-    "logo": "https://collabcisco.github.io/demo/segurosargos/logo.png",
+    "logo": "https://collabcisco.github.io/demo/dominos/logo.png",
     "stopNavigateOnAcceptTask": false,
     "dragDropEnabled": true,
     "notificationTimer": 8,
     "maximumNotificationCount": 3,
     "browserNotificationTimer": 8,
-    "taskPageIllustration": "https://collabcisco.github.io/demo/segurosargos/logo.png",
+    "taskPageIllustration": "https://collabcisco.github.io/demo/dominos/logo.png",
     "wxmConfigured": false,
     "desktopChatApp": {
       "webexConfigured": true
@@ -353,7 +353,7 @@
                 "width": 5,
                 "height": 13,
                 "attributes": {
-                  "src": "https://collabcisco.github.io/demo/segurosargos/clientes.html"
+                  "src": "https://collabcisco.github.io/demo/dominos/consultarpedidos.html"
                 },
                   "wrapper": {
                                     "title": "Clientes",
