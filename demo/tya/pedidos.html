@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión de Pedidos</title>
+  <!-- Información del Autor -->
+  <!-- Desarrollado por: [Tu Nombre/Nombre de la Empresa] -->
+  <!-- Fecha de Creación: [Fecha de Creación] -->
+  <!-- Versión: 1.0 -->
+  <!-- Contacto: [Tu Correo Electrónico o Información de Contacto] -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0077cc; /* Azul principal de Merka+ */
+      --secondary: #00bfa6; /* Teal/Verde secundario de Merka+ */
+      --bg-light: #f9f9f9; /* Fondo claro */
+      --text-dark: #333; /* Texto oscuro */
+      --border-radius: 12px; /* Radio de borde general */
+      --card-bg: #ffffff; /* Fondo de las tarjetas de pedido */
+      --column-bg: #eef2f6; /* Fondo de las columnas de estado */
+      --status-received: #ffc107; /* Amarillo para 'Recibido' */
+      --status-preparing: #17a2b8; /* Azul claro para 'Preparando' */
+      --status-shipped: var(--primary); /* Azul principal para 'Enviado' */
+      --button-bg-received: #ffc107;
+      --button-bg-preparing: #17a2b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* Encabezado - Estilo de Merka+ */
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    header img {
+      height: 50px;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--secondary);
+    }
+
+    /* Sección Principal del Tablero de Pedidos */
+    .orders-dashboard {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .orders-dashboard h1 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 2rem;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    .order-columns-container {
+      display: flex;
+      gap: 1.5rem; /* Espacio entre columnas */
+      flex-wrap: wrap; /* Permite que las columnas se envuelvan en pantallas pequeñas */
+      justify-content: center; /* Centra las columnas cuando se envuelven */
+    }
+
+    .order-column {
+      flex: 1; /* Permite que las columnas crezcan y se encojan */
+      min-width: 300px; /* Ancho mínimo para las columnas antes de envolverse */
+      background-color: var(--column-bg);
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem; /* Espacio entre tarjetas dentro de una columna */
+    }
+
+    .order-column h3 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      font-size: 1.5rem;
+      border-bottom: 2px solid var(--secondary);
+      padding-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .order-card {
+      background-color: var(--card-bg);
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-left: 5px solid; /* Borde izquierdo para indicar el estado */
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* Para empujar el botón hacia abajo */
+    }
+
+    .order-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    .order-card h4 {
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .order-card p {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 0.3rem;
+    }
+
+    .order-card .status-indicator {
+      font-weight: 700;
+      color: var(--primary); /* Color por defecto, se sobrescribe por estado */
+      margin-top: 0.5rem;
+      margin-bottom: 1rem; /* Espacio antes del botón */
+    }
+
+    .order-card button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: var(--border-radius-sm);
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      align-self: flex-end; /* Alinea el botón a la derecha en la parte inferior */
+    }
+
+    .order-card button:hover {
+      opacity: 0.9;
+    }
+
+    /* Colores específicos para el borde de las tarjetas según el estado */
+    .order-column.received .order-card { border-left-color: var(--status-received); }
+    .order-column.preparing .order-card { border-left-color: var(--status-preparing); }
+    .order-column.shipped .order-card { border-left-color: var(--status-shipped); }
+
+    /* Colores específicos para el texto del estado dentro de las tarjetas */
+    .order-column.received .order-card .status-indicator { color: var(--status-received); }
+    .order-column.preparing .order-card .status-indicator { color: var(--status-preparing); }
+    .order-column.shipped .order-card .status-indicator { color: var(--status-shipped); }
+
+    /* Colores de botón según el estado */
+    .order-card button.received-btn { background-color: var(--button-bg-received); }
+    .order-card button.preparing-btn { background-color: var(--button-bg-preparing); }
+    .order-card button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
+    /* Pie de Página - Estilo de Merka+ */
+    footer {
+      background-color: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+      border-top: 4px solid var(--secondary);
+    }
+
+    /* Ajustes Responsivos */
+    @media (max-width: 992px) {
+      .orders-dashboard {
+        padding: 1.5rem;
+      }
+      .order-columns-container {
+        flex-direction: column; /* Apila las columnas en pantallas más pequeñas */
+        gap: 2rem;
+      }
+      .order-column {
+        min-width: unset; /* Elimina el ancho mínimo cuando están apiladas */
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+      }
+      nav {
+        margin-top: 0.8rem;
+      }
+      nav a {
+        margin: 0 0.5rem;
+        font-size: 0.9rem;
+      }
+      .orders-dashboard h1 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+      }
+      .order-column {
+        padding: 1rem;
+      }
+      .order-column h3 {
+        font-size: 1.3rem;
+      }
+      .order-card {
+        padding: 0.8rem;
+      }
+      .order-card h4 {
+        font-size: 1rem;
+      }
+      .order-card p {
+        font-size: 0.85rem;
+      }
+      .order-card button {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+      }
+      footer {
+        margin-top: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="logo.png" alt="Logo Merka+">
+  <nav>
+    <a href="pedidos.html">Dashboard de Pedidos</a> <!-- Enlace a tu página principal de gestión -->
+    <a href="consultarpedidos.html">Buscar Pedidos</a> <!-- Enlace a esta página -->
+  </nav>
+</header>
+
+<main>
+  <section class="orders-dashboard">
+    <h1>Gestión de Pedidos de Domino's Pizza</h1>
+
+    <div class="order-columns-container">
+      <!-- Las tarjetas de pedido se renderizarán aquí dinámicamente -->
+      <div id="received-column" class="order-column received">
+        <h3>Pedido Recibido</h3>
+        <!-- Pedidos recibidos irán aquí -->
+      </div>
+
+      <div id="preparing-column" class="order-column preparing">
+        <h3>Preparando Envío</h3>
+        <!-- Pedidos en preparación irán aquí -->
+      </div>
+
+      <div id="shipped-column" class="order-column shipped">
+        <h3>Pedido Enviado</h3>
+        <!-- Pedidos enviados irán aquí -->
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 Merka+. Todos los derechos reservados.<br>
+  Desarrollado por <a href="mailto:vdiazrod@cisco.com">Veronica Diaz</a> (vdiazrod@cisco.com)
+</footer>
+
+<script>
+  // ¡¡¡IMPORTANTE!!! REEMPLAZA ESTA URL CON LA TUYA DE MOCKAPI.IO
+  const MOCKAPI_URL = 'https://690cbd72a6d92d83e84f32ee.mockapi.io/pedidos'; // Ejemplo: 'https://66a2f7c09673f37d7a469792.mockapi.io/api/v1/orders'
+  const WEBHOOK_URL = 'https://hooks.us.webexconnect.io/events/QW1I70QW3Y'; // Tu URL de Webhook
+
+  const receivedColumn = document.getElementById('received-column');
+  const preparingColumn = document.getElementById('preparing-column');
+  const shippedColumn = document.getElementById('shipped-column');
+
+  /**
+   * Envía una solicitud POST al Webhook con el ID de pedido y el estado.
+   * @param {string} orderId - El ID del pedido (el que se muestra al usuario, e.g., "PEDIDO_XYZ_123").
+   * @param {string} status - El nuevo estado del pedido (ej. "preparando envio", "enviado").
+   */
+  async function sendWebhookUpdate(orderId, status) {
+      if (!orderId) {
+          console.error('Error: El ID de pedido para el Webhook no está definido.');
+          return;
+      }
+
+      const payload = {
+          orderId: orderId,
+          status: status
+      };
+
+      try {
+          const response = await fetch(WEBHOOK_URL, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(payload)
+          });
+
+          if (response.ok) {
+              console.log(`Webhook enviado exitosamente para el pedido ${orderId} con estado: ${status}.`);
+              // alert(`Estado del pedido ${orderId} actualizado a "${status}" exitosamente vía Webhook.`); // Puedes descomentar esto si quieres una alerta
+          } else {
+              const errorText = await response.text();
+              console.error(`Error al enviar el Webhook para el pedido ${orderId}: ${response.status} ${response.statusText} - ${errorText}`);
+              alert(`Error al enviar el Webhook para el pedido ${orderId}. Código: ${response.status}`);
+          }
+      } catch (error) {
+          console.error(`Error de red al enviar el Webhook para el pedido ${orderId}:`, error);
+          alert(`Error de conexión al enviar el Webhook para el pedido ${orderId}.`);
+      }
+  }
+
+  // Función para crear una tarjeta de pedido HTML
+  function createOrderCard(order) {
+    const card = document.createElement('div');
+    card.className = 'order-card';
+    card.dataset.orderId = order.id; // Usamos el ID de MockAPI para futuras actualizaciones
+
+    let buttonHtml = '';
+    let buttonClass = '';
+    let buttonText = '';
+    let nextStatus = '';
+    let currentStatusText = '';
+
+    switch (order.status) {
+      case 'received':
+        buttonText = 'Marcar como Preparando Envío';
+        buttonClass = 'received-btn';
+        nextStatus = 'preparing';
+        currentStatusText = 'Estado: Recibido';
+        break;
+      case 'preparing':
+        buttonText = 'Marcar como Enviado';
+        buttonClass = 'preparing-btn';
+        nextStatus = 'shipped';
+        currentStatusText = 'Estado: En Preparación';
+        break;
+      case 'shipped':
+        buttonText = 'Pedido Enviado';
+        buttonClass = 'shipped-btn';
+        nextStatus = ''; // No hay siguiente estado
+        currentStatusText = 'Estado: Enviado';
+        break;
+    }
+
+    if (order.status !== 'shipped') {
+      buttonHtml = `<button class="${buttonClass}" data-next-status="${nextStatus}">
+                      ${buttonText}
+                    </button>`;
+    } else {
+      buttonHtml = `<button disabled>
+                      ${buttonText}
+                    </button>`;
+    }
+
+    card.innerHTML = `
+      <div>
+        <h4>Pedido #${order.orderId}</h4>
+        <p>Cliente: ${order.customerName}</p>
+        <p>ID Cliente: ${order.customerID}</p>
+        <p>Productos: ${order.items}</p>
+        <p>Total: ${order.costo} MXN</p>
+        <p class="status-indicator">${currentStatusText}</p>
+      </div>
+      ${buttonHtml}
+    `;
+
+    // Añadir el event listener al botón si existe y no está deshabilitado
+    const button = card.querySelector('button:not([disabled])');
+    if (button) {
+      button.addEventListener('click', () => {
+        const newStatus = button.dataset.nextStatus;
+        // Pasa tanto el ID de MockAPI (order.id) como el ID de negocio (order.orderId)
+        updateOrderStatus(order.id, order.orderId, newStatus);
+      });
+    }
+
+    return card;
+  }
+
+  // Función para renderizar los pedidos en las columnas
+  function renderOrders(orders) {
+    // Limpiar columnas existentes
+    receivedColumn.querySelectorAll('.order-card').forEach(card => card.remove());
+    preparingColumn.querySelectorAll('.order-card').forEach(card => card.remove());
+    shippedColumn.querySelectorAll('.order-card').forEach(card => card.remove());
+
+    orders.forEach(order => {
+      const card = createOrderCard(order);
+      if (order.status === 'received') {
+        receivedColumn.appendChild(card);
+      } else if (order.status === 'preparing') {
+        preparingColumn.appendChild(card);
+      } else if (order.status === 'shipped') {
+        shippedColumn.appendChild(card);
+      }
+    });
+  }
+
+  // Función para obtener pedidos de MockAPI.io
+  async function fetchOrders() {
+    try {
+      const response = await fetch(MOCKAPI_URL);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      let orders = await response.json();
+
+      // --- INICIO DE LA MODIFICACIÓN PARA EL ORDENAMIENTO CORRECTO ---
+      orders.sort((a, b) => {
+        // Extraer el número del orderId (ej. "MERK#14" -> 14)
+        // Usamos match(/\d+/g) para encontrar todos los números y .pop() para tomar el último.
+        // Esto asume que el número relevante siempre es el último grupo de dígitos.
+        const numA = parseInt(a.orderId.match(/\d+/g).pop());
+        const numB = parseInt(b.orderId.match(/\d+/g).pop());
+
+        // Ordenar en orden descendente (el número más grande primero)
+        return numB - numA;
+      });
+      // --- FIN DE LA MODIFICACIÓN ---
+
+      renderOrders(orders);
+    } catch (error) {
+      console.error('Error al obtener los pedidos:', error);
+      // Podrías mostrar un mensaje de error en la UI
+    }
+  }
+
+  // Función para actualizar el estado de un pedido en MockAPI.io y enviar al Webhook
+  async function updateOrderStatus(mockApiOrderId, businessOrderId, newStatus) {
+    try {
+      const response = await fetch(`${MOCKAPI_URL}/${mockApiOrderId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      console.log(`Pedido ${mockApiOrderId} actualizado a ${newStatus} en MockAPI.`);
+
+      // Determinar el estado legible para el Webhook
+      let webhookStatus;
+      if (newStatus === 'preparing') {
+        webhookStatus = 'preparing';
+      } else if (newStatus === 'shipped') {
+        webhookStatus = 'shipped';
+      }
+
+      // Llamar al Webhook después de la actualización exitosa en MockAPI
+      if (webhookStatus) {
+        await sendWebhookUpdate(businessOrderId, webhookStatus);
+      }
+
+      fetchOrders(); // Volver a cargar los pedidos para reflejar el cambio
+    } catch (error) {
+      console.error('Error al actualizar el estado del pedido o enviar webhook:', error);
+      // Podrías mostrar un mensaje de error en la UI
+    }
+  }
+
+  // Cargar pedidos al cargar la página
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchOrders();
+    // Actualizar pedidos cada 5 segundos
+    setInterval(fetchOrders, 5000); // 5000 ms = 5 segundos
+  });
+</script>
+
+</body>
+</html>
