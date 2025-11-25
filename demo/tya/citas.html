@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard de Citas Médicas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            margin: 0; 
+            background: #f3f6fa; 
+            color: #222; 
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 20px 40px 20px 32px;
+        }
+        .header img {
+            height: 48px;
+            margin-right: 22px;
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 0;
+            color: #0077c8;
+            letter-spacing: 1px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            background: #fff;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+            border-radius: 16px;
+            padding: 32px 28px 28px 28px;
+        }
+        .search-refresh-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .search-box label {
+            font-size: 1rem;
+            color: #0077c8;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+        .search-box input[type="text"] {
+            padding: 8px 14px;
+            border: 1.5px solid #b4bfc7;
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 270px;
+            transition: border 0.2s;
+        }
+        .search-box input[type="text"]:focus {
+            border: 1.5px solid #0077c8;
+            outline: none;
+        }
+        .refreshed {
+            font-size: 0.98rem;
+            color: #888;
+            text-align: right;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px 10px;
+            text-align: left;
+        }
+        th {
+            background: linear-gradient(90deg, #0077c8 70%, #2ca3e0 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            font-weight: 600;
+            font-size: 1rem;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        th.hora-col, td.hora-col {
+            min-width: 100px;
+            max-width: 140px;
+            white-space: nowrap;
+        }
+        th.link-col, td.link-col {
+            min-width: 108px;
+            max-width: 180px;
+            text-align: center;
+        }
+        tr {
+            border-bottom: 1px solid #e8eef2;
+        }
+        tr:last-child {
+            border-bottom: none;
+        }
+        tbody tr {
+            background: #f6fafd;
+            transition: background 0.2s;
+        }
+        tbody tr:hover {
+            background: #e0f4ff;
+        }
+        .loading {
+            color: #0077c8;
+            font-weight: 500;
+            padding: 22px 0;
+        }
+        .error {
+            color: #d32f2f;
+            font-weight: 500;
+            padding: 22px 0;
+        }
+        .btn-link {
+            display: inline-block;
+            background: #0077c8;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 16px;
+            font-size: 0.97rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        .btn-link:hover {
+            background: #005fa3;
+        }
+        @media (max-width: 900px) {
+            .container { padding: 16px 5px; }
+            th, td { padding: 8px 6px; font-size: 0.95rem; }
+            .header { flex-direction: column; align-items: flex-start; gap: 10px; }
+        }
+        @media (max-width: 600px) {
+            table, thead, tbody, th, td, tr { display: block; }
+            thead tr { display: none; }
+            tbody tr { margin-bottom: 24px; }
+            td {
+                position: relative;
+                padding-left: 48%;
+                border: none;
+                min-height: 32px;
+                font-size: 0.98rem;
+            }
+            td:before {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                width: 46%;
+                white-space: nowrap;
+                color: #0077c8;
+                font-weight: 500;
+                content: attr(data-label);
+            }
+            td.hora-col, td.link-col { min-width: 0; width: 100%; max-width: none; white-space: nowrap; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="logo.png" alt="Logo" />
+        <h1>Dashboard de Citas Médicas</h1>
+    </div>
+    <div class="container">
+        <div class="search-refresh-row">
+            <div class="search-box">
+                <label for="search">Buscar:</label>
+                <input type="text" id="search" placeholder="Paciente, Doctor, o Razón">
+            </div>
+            <div class="refreshed" id="refreshed"></div>
+        </div>
+        <div id="status" class="loading">Cargando citas...</div>
+        <table id="appointments-table" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th class="hora-col">Hora</th>
+                    <th>Nombre del Paciente</th>
+                    <th>Razón de Consulta</th>
+                    <th>Correo Electrónico</th>
+                    <th>Teléfono</th>
+                    <th>Nombre del Dr.</th>
+                    <th class="link-col">Link Dr</th>
+                    <th class="link-col">Link Paciente</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Las filas se llenarán dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const API_URL = 'https://690cbd72a6d92d83e84f32ee.mockapi.io/citas';
+        let citas = [];
+
+        function formatearFecha(fecha) {
+            if (!fecha) return '';
+            const [y, m, d] = fecha.split('-');
+            return `${d}/${m}/${y}`;
+        }
+
+        function renderTable(data) {
+            const tbody = document.querySelector('#appointments-table tbody');
+            tbody.innerHTML = '';
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;color:#888;">No hay citas para mostrar.</td></tr>`;
+                return;
+            }
+            data.forEach(cita => {
+                const row = `
+                    <tr>
+                        <td data-label="Fecha">${formatearFecha(cita.fecha)}</td>
+                        <td data-label="Hora" class="hora-col">${cita.hora || ''}</td>
+                        <td data-label="Nombre del Paciente">${cita.paciente || ''}</td>
+                        <td data-label="Razón de Consulta">${cita.razon || ''}</td>
+                        <td data-label="Correo Electrónico">${cita.correo || ''}</td>
+                        <td data-label="Teléfono">${cita.telefono || ''}</td>
+                        <td data-label="Nombre del Dr.">${cita.doctor || ''}</td>
+                        <td data-label="Link Dr" class="link-col">
+                            ${cita.linkDr ? `<a href="${cita.linkDr}" class="btn-link" target="_blank" rel="noopener noreferrer">Instant Connect</a>` : ''}
+                        </td>
+                        <td data-label="Link Paciente" class="link-col">
+                            ${cita.linkPa ? `<a href="${cita.linkPa}" class="btn-link" target="_blank" rel="noopener noreferrer">Instant Connect</a>` : ''}
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function compararPorFecha(citaA, citaB) {
+            // Ordena por fecha y hora (la más próxima primero)
+            const fechaA = citaA.fecha + ' ' + (citaA.hora || '00:00');
+            const fechaB = citaB.fecha + ' ' + (citaB.hora || '00:00');
+            return fechaA.localeCompare(fechaB);
+        }
+
+        function actualizarUltimaRefrescada() {
+            const ahora = new Date();
+            const hh = ahora.getHours().toString().padStart(2, '0');
+            const mm = ahora.getMinutes().toString().padStart(2, '0');
+            const ss = ahora.getSeconds().toString().padStart(2, '0');
+            document.getElementById('refreshed').textContent = `Actualizado a las ${hh}:${mm}:${ss}`;
+        }
+
+        document.getElementById('search').addEventListener('input', function() {
+            const value = this.value.toLowerCase();
+            const filtered = citas.filter(c =>
+                (c.paciente || '').toLowerCase().includes(value) ||
+                (c.doctor || '').toLowerCase().includes(value) ||
+                (c.razon || '').toLowerCase().includes(value)
+            );
+            renderTable(filtered);
+        });
+
+        async function cargarCitas() {
+            const status = document.getElementById('status');
+            try {
+                const response = await fetch(API_URL, {cache: "no-store"});
+                if (!response.ok) throw new Error('Error al obtener los datos');
+                citas = await response.json();
+
+                // Ordena por fecha y hora (más próxima primero)
+                citas.sort(compararPorFecha);
+
+                status.style.display = 'none';
+                document.getElementById('appointments-table').style.display = '';
+                const searchVal = document.getElementById('search').value.toLowerCase();
+                if (searchVal) {
+                    const filtered = citas.filter(c =>
+                        (c.paciente || '').toLowerCase().includes(searchVal) ||
+                        (c.doctor || '').toLowerCase().includes(searchVal) ||
+                        (c.razon || '').toLowerCase().includes(searchVal)
+                    );
+                    renderTable(filtered);
+                } else {
+                    renderTable(citas);
+                }
+                actualizarUltimaRefrescada();
+            } catch (e) {
+                status.textContent = 'No se pudieron cargar las citas. Intenta más tarde.';
+                status.className = 'error';
+                document.getElementById('appointments-table').style.display = 'none';
+            }
+        }
+
+        cargarCitas();
+        setInterval(cargarCitas, 30000); // Actualiza cada 30 segundos
+    </script>
+</body>
+</html>
