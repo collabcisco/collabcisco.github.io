@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Retail Demo | Webex CC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --webex-blue: #005ede;
+      --webex-green: #06c8ae;
+      --webex-dark: #23272f;
+      --webex-gray-bg: #f6f9fb;
+      --webex-card: #fff;
+      --webex-header: #f7fafc;
+      --webex-link: #005ede;
+      --webex-link-hover: #06c8ae;
+      --webex-border: #e5eef7;
+      --webex-shadow: 0 4px 24px rgba(0,0,0,0.05);
+      --webex-radius: 18px;
+    }
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--webex-gray-bg);
+      margin: 0;
+      color: #23272f;
+    }
+    header {
+      background: var(--webex-header);
+      color: var(--webex-blue);
+      padding: 2.1rem 1rem 1.6rem 1rem;
+      text-align: center;
+      border-bottom: 2px solid var(--webex-border);
+    }
+    .logo {
+      width: 54px; /* Adjust if your image has different dimensions */
+      height: 54px; /* Adjust if your image has different dimensions */
+      border-radius: 50%;
+      background: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--webex-shadow);
+      border: 2px solid var(--webex-blue);
+      margin-bottom: 1rem;
+      overflow: hidden; /* So the image crops if it's larger than the container */
+    }
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensures the image covers the area without distortion */
+      border-radius: 50%; /* So the image is also round */
+    }
+    h1 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--webex-blue);
+      margin-bottom: 0.3rem;
+      margin-top: 0.5rem;
+    }
+    .vertical-title {
+      font-size: 1.23rem;
+      font-weight: 600;
+      color: var(--webex-green);
+      margin-bottom: 1.1rem;
+      letter-spacing: .01em;
+    }
+    main {
+      max-width: 720px;
+      margin: 2rem auto;
+      background: var(--webex-card);
+      border-radius: var(--webex-radius);
+      box-shadow: var(--webex-shadow);
+      padding: 2.5rem 2rem;
+      border: 1.5px solid var(--webex-border);
+    }
+    ol {
+      padding-left: 1.2em;
+      margin-bottom: 2.5rem;
+    }
+    li {
+      margin-bottom: 1.15rem;
+      font-size: 1.09rem;
+      line-height: 1.7;
+    }
+    li ul { /* Style for nested lists */
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      padding-left: 1.5em;
+    }
+    li ul li { /* Style for nested list items */
+      margin-bottom: 0.5rem;
+      font-size: 1em; /* Inherits parent size or adjusts it */
+      line-height: 1.5;
+    }
+    .note-text {
+      font-size: 0.9em;
+      margin-top: 0.5em;
+      color: #555;
+      display: block; /* So it takes its own line */
+    }
+    .contact-description-img {
+      display: inline; /* So the image is inline with the text */
+      vertical-align: middle; /* Vertical alignment */
+      margin: 0 5px; /* Small margin on the sides to separate from text */
+    }
+    .back-link {
+      color: var(--webex-blue);
+      text-decoration: underline;
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-block;
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+      transition: color .18s;
+    }
+    .back-link:hover {
+      color: var(--webex-green);
+    }
+    /* New style for contact items with icons */
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px; /* Space between icon and text */
+      flex-wrap: wrap; /* Allows content to wrap if the line is too long */
+    }
+    .contact-item svg {
+      flex-shrink: 0; /* Prevents the icon from shrinking */
+    }
+    .contact-item .inline-note {
+      font-size: 0.9em;
+      color: #555;
+    }
+    /* Styles for details/summary element */
+    details {
+      margin-bottom: 0.5rem;
+      border: 1px solid var(--webex-border);
+      border-radius: 5px;
+      padding: 0.5rem 1rem;
+      background-color: #fcfdff;
+    }
+    summary {
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--webex-blue);
+      padding: 0.5rem 0;
+      outline: none; /* Removes outline on click */
+    }
+    summary:hover {
+      color: var(--webex-green);
+    }
+    details ul {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding-left: 20px; /* Adjust list indentation within details */
+    }
+    details p {
+      margin-top: 10px;
+      margin-bottom: 5px;
+      font-size: 0.95em;
+    }
+
+    @media (max-width: 600px) {
+      main { padding: 1.2rem 0.5rem; }
+      h1 { font-size: 1.2rem; }
+      .contact-item .inline-note {
+        white-space: normal; /* Ensures the note wraps on small screens */
+        margin-left: 0; /* Removes margin on small screens if there's no space */
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <!-- Replace this comment and the SVG with your <img> tag with the path to your logo -->
+      <!-- Example: <img src="path/to/your/logo.png" alt="Your company logo"> -->
+      <img src="logo.png" alt="Logo Placeholder"> <!-- Example placeholder -->
+    </div>
+    <h1>🛒 Scenario: Retail</h1>
+    <div class="vertical-title">Steps for the Retail Demonstration</div>
+  </header>
+  <main>
+    <ol>
+      <li><b>Log in</b> as an agent and supervisor to the portal: <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" style="color:#005ede;">desktop.wxcc-us1.cisco.com</a>. Select the team: <b>"Team-Retail"</b> and Manage calls as: <b>"Desktop"</b> to use WebRTC. Credentials can be found on <a href="index.html" target="_blank" style="color:#005ede;">the home page</a>.</li>
+      <li><b>Simulate a customer interaction</b> through the following channels:
+        <ul>
+          <li>
+            <div class="contact-item">
+              <!-- Chat/Website Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="var(--webex-blue)"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+              <b>Website (Chat):</b> <a href="https://collabcisco.github.io/collabmex/retail/index.html" target="_blank" style="color:#005ede;">https://collabcisco.github.io/collabmex/retail/index.html</a>
+              <span class="inline-note">
+                <i>(You will find the <img src="contactanos.png" alt="Contact Us Button" class="contact-description-img" style="width: 150px;"> button in the top right that will direct you to all listed contact methods.)</i>
+              </span>
+            </div>
+          </li>
+          <li>
+            <div class="contact-item">
+              <!-- Phone Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="var(--webex-blue)"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.21-2.21a1 1 0 0 1 1.09-.27 11.41 11.41 0 0 0 3.57.92 1 1 0 0 1 1 .91v3.5a1 1 0 0 1-1 1A19 19 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 .91 1 11.41 11.41 0 0 0 .92 3.57 1 1 0 0 1-.27 1.09z"/></svg>
+              <b>Phone:</b> +52 55 9088 6970 (option 1)
+            </div>
+          </li>
+          <li>
+            <div class="contact-item">
+              <!-- WhatsApp Icon (green) -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="var(--webex-green)"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.35 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm3.39 13.9a.74.74 0 0 1-1.05.04l-1.74-1.44a.74.74 0 0 0-.96-.06c-.6.37-1.28.6-1.99.6-1.59 0-2.88-1.29-2.88-2.88 0-1.04.55-1.92 1.39-2.45a.74.74 0 0 1 .96.06l1.74 1.44a.74.74 0 0 0 .96.06c.6-.37 1.28-.6 1.99-.6 1.59 0 2.88 1.29 2.88 2.88 0 1.04-.55 1.92-1.39 2.45z"/></svg>
+              <b>WhatsApp:</b> +1 408 676 4583 (collabmex → Retail)
+              <!-- WhatsApp QR code directly next to it -->
+              <img src="qr-code.png" alt="QR Code" style="width: 70px; height: 70px;">
+            </div>
+          </li>
+          <li>
+            <div class="contact-item">
+              <!-- Email Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="var(--webex-blue)"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              <b>Email:</b> wxconnect.demo@gmail.com
+            </div>
+          </li>
+        </ul>
+        <span class="note-text"><i>For these interactions, remember to use your Cisco cell phone number and email address.</i></span>
+      </li>
+      <li>
+        <b>Show how the AI Agent responds and automates tasks</b> (you can do this via phone, WhatsApp, and web chat):
+        <ul>
+          <li>
+            <details>
+              <summary>Responses to Frequently Asked Questions</summary>
+              <ul>
+                <li>How can I check the status of my order?</li>
+                <li>What payment options are available?</li>
+                <li>Can I return a product if I am not satisfied?</li>
+                <li>How do I contact technical support?</li>
+              </ul>
+              <p>Download the complete document: <a href="https://collabcisco.github.io/collabmex/retail/FAQ-retail.docx" download style="color:#005ede;">Download</a></p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Product Information</summary>
+              <ul>
+                <li><b>TEC001:</b> ZenAir Wireless Headphones (Technology) - $799 MXN</li>
+                <li><b>HOG002:</b> PowerMix 500W Blender (Home) - $1099 MXN</li>
+                <li><b>MOD003:</b> Merka Men's Casual Shirt (Fashion) - $399 MXN</li>
+                <li><b>TEC004:</b> NovaX Pro 128GB Cell Phone (Technology) - $5499 MXN</li>
+                <li><b>HOG005:</b> Double Comfort Sheet Set (Home) - $899 MXN</li>
+              </ul>
+              <p>Download the complete product list: <a href="https://collabcisco.github.io/collabmex/retail/productos-retail.xlsx" download style="color:#005ede;">Download</a></p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Create or Generate an Order</summary>
+              <p>To see how the new order is updated in real time, you can access the: <a href="https://collabcisco.github.io/collabmex/retail/pedidos.html" target="_blank" style="color:#005ede;">Order Dashboard</a></p>
+              <ul>
+                <li>Ask to generate an order or make a purchase.</li>
+                <li>The agent will ask for your phone number; provide your cell phone number.</li>
+                <li>Once identified, the agent will ask you for the products you wish to buy and the total price.</li>
+                <li>Confirm the order.</li>
+                <li>You will receive confirmation in your email and WhatsApp.</li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Request Order Status</summary>
+              <ul>
+                <li>Ask the agent for the status of an order.</li>
+                <li>It will ask for your phone number to validate you are an existing user and will provide you with information on all your orders.</li>
+              </ul>
+              <p>To validate the information, you can search for your orders on this portal: <a href="https://collabcisco.github.io/collabmex/retail/consultarpedidos.html" target="_blank" style="color:#005ede;">Order Inquiry Portal</a> or on the: <a href="https://collabcisco.github.io/collabmex/retail/pedidos.html" target="_blank" style="color:#005ede;">Order Dashboard</a></p>
+            </details>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <b>Escalate the interaction to the Human Agent and demonstrate simplified tasks:</b>
+        <ul>
+          <li>
+            <details>
+              <summary>Agent Screen Customization</summary>
+              <p>The agent interface can be customized with the company name and logo for a consistent brand experience.</p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Transcription and Summary with AI Assistant</summary>
+              <p>View the transcription of the AI Agent's interaction with the customer and visualize the conversation summary with the AI Assistant.</p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Customer Information</summary>
+              <p>The agent will have customer information, which is taken from a CRM or customer database.</p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Digital Call/Interaction Control Buttons</summary>
+              <ul>
+                <li>Call control button functionalities:
+                  <ul>
+                    <li>Put on hold</li>
+                    <li>Make conferences</li>
+                    <li>Transfer calls</li>
+                    <li>Pause recording</li>
+                  </ul>
+                </li>
+                <li>For digital channels, conference and transfer buttons are included.</li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>System and Web Page Integration</summary>
+              <p>The agent interface integrates relevant systems and web pages, such as the page for searching orders.</p>
+            </details>
+          </li>
+            <li>
+            <details>
+              <summary>Customer Journey and Proactive Notifications</summary>
+              <ul>
+                <li>View the complete history of customer interactions across different channels and order-related activities.</li>
+                <li>You can change the status of orders on the order dashboard (e.g., "Mark as Preparing Shipment" or "Mark as Shipped"), and this will be updated in the customer journey.</li>
+                </li>
+                <li>When you change the order status, you will receive a notification via email and WhatsApp.</li>
+              </ul>
+              <p>Access the <a href="https://collabcisco.github.io/collabmex/retail/pedidos.html" target="_blank" style="color:#005ede;">Order Dashboard</a></p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Outbound Email</summary>
+              <p>Send emails directly from the platform for seamless customer communication.</p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Agent Performance Reports</summary>
+              <p>The Agent will be able to access the APS widget (this information is taken from Analyzer) to view agent performance reports.</p>
+            </details>
+          </li>
+        </ul>
+      </li>
+      <li><b>Show the Supervisor experience</b> and demonstrate real-time operational visibility.
+        <ul>
+          <li>
+            <details>
+              <summary>Initial Dashboard</summary>
+              <p>Shows customer interactions in different queues and service level in real time.</p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Agent Monitoring</summary>
+              <p>Monitor agent activities. For voice interactions, you can listen to conversations or barge in and also listen to recordings. You can also view the customer journey.</p>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>Agent Performance Reports</summary>
+              <p>The Supervisor will be able to access the APS widget (this information is taken from Analyzer) to view agent performance reports.</p>
+            </details>
+          </li>
+        </ul></li>
+      <li><b>Access the reports panel</b> to show how activity and operational efficiency are visualized.
+        <p>Access <a href="https://analyzer-v2.wxcc-us1.cisco.com/analyzer/home?ciClusterId=P0A1&orgId=a2dd2327-7083-4a0e-8fd8-8ccfdbaef9a8" target="_blank" style="color:#005ede;">Analyzer</a> with your Supervisor credentials.</p></li>
+      <!--  <li><b>Show Control Hub,</b> system administration and configuration.
+        <p>Access <a href="https://admin.webex.com" target="_blank" style="color:#005ede;">Control Hub</a> with your Administrator credentials</p></li>
+     You can add, remove, or customize the steps according to your demo -->
+    </ol>
+    <a href="index.html" class="back-link">&larr; Back to main page</a>
+  </main>
+</body>
+</html>
