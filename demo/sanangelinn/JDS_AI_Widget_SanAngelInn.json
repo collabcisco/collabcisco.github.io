@@ -1,7 +1,7 @@
 {
   "agent": {
     "version": "0.1.0",
-    "appTitle": "Webex Contact Center - Dominos",
+    "appTitle": "Webex Contact Center - Hospital San Angel Inn",
     "logo": "https://collabcisco.github.io/demo/sanangelinn/logo.png",
     "stopNavigateOnAcceptTask": false,
     "dragDropEnabled": true,
