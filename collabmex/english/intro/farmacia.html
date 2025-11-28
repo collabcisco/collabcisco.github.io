@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Demo Salud/Farmacia | Webex CC</title>
+  <title>Health/Pharmacy Demo | Webex CC</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
   <style>
@@ -33,8 +33,8 @@
       border-bottom: 2px solid var(--webex-border);
     }
     .logo {
-      width: 54px; /* Ajusta si tu imagen tiene otras dimensiones */
-      height: 54px; /* Ajusta si tu imagen tiene otras dimensiones */
+      width: 54px; /* Adjust if your image has different dimensions */
+      height: 54px; /* Adjust if your image has different dimensions */
       border-radius: 50%;
       background: #fff;
       display: inline-flex;
@@ -43,13 +43,13 @@
       box-shadow: var(--webex-shadow);
       border: 2px solid var(--webex-blue);
       margin-bottom: 1rem;
-      overflow: hidden; /* Para que la imagen se recorte si es más grande que el contenedor */
+      overflow: hidden; /* So the image crops if it's larger than the container */
     }
     .logo img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
-      border-radius: 50%; /* Para que la imagen también sea redonda */
+      object-fit: cover; /* Ensures the image covers the area without distortion */
+      border-radius: 50%; /* So the image is also round */
     }
     h1 {
       font-size: 1.7rem;
@@ -83,26 +83,26 @@
       font-size: 1.09rem;
       line-height: 1.7;
     }
-    li ul { /* Estilo para listas anidadas */
+    li ul { /* Style for nested lists */
       margin-top: 0.5rem;
       margin-bottom: 0.5rem;
       padding-left: 1.5em;
     }
-    li ul li { /* Estilo para elementos de listas anidadas */
+    li ul li { /* Style for nested list items */
       margin-bottom: 0.5rem;
-      font-size: 1em; /* Hereda el tamaño del padre o lo ajusta */
+      font-size: 1em; /* Inherits parent size or adjusts it */
       line-height: 1.5;
     }
     .note-text {
       font-size: 0.9em;
       margin-top: 0.5em;
       color: #555;
-      display: block; /* Para que ocupe su propia línea */
+      display: block; /* So it takes its own line */
     }
     .contact-description-img {
-      display: inline; /* Para que la imagen esté en línea con el texto */
-      vertical-align: middle; /* Alineación vertical */
-      margin: 0 5px; /* Pequeño margen a los lados para separar del texto */
+      display: inline; /* So the image is inline with the text */
+      vertical-align: middle; /* Vertical alignment */
+      margin: 0 5px; /* Small margin on the sides to separate from text */
     }
     .back-link {
       color: var(--webex-blue);
@@ -117,21 +117,21 @@
     .back-link:hover {
       color: var(--webex-green);
     }
-    /* Nuevo estilo para los elementos de contacto con íconos */
+    /* New style for contact items with icons */
     .contact-item {
       display: flex;
       align-items: center;
-      gap: 8px; /* Espacio entre el ícono y el texto */
-      flex-wrap: wrap; /* Permite que el contenido se ajuste si la línea es muy larga */
+      gap: 8px; /* Space between icon and text */
+      flex-wrap: wrap; /* Allows content to wrap if the line is too long */
     }
     .contact-item svg {
-      flex-shrink: 0; /* Evita que el ícono se encoja */
+      flex-shrink: 0; /* Prevents the icon from shrinking */
     }
     .contact-item .inline-note {
       font-size: 0.9em;
       color: #555;
     }
-    /* Estilos para el elemento details/summary */
+    /* Styles for details/summary element */
     details {
       margin-bottom: 0.5rem;
       border: 1px solid var(--webex-border);
@@ -144,7 +144,7 @@
       cursor: pointer;
       color: var(--webex-blue);
       padding: 0.5rem 0;
-      outline: none; /* Elimina el contorno al hacer clic */
+      outline: none; /* Removes outline on click */
     }
     summary:hover {
       color: var(--webex-green);
@@ -152,7 +152,7 @@
     details ul {
       margin-top: 10px;
       margin-bottom: 10px;
-      padding-left: 20px; /* Ajusta el sangrado de la lista dentro del details */
+      padding-left: 20px; /* Adjust list indentation within details */
     }
     details p {
       margin-top: 10px;
@@ -164,8 +164,8 @@
       main { padding: 1.2rem 0.5rem; }
       h1 { font-size: 1.2rem; }
       .contact-item .inline-note {
-        white-space: normal; /* Asegura que la nota se rompa en varias líneas en pantallas pequeñas */
-        margin-left: 0; /* Elimina el margen en pantallas pequeñas si no hay espacio */
+        white-space: normal; /* Ensures the note wraps on small screens */
+        margin-left: 0; /* Removes margin on small screens if there's no space */
       }
     }
   </style>
@@ -173,227 +173,227 @@
 <body>
   <header>
     <div class="logo">
-      <!-- Reemplaza este comentario y el SVG por tu etiqueta <img> con la ruta a tu logo de farmacia -->
-      <img src="logo.png" alt="Logo de Farmacia"> <!-- Placeholder de ejemplo -->
+      <!-- Replace this comment and the SVG with your <img> tag with the path to your pharmacy logo -->
+      <img src="logo.png" alt="Pharmacy Logo"> <!-- Example placeholder -->
     </div>
-    <h1>💊 Escenario: Salud/Farmacia</h1>
-    <div class="vertical-title">Pasos para la demostración de Salud/Farmacia</div>
+    <h1>💊 Scenario: Health/Pharmacy</h1>
+    <div class="vertical-title">Steps for the Health/Pharmacy Demonstration</div>
   </header>
   <main>
     <ol>
-      <li><b>Inicia sesión</b> como agente y supervisor en el portal: <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" style="color:#005ede;">desktop.wxcc-us1.cisco.com</a>. Selecciona el equipo: <b>"Team-Salud"</b> y Gestiona las llamadas como: <b>"Desktop"</b> para utilizar WebRTC. Las credenciales se encuentran en <a href="index.html" target="_blank" style="color:#005ede;">la página de inicio</a>.</li>
-      <li><b>Simula una interacción de cliente</b> a través de los siguientes medios:
+      <li><b>Log in</b> as an agent and supervisor to the portal: <a href="https://desktop.wxcc-us1.cisco.com/" target="_blank" style="color:#005ede;">desktop.wxcc-us1.cisco.com</a>. Select the team: <b>"Team-Salud"</b> and Manage calls as: <b>"Desktop"</b> to use WebRTC. Credentials can be found on <a href="index.html" target="_blank" style="color:#005ede;">the home page</a>.</li>
+      <li><b>Simulate a customer interaction</b> through the following channels:
         <ul>
           <li>
             <div class="contact-item">
-              <!-- Ícono de Chat/Página Web -->
+              <!-- Chat/Website Icon -->
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="var(--webex-blue)"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
-              <b>Página Web (Chat):</b> <a href="https://collabcisco.github.io/collabmex/farmacia/index.html" target="_blank" style="color:#005ede;">https://collabcisco.github.io/collabmex/farmacia/index.html</a>
+              <b>Website (Chat):</b> <a href="https://collabcisco.github.io/collabmex/farmacia/index.html" target="_blank" style="color:#005ede;">https://collabcisco.github.io/collabmex/farmacia/index.html</a>
               <span class="inline-note">
-                <i>(Encontrarás el botón <img src="contactanos.png" alt="Botón Contáctanos" class="contact-description-img" style="width: 150px;"> en la parte superior derecha que te dirigirá a todos los medios de contacto listados.)</i>
+                <i>(You will find the <img src="contactanos.png" alt="Contact Us Button" class="contact-description-img" style="width: 150px;"> button in the top right that will direct you to all listed contact methods.)</i>
               </span>
             </div>
           </li>
           <li>
             <div class="contact-item">
-              <!-- Ícono de Teléfono -->
+              <!-- Phone Icon -->
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="var(--webex-blue)"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.21-2.21a1 1 0 0 1 1.09-.27 11.41 11.41 0 0 0 3.57.92 1 1 0 0 1 1 .91v3.5a1 1 0 0 1-1 1A19 19 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 .91 1 11.41 11.41 0 0 0 .92 3.57 1 1 0 0 1-.27 1.09z"/></svg>
-              <b>Teléfono:</b> +52 55 9088 6970 (opción 2)
+              <b>Phone:</b> +52 55 9088 6970 (option 2)
             </div>
           </li>
           <li>
             <div class="contact-item">
-              <!-- Ícono de WhatsApp (verde) -->
+              <!-- WhatsApp Icon (green) -->
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="var(--webex-green)"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.35 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm3.39 13.9a.74.74 0 0 1-1.05.04l-1.74-1.44a.74.74 0 0 0-.96-.06c-.6.37-1.28.6-1.99.6-1.59 0-2.88-1.29-2.88-2.88 0-1.04.55-1.92 1.39-2.45a.74.74 0 0 1 .96.06l1.74 1.44a.74.74 0 0 0 .96.06c.6-.37 1.28-.6 1.99-.6 1.59 0 2.88 1.29 2.88 2.88 0 1.04-.55 1.92-1.39 2.45z"/></svg>
-              <b>WhatsApp:</b> +1 408 676 4583 (collabmex → Salud)
-              <!-- Código QR de WhatsApp directamente al lado -->
+              <b>WhatsApp:</b> +1 408 676 4583 (collabmex → Health)
+              <!-- WhatsApp QR code directly next to it -->
               <img src="qr-code.png" alt="QR Code" style="width: 70px; height: 70px;">
             </div>
           </li>
           <li>
             <div class="contact-item">
-              <!-- Ícono de Correo Electrónico -->
+              <!-- Email Icon -->
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="var(--webex-blue)"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
               <b>Email:</b> wxconnect.demo@gmail.com
             </div>
           </li>
         </ul>
-        <span class="note-text"><i>Para estas interacciones, recuerda utilizar tu número de celular y correo electrónico de Cisco.</i></span>
+        <span class="note-text"><i>For these interactions, remember to use your Cisco cell phone number and email address.</i></span>
       </li>
       <li>
-        <b>Muestra cómo el Agente de IA responde y automatiza tareas </b>(lo puedes hacer vía telefónica, WhatsApp y web chat):</b>
+        <b>Show how the AI Agent responds and automates tasks</b> (you can do this via phone, WhatsApp, and web chat):
         <ul>
           <li>
             <details>
-              <summary>Respuestas a preguntas frecuentes</summary>
+              <summary>Responses to Frequently Asked Questions</summary>
               <ul>
-                <li>¿Cuál es el horario de atención de la farmacia?</li>
-                <li>¿Tienen servicio a domicilio?</li>
-                <li>¿Aceptan recetas electrónicas?</li>
-                <li>¿Cuáles son las opciones de pago disponibles?</li>
+                <li>What are the pharmacy's opening hours?</li>
+                <li>Do you offer home delivery service?</li>
+                <li>Do you accept electronic prescriptions?</li>
+                <li>What payment options are available?</li>
               </ul>
-              <p>Descarga el documento completo: <a href="https://collabcisco.github.io/collabmex/farmacia/FAQ-farmacia.docx" download style="color:#005ede;">Descargar</a></p>
+              <p>Download the complete document: <a href="https://collabcisco.github.io/collabmex/farmacia/FAQ-farmacia.docx" download style="color:#005ede;">Download</a></p>
             </details>
           </li>
           <li>
             <details>
-              <summary>Información de Productos y Medicamentos</summary>
+              <summary>Product and Medication Information</summary>
               <ul>
-                <li>Paracetamol 500mg (Analgésico)</li>
-                <li>Vitamina C 1000mg (Suplemento)</li>
-                <li>Amoxicilina 500mg (Higiene)</li>
-                <li>Probióticos (Frasco 30 capsulas)</li>
+                <li>Paracetamol 500mg (Analgesic)</li>
+                <li>Vitamin C 1000mg (Supplement)</li>
+                <li>Amoxicillin 500mg (Hygiene)</li>
+                <li>Probiotics (Bottle 30 capsules)</li>
               </ul>
-              <p>Descarga la lista completa de productos: <a href="https://collabcisco.github.io/collabmex/farmacia/productos-farmacia.xlsx" download style="color:#005ede;">Descargar</a></p>
+              <p>Download the complete product list: <a href="https://collabcisco.github.io/collabmex/farmacia/productos-farmacia.xlsx" download style="color:#005ede;">Download</a></p>
             </details>
           </li>
   <li>
             <details>
-              <summary>Agendar Consulta Virtual</summary>
-              <p>Para ver en tiempo real cómo se agrega la cita, puedes acceder al: <a href="https://collabcisco.github.io/collabmex/farmacia/citas.html" target="_blank" style="color:#005ede;">Dashboard de Citas Médicas</a></p>
+              <summary>Schedule Virtual Consultation</summary>
+              <p>To see how the appointment is added in real time, you can access the: <a href="https://collabcisco.github.io/collabmex/farmacia/citas.html" target="_blank" style="color:#005ede;">Medical Appointments Dashboard</a></p>
               <ul>
-                <li>Pide agendar una cita médica.</li>
-                <li>El agente te preguntará si ya eres cliente existente, indica que lo eres y te pedirá tu número telefónico; proporciona tu número de celular.</li>
-                <li>Una vez identificado, el agente te preguntará la fecha deseada y el motivo de tu cita</li>
-                <li>Confirma la cita.</li>
-                <li>Recibirás la confirmación en tu correo electrónico y WhatsApp, y se te proporcionará el link de Instant Connect para entrar a la cita virtual.</li>
-                <li>En el Dashboard de citas médicas encontrarás también el link del Doctor para iniciar la cita virtual.</li>
+                <li>Ask to schedule a medical appointment.</li>
+                <li>The agent will ask if you are an existing customer; indicate that you are and provide your cell phone number.</li>
+                <li>Once identified, the agent will ask for your desired date and the reason for your appointment.</li>
+                <li>Confirm the appointment.</li>
+                <li>You will receive confirmation in your email and WhatsApp, and you will be provided with the Instant Connect link to join the virtual appointment.</li>
+                <li>On the Medical Appointments Dashboard, you will also find the Doctor's link to start the virtual appointment.</li>
               </ul>
             </details>
           </li>
             <li>
             <details>
-              <summary>Cancelar Consulta Virtual</summary>
+              <summary>Cancel Virtual Consultation</summary>
               <ul>
-                <li>Pide cancelar una cita médica.</li>
-                <li>El agente te preguntará tu número telefónico; proporciona tu número de celular.</li>
-                <li>Una vez identificado, el agente desplegará tu cita médica</li>
-                <li>Confirma cancelar la cita.</li>
+                <li>Ask to cancel a medical appointment.</li>
+                <li>The agent will ask for your phone number; provide your cell phone number.</li>
+                <li>Once identified, the agent will display your medical appointment.</li>
+                <li>Confirm cancellation of the appointment.</li>
               </ul>
             </details>
           </li>
           <li>
             <details>
-              <summary>Crear o Generar un Pedido de Farmacia</summary>
-              <p>Para ver en tiempo real cómo se actualiza el nuevo pedido, puedes acceder al: <a href="https://collabcisco.github.io/collabmex/farmacia/pedidos.html" target="_blank" style="color:#005ede;">Dashboard de Pedidos de Farmacia</a></p>
+              <summary>Create or Generate a Pharmacy Order</summary>
+              <p>To see how the new order is updated in real time, you can access the: <a href="https://collabcisco.github.io/collabmex/farmacia/pedidos.html" target="_blank" style="color:#005ede;">Pharmacy Orders Dashboard</a></p>
               <ul>
-                <li>Pide generar un pedido o hacer una compra de medicamentos/productos.</li>
-                <li>El agente te preguntará tu número telefónico; proporciona tu número de celular.</li>
-                <li>Una vez identificado, el agente te preguntará por los productos/medicamentos que deseas comprar y el precio total.</li>
-                <li>Confirma el pedido.</li>
-                <li>Recibirás la confirmación en tu correo electrónico y WhatsApp.</li>
+                <li>Ask to generate an order or make a purchase of medications/products.</li>
+                <li>The agent will ask for your phone number; provide your cell phone number.</li>
+                <li>Once identified, the agent will ask you for the products/medications you wish to buy and the total price.</li>
+                <li>Confirm the order.</li>
+                <li>You will receive confirmation in your email and WhatsApp.</li>
               </ul>
             </details>
           </li>
 
           <li>
             <details>
-              <summary>Pedir estatus del pedido</summary>
+              <summary>Request Order Status</summary>
               <ul>
-                <li>Pide al agente estatus de un pedido.</li>
-                <li>Te pedirá tu número telefónico para validar que eres usuario existente y te proporcionará la información de todos tus pedidos.</li>
+                <li>Ask the agent for the status of an order.</li>
+                <li>It will ask for your phone number to validate you are an existing user and will provide you with information on all your orders.</li>
               </ul>
-              <p>Para validar la información, puedes buscar tus pedidos en este portal: <a href="https://collabcisco.github.io/collabmex/farmacia/consultarpedidos.html" target="_blank" style="color:#005ede;">Portal de Consulta de Pedidos</a> o en el: <a href="https://collabcisco.github.io/collabmex/farmacia/pedidos.html" target="_blank" style="color:#005ede;">Dashboard de Pedidos de Farmacia</a></p>
+              <p>To validate the information, you can search for your orders on this portal: <a href="https://collabcisco.github.io/collabmex/farmacia/consultarpedidos.html" target="_blank" style="color:#005ede;">Order Inquiry Portal</a> or on the: <a href="https://collabcisco.github.io/collabmex/farmacia/pedidos.html" target="_blank" style="color:#005ede;">Pharmacy Orders Dashboard</a></p>
             </details>
           </li>
         </ul>
       </li>
       <li>
-        <b>Escala la interacción al Agente Humano y demuestra las tareas simplificadas:</b>
+        <b>Escalate the interaction to the Human Agent and demonstrate simplified tasks:</b>
         <ul>
           <li>
             <details>
-              <summary>Personalización de la pantalla del agente</summary>
-              <p>La interfaz del agente puede ser personalizada con el nombre y logo de la farmacia para una experiencia de marca consistente.</p>
+              <summary>Agent Screen Customization</summary>
+              <p>The agent interface can be customized with the pharmacy's name and logo for a consistent brand experience.</p>
             </details>
           </li>
           <li>
             <details>
-              <summary>Transcripción y resumen con AI Assistant</summary>
-              <p>Visualiza la transcripción de la interacción del AI Agent con el cliente y visualizar el resumen de la conversación con el AI Assistant.</p>
+              <summary>Transcription and Summary with AI Assistant</summary>
+              <p>View the transcription of the AI Agent's interaction with the customer and visualize the conversation summary with the AI Assistant.</p>
             </details>
           </li>
           <li>
             <details>
-              <summary>Información del Cliente y su Historial de Compras y Consultas Médicas</summary>
-              <p>El agente tendrá la información del cliente, incluyendo su historial de compras y citas, tomada de un CRM o base de datos de clientes.</p>
+              <summary>Customer Information and Purchase/Medical Consultation History</summary>
+              <p>The agent will have customer information, including their purchase and appointment history, taken from a CRM or customer database.</p>
             </details>
           </li>
           <li>
             <details>
-              <summary>Botones de control de llamada/interacción digitales</summary>
+              <summary>Digital Call/Interaction Control Buttons</summary>
               <ul>
-                <li>Funcionalidades de los botones de control de llamada:
+                <li>Call control button functionalities:
                   <ul>
-                    <li>Poner en espera</li>
-                    <li>Realizar conferencias</li>
-                    <li>Transferir llamadas</li>
-                    <li>Pausar la grabación</li>
+                    <li>Put on hold</li>
+                    <li>Make conferences</li>
+                    <li>Transfer calls</li>
+                    <li>Pause recording</li>
                   </ul>
                 </li>
-                <li>Para canales digitales, se incluyen botones de conferencia y transferencia.</li>
+                <li>For digital channels, conference and transfer buttons are included.</li>
               </ul>
             </details>
           </li>
           <li>
             <details>
-              <summary>Integración de sistemas y páginas web</summary>
-              <p>La interfaz del agente integra sistemas y páginas web relevantes, como el portal para buscar pedidos o el calendario de citas médicas.</p>
+              <summary>System and Web Page Integration</summary>
+              <p>The agent interface integrates relevant systems and web pages, such as the portal for searching orders or the medical appointments calendar.</p>
             </details>
           </li>
             <li>
             <details>
-              <summary>Customer Journey del cliente y Notificaciones Proactivas</summary>
+              <summary>Customer Journey and Proactive Notifications</summary>
               <ul>
-                <li>Visualiza el historial completo de interacciones del cliente a través de distintos canales, las actividades relacionadas con los pedidos y sus citas médicas.</li>
-                <li>Podrás cambiar el estatus de los pedidos en el dashboard de pedidos (ej. "Marcar como Preparando Envío" o "Marcar como Enviado"), y esto se actualizará en el Customer Journey. Cuando cambies el estado del pedido, te llegará una notificación por correo y por WhatsApp.</li>
-                <li>También podrás angendar/cancelar las citas y esto se reflejará en el Customer Journey</li>
+                <li>View the complete history of customer interactions across different channels, order-related activities, and their medical appointments.</li>
+                <li>You can change the status of orders on the order dashboard (e.g., "Mark as Preparing Shipment" or "Mark as Shipped"), and this will be updated in the Customer Journey. When you change the order status, you will receive a notification via email and WhatsApp.</li>
+                <li>You can also schedule/cancel appointments, and this will be reflected in the Customer Journey.</li>
               </ul>
-              <p>Accede al <a href="https://collabcisco.github.io/collabmex/farmacia/pedidos.html" target="_blank" style="color:#005ede;">Dashboard de Pedidos</a> y al <a href="https://collabcisco.github.io/collabmex/farmacia/citas.html" target="_blank" style="color:#005ede;">Dashboard de Citas</a></p>
+              <p>Access the <a href="https://collabcisco.github.io/collabmex/farmacia/pedidos.html" target="_blank" style="color:#005ede;">Orders Dashboard</a> and the <a href="https://collabcisco.github.io/collabmex/farmacia/citas.html" target="_blank" style="color:#005ede;">Appointments Dashboard</a></p>
             </details>
           </li>
           <li>
             <details>
-              <summary>Correo electrónico de salida</summary>
-              <p>Envía correos electrónicos directamente desde la plataforma para una comunicación fluida con el cliente, incluyendo confirmaciones de pedidos o recordatorios de citas.</p>
+              <summary>Outbound Email</summary>
+              <p>Send emails directly from the platform for seamless customer communication, including order confirmations or appointment reminders.</p>
             </details>
           </li>
           <li>
             <details>
-              <summary>Reportes de Desempeño de los Agentes</summary>
-              <p>El Agente podrá acceder al widget de APS (esta información es tomada del Analyzer) para visualizar los reportes de desempeño de los agentes.</p>
+              <summary>Agent Performance Reports</summary>
+              <p>The Agent will be able to access the APS widget (this information is taken from Analyzer) to view agent performance reports.</p>
             </details>
           </li>
         </ul>
       </li>
-      <li><b>Muestra la experiencia del Supervisor</b> y demuestra la visibilidad de la operación en tiempo real.</b>
+      <li><b>Show the Supervisor experience</b> and demonstrate real-time operational visibility.
         <ul>
           <li>
             <details>
-              <summary>Dashboard Inicial</summary>
-              <p>Muestra en tiempo real las interacciones de los clientes en las distintas colas (pedidos, consultas, citas médicas) y el nivel de servicio.</p>
+              <summary>Initial Dashboard</summary>
+              <p>Shows customer interactions in different queues (orders, inquiries, medical appointments) and service level in real time.</p>
             </details>
           </li>
           <li>
             <details>
-              <summary>Monitoreo de Agentes</summary>
-              <p>Monitorea actividades de los agentes. En las interacciones de voz podrás escuchar las conversaciones o hacer barge in y tambien escuchar las grabaciones. También podras ver el customer journey del cliente.</p>
+              <summary>Agent Monitoring</summary>
+              <p>Monitor agent activities. For voice interactions, you can listen to conversations or barge in and also listen to recordings. You can also view the customer journey.</p>
             </details>
           </li>
           <li>
             <details>
-              <summary>Reportes de Desempeño de los Agentes </summary>
-              <p>El Supervisor podrá acceder al widget de APS (esta información es tomada del Analyzer) para visualizar los reportes de desempeño de los agentes.</p>
+              <summary>Agent Performance Reports</summary>
+              <p>The Supervisor will be able to access the APS widget (this information is taken from Analyzer) to view agent performance reports.</p>
             </details>
           </li>
         </ul></li>
-      <li><b>Accede al panel de reportes</b> para mostrar cómo se visualiza la actividad y la eficiencia operativa.
-        <p>Accede a <a href="https://analyzer-v2.wxcc-us1.cisco.com/analyzer/home?ciClusterId=P0A1&orgId=a2dd2327-7083-4a0e-8fd8-8ccfdbaef9a8" target="_blank" style="color:#005ede;">Analyzer</a> con tus credenciales de Supervisor</p></li>
-      <!--  <li><b>Muestra Control Hub,</b> la administración del sistema y configuración.
-        <p>Accede a <a href="https://admin.webex.com" target="_blank" style="color:#005ede;">Control Hub</a> con tus credenciales de Administrador</p></li>
-     Puedes agregar, quitar o personalizar los pasos según tu demo -->
+      <li><b>Access the reports panel</b> to show how activity and operational efficiency are visualized.
+        <p>Access <a href="https://analyzer-v2.wxcc-us1.cisco.com/analyzer/home?ciClusterId=P0A1&orgId=a2dd2327-7083-4a0e-8fd8-8ccfdbaef9a8" target="_blank" style="color:#005ede;">Analyzer</a> with your Supervisor credentials.</p></li>
+      <!--  <li><b>Show Control Hub,</b> system administration and configuration.
+        <p>Access <a href="https://admin.webex.com" target="_blank" style="color:#005ede;">Control Hub</a> with your Administrator credentials</p></li>
+     You can add, remove, or customize the steps according to your demo -->
     </ol>
-    <a href="index.html" class="back-link">&larr; Volver a la página principal</a>
+    <a href="index.html" class="back-link">&larr; Back to main page</a>
   </main>
 </body>
 </html>
