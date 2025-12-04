@@ -149,15 +149,16 @@
         color: #007bff;
       }
       td:nth-child(1):before { content: "ID: "; }
-      td:nth-child(2):before { content: "ID Cliente: "; }
-      td:nth-child(3):before { content: "Cliente: "; }
-      td:nth-child(4):before { content: "Título: "; }
-      td:nth-child(5):before { content: "Descripción: "; }
-      td:nth-child(6):before { content: "Estado: "; }
-      td:nth-child(7):before { content: "Fecha Creación: "; }
-      td:nth-child(8):before { content: "Fecha Actualización: "; }
-      td:nth-child(9):before { content: "Reportado por: "; }
-      td:nth-child(10):before { content: "Acción: "; }
+      /* Las siguientes dos reglas se eliminan */
+      /* td:nth-child(2):before { content: "ID Cliente: "; } */
+      /* td:nth-child(3):before { content: "Cliente: "; } */
+      td:nth-child(2):before { content: "Título: "; } /* Antes era nth-child(4) */
+      td:nth-child(3):before { content: "Descripción: "; } /* Antes era nth-child(5) */
+      td:nth-child(4):before { content: "Estado: "; } /* Antes era nth-child(6) */
+      td:nth-child(5):before { content: "Fecha Creación: "; } /* Antes era nth-child(7) */
+      td:nth-child(6):before { content: "Fecha Actualización: "; } /* Antes era nth-child(8) */
+      td:nth-child(7):before { content: "Reportado por: "; } /* Antes era nth-child(9) */
+      td:nth-child(8):before { content: "Acción: "; } /* Antes era nth-child(10) */
       th, td { padding: 8px 4px; }
     }
   </style>
@@ -174,8 +175,7 @@
       <thead>
         <tr>
           <th data-col="id">ID</th>
-          <th data-col="client_id">ID Cliente</th>
-          <th data-col="client_name">Cliente</th>
+          <!-- Columnas "ID Cliente" y "Cliente" eliminadas -->
           <th data-col="title">Título</th>
           <th data-col="description">Descripción</th>
           <th data-col="status">Estado</th>
@@ -230,8 +230,7 @@
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${ticket.id ?? ''}</td>
-          <td>${ticket.client_id ?? ''}</td>
-          <td>${ticket.client_name ?? ''}</td>
+          <!-- Datos de ID Cliente y Cliente eliminados -->
           <td>${ticket.title ?? ''}</td>
           <td>${ticket.description ?? ''}</td>
           <td class="status-${(ticket.status ?? '').replace(/\s+/g, '').toLowerCase()}">${ticket.status ?? ''}</td>
