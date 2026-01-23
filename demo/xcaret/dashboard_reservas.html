@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard de Reservas | Xcaret</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --accent: #06b6d4;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; font-family: 'Inter', 'Segoe UI', sans-serif; }
+    body { background: var(--bg); color: var(--text); min-height: 100vh; padding: 24px; }
+    header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; }
+    h1 { font-size: 2rem; }
+    .brand { display: flex; align-items: center; gap: 16px; }
+    .brand img { height: 56px; object-fit: contain; }
+    .status { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: var(--muted); }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .card { background: var(--card); padding: 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.25); }
+    .card h2 { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+    .card p { font-size: 2rem; font-weight: 600; }
+    table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.25); }
+    thead { background: rgba(255,255,255,0.05); }
+    th, td { padding: 14px 16px; text-align: left; }
+    th { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--muted); }
+    tbody tr { border-top: 1px solid rgba(255,255,255,0.05); }
+    tbody tr:hover { background: rgba(255,255,255,0.03); }
+    .spinner { width: 24px; height: 24px; border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid var(--accent); border-radius: 50%; animation: spin 0.9s linear infinite; margin: 10px auto; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (max-width: 768px) {
+      th, td { font-size: 0.9rem; }
+      header { flex-direction: column; align-items: flex-start; }
+      .brand { flex-direction: column; align-items: flex-start; }
+      .brand img { height: 48px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <img src="logo.png" alt="Logo Xcaret" />
+      <div>
+        <h1>Reservas Xcaret</h1>
+     
+      </div>
+    </div>
+    <div class="status">
+      <div class="dot"></div>
+      <span id="statusText">Conectando...</span>
+    </div>
+  </header>
+
+  <section class="cards">
+    <article class="card">
+      <h2>Total de reservas</h2>
+      <p id="total">—</p>
+    </article>
+    <article class="card">
+      <h2>Huéspedes únicos</h2>
+      <p id="uniqueGuests">—</p>
+    </article>
+    <article class="card">
+      <h2>Noches totales</h2>
+      <p id="totalNights">—</p>
+    </article>
+  </section>
+
+  <section>
+    <table>
+      <thead>
+        <tr>
+          <th>Reserva</th>
+          <th>Huésped</th>
+          <th>Hotel</th>
+          <th>Noches</th>
+          <th>Costo (MXN)</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr>
+          <td colspan="6">
+            <div class="spinner"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <script>
+    const API_URL = 'https://686f1c1891e85fac429fcd60.mockapi.io/checkin';
+    const REFRESH_MS = 30000;
+
+    let timer = null;
+    let isFetching = false;
+
+    async function fetchReservations() {
+      if (isFetching) return;
+      isFetching = true;
+      setStatus('Actualizando...');
+
+      try {
+        const res = await fetch(API_URL, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Error en la red');
+        const data = await res.json();
+        renderDashboard(data);
+        setStatus(`Última actualización: ${new Date().toLocaleTimeString('es-MX')}`);
+      } catch (error) {
+        console.error(error);
+        setStatus('Error al cargar datos');
+      } finally {
+        isFetching = false;
+      }
+    }
+
+    function renderDashboard(reservations = []) {
+      document.getElementById('total').textContent = reservations.length;
+
+      const uniqueGuests = new Set(reservations.map(r => r.customerID || r.customerName));
+      document.getElementById('uniqueGuests').textContent = uniqueGuests.size;
+
+      const totalNights = reservations.reduce((sum, r) => sum + Number(r.noches || 0), 0);
+      document.getElementById('totalNights').textContent = totalNights;
+
+      const tbody = document.getElementById('tableBody');
+
+      if (!reservations.length) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#94a3b8;">Sin reservas registradas</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = reservations
+        .map(r => `
+          <tr>
+            <td>${r.Id || r.id || '—'}</td>
+            <td>${r.customerName || '—'}</td>
+            <td>${r.hotel || '—'}</td>
+            <td>${r.noches || '—'}</td>
+            <td>${formatCurrency(r.costo)}</td>
+            <td>${formatDate(r.fecha)}</td>
+          </tr>
+        `)
+        .join('');
+    }
+
+    function formatCurrency(value) {
+      if (value === undefined || value === null || value === '') return '—';
+      return Number(value).toLocaleString('es-MX', {
+        style: 'currency',
+        currency: 'MXN',
+        maximumFractionDigits: 0
+      });
+    }
+
+    function formatDate(value) {
+      if (!value) return '—';
+      const date = new Date(value);
+      return isNaN(date) ? value : date.toLocaleDateString('es-MX', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    function setStatus(text) {
+      document.getElementById('statusText').textContent = text;
+    }
+
+    function startAutoRefresh() {
+      fetchReservations();
+      clearInterval(timer);
+      timer = setInterval(fetchReservations, REFRESH_MS);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        clearInterval(timer);
+      } else {
+        startAutoRefresh();
+      }
+    });
+
+    startAutoRefresh();
+  </script>
+</body>
+</html>
