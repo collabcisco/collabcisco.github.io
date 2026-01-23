@@ -158,11 +158,20 @@
       });
     }
 
-    function formatDate(value) {
-      if (!value) return '—';
-      const date = new Date(value);
-      return isNaN(date) ? value : date.toLocaleDateString('es-MX', { year: 'numeric', month: 'short', day: 'numeric' });
-    }
+function formatDate(value) {
+  if (!value) return '—';
+  const normalized = value.replace(/\//g, '-'); // admite 2025/02/06 o 2025-02-06
+  const [year, month, day] = normalized.split('-').map(Number);
+  if (!year || !month || !day) return value;
+
+  const utcDate = new Date(Date.UTC(year, month - 1, day));
+  return new Intl.DateTimeFormat('es-MX', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC'
+  }).format(utcDate);
+}
 
     function setStatus(text) {
       document.getElementById('statusText').textContent = text;
