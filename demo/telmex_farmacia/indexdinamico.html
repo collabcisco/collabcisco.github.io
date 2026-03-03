@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="companyNameTitle">Farmacia SaludVital - Tu Salud, Nuestra Prioridad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-green: #20c997; /* Verde menta vibrante */
+      --secondary-teal: #17a2b8; /* Turquesa/Teal */
+      --light-bg: #e6fff7; /* Fondo muy claro verdoso */
+      --dark-text: #343a40; /* Texto oscuro */
+      --white: #ffffff;
+      --border-radius-lg: 12px;
+      --border-radius-sm: 8px;
+      --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08);
+      --shadow-medium: 0 6px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--dark-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--white);
+      padding: 1rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-light);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header .logo {
+      height: 50px; /* Más grande para visibilidad */
+      display: flex;
+      align-items: center;
+      font-size: 2rem; /* Tamaño de fuente del texto del logo */
+      font-weight: 700;
+      color: var(--primary-green);
+      text-decoration: none;
+    }
+
+    header .logo img {
+      height: 45px; /* Tamaño de la imagen del logo */
+      margin-right: 10px;
+      border-radius: var(--border-radius-sm);
+    }
+
+    nav a {
+      color: var(--dark-text);
+      margin-left: 2rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--primary-green);
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2.5rem; /* Ajustado */
+      background: linear-gradient(135deg, #e0fdf0 0%, #d1f7f9 100%); /* Gradiente suave verdoso-turquesa */
+      min-height: 400px; /* Ajustado */
+      position: relative;
+      overflow: hidden;
+      gap: 2rem;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 200px;
+      height: 200px;
+      background: rgba(32, 201, 151, 0.1); /* Color del primary-green */
+      border-radius: 50%;
+      filter: blur(80px);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      right: -50px;
+      width: 250px;
+      height: 250px;
+      background: rgba(23, 162, 184, 0.15); /* Color del secondary-teal */
+      border-radius: 50%;
+      filter: blur(100px);
+    }
+
+    .hero-content {
+      max-width: 50%;
+      z-index: 1;
+      text-align: left;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-green);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .hero-content p {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      color: #555;
+    }
+
+    .hero-image {
+      max-width: 45%;
+      z-index: 1;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary-green);
+      color: white;
+      padding: 0.9rem 2.2rem;
+      border-radius: var(--border-radius-sm);
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(32, 201, 151, 0.3);
+    }
+
+    .btn:hover {
+      background-color: #1a9e7d; /* Tono más oscuro de verde */
+      transform: translateY(-2px);
+    }
+
+    /* Sections / Cards */
+    .sections-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajustado para más tarjetas */
+      gap: 2rem;
+      padding: 3rem 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-card {
+      background-color: var(--white);
+      padding: 2.5rem;
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-light);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .section-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .section-card h2 {
+      margin-bottom: 1rem;
+      color: var(--primary-green);
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .section-card p {
+      font-size: 1.05rem;
+      color: #666;
+      flex-grow: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-card img {
+      width: 100%;
+      max-height: 180px; /* Reducido para que las tarjetas sean más compactas */
+      object-fit: cover;
+      border-radius: var(--border-radius-sm);
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* Sección de Beneficios/Características */
+    .features-section {
+      background-color: var(--light-bg); /* Fondo más claro para esta sección */
+      padding: 4rem 2.5rem;
+      text-align: center;
+    }
+
+    .features-section h2 {
+      font-size: 2.5rem;
+      color: var(--primary-green);
+      margin-bottom: 2.5rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .feature-item {
+      background-color: var(--white);
+      padding: 2rem;
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-light);
+      text-align: left;
+    }
+
+    .feature-item h3 {
+      color: var(--primary-green);
+      margin-bottom: 0.8rem;
+      font-size: 1.4rem;
+    }
+
+    .feature-item p {
+      color: #555;
+      font-size: 1rem;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--primary-green);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+    }
+
+    /* Admin Panel Floater */
+    .admin-panel-floater {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .admin-panel-floater-btn {
+      background-color: var(--secondary-teal);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-medium);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .admin-panel-floater-btn:hover {
+      background-color: #138496;
+      transform: scale(1.05);
+    }
+
+    .admin-panel-content {
+      background-color: var(--white);
+      border-radius: var(--border-radius-lg);
+      padding: 1rem;
+      box-shadow: var(--shadow-medium);
+      margin-bottom: 10px;
+      display: none; /* Hidden by default */
+      flex-direction: column;
+      gap: 10px;
+      width: 280px;
+    }
+
+    .admin-panel-content.active {
+      display: flex; /* Show when active */
+    }
+
+    .admin-panel-content label {
+      font-weight: 600;
+      color: var(--dark-text);
+      font-size: 0.9rem;
+    }
+
+    .admin-panel-content input[type="text"] {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: var(--border-radius-sm);
+      font-size: 0.9rem;
+    }
+
+    .admin-panel-content button {
+      background-color: var(--primary-green);
+      color: white;
+      padding: 0.6rem;
+      border: none;
+      border-radius: var(--border-radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .admin-panel-content button:hover {
+      background-color: #1a9e7d;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 2.5rem 1.5rem;
+        min-height: auto;
+      }
+      .hero-content, .hero-image {
+        max-width: 100%;
+      }
+      .hero-content h1 {
+        font-size: 2.8rem;
+      }
+      .hero-content p {
+        font-size: 1.1rem;
+      }
+      header {
+        padding: 0.8rem 1.5rem;
+      }
+      nav a {
+        margin-left: 1rem;
+      }
+      .sections-container, .features-section {
+        padding: 2rem 1.5rem;
+      }
+      .section-card {
+        padding: 2rem;
+      }
+      .admin-panel-floater {
+        bottom: 15px;
+        right: 15px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.7rem 1rem;
+      }
+      header .logo {
+        font-size: 1.8rem;
+        height: 45px;
+      }
+      header .logo img {
+        height: 40px;
+      }
+      header nav {
+        margin-top: 0.8rem;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+      }
+      nav a {
+        margin: 0 0.5rem;
+        font-size: 0.9rem;
+      }
+      .hero {
+        padding: 2rem 1rem;
+      }
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+      .hero-content p {
+        font-size: 1rem;
+      }
+      .btn {
+        padding: 0.8rem 2rem;
+        font-size: 0.9rem;
+      }
+      .sections-container {
+        grid-template-columns: 1fr;
+        padding: 1.5rem 1rem;
+      }
+      .section-card {
+        padding: 1.5rem;
+      }
+      .section-card h2 {
+        font-size: 1.5rem;
+      }
+      .section-card img {
+        max-height: 150px;
+      }
+      .features-section h2 {
+        font-size: 2rem;
+      }
+      .feature-item {
+        padding: 1.5rem;
+      }
+      .admin-panel-content {
+        width: 250px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header .logo {
+        font-size: 1.5rem;
+        height: 40px;
+      }
+      header .logo img {
+        height: 35px;
+      }
+      nav a {
+        font-size: 0.8rem;
+        margin: 0 0.3rem;
+      }
+      .hero-content h1 {
+        font-size: 1.8rem;
+      }
+      .hero-content p {
+        font-size: 0.9rem;
+      }
+      .btn {
+        padding: 0.7rem 1.8rem;
+        font-size: 0.85rem;
+      }
+      .section-card h2 {
+        font-size: 1.3rem;
+      }
+      .admin-panel-floater-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+      }
+      .admin-panel-content {
+        width: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="#" class="logo">
+    <img id="companyNameLogoImg" src="farmacia-saludvital-logo.jpg" alt="Logo Farmacia SaludVital">
+    <span id="companyNameLogoText">SaludVital</span>
+  </a>
+  <nav>
+    <a href="#">Inicio</a>
+    <a href="#">Productos</a>
+    <a href="#">Servicios</a>
+    <a href="#">Contacto</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1 id="companyNameHeroHeading">Farmacia SaludVital: Cuidando de Ti y tu Familia</h1>
+    <p>Tu bienestar es nuestra prioridad. Encuentra todo lo que necesitas para tu salud, con la mejor asesoría profesional.</p>
+    <a href="#productos" class="btn">Explora Nuestros Productos</a>
+  </div>
+  <div class="hero-image">
+    <img src="farmacia-saludvital-hero.jpg" alt="Profesional de la salud atendiendo a cliente">
+  </div>
+</section>
+
+<div class="sections-container">
+  <section class="section-card">
+    <h2>Medicamentos</h2>
+    <p>Amplia variedad de medicamentos con y sin receta, siempre con la seguridad y calidad que mereces.</p>
+    <img src="farmacia-saludvital-medicamentos.jpg" alt="Estantes de medicamentos">
+  </section>
+
+  <section class="section-card">
+    <h2>Cuidado Personal</h2>
+    <p>Productos para el cuidado de la piel, higiene personal y belleza para toda la familia.</p>
+    <img src="farmacia-saludvital-cuidado-personal.jpg" alt="Productos de cuidado personal">
+  </section>
+
+  <section class="section-card">
+    <h2>Vitaminas y Suplementos</h2>
+    <p>Fortalece tu salud con nuestra selección de vitaminas, minerales y suplementos.</p>
+    <img src="farmacia-saludvital-vitaminas-suplementos.jpg" alt="Vitaminas y suplementos">
+  </section>
+
+  <section class="section-card">
+    <h2>Servicios Profesionales</h2>
+    <p>Asesoría farmacéutica, toma de presión, inyecciones y más servicios para tu comodidad.</p>
+    <img src="farmacia-saludvital-servicios.jpg" alt="Profesional de la salud asesorando">
+  </section>
+</div>
+
+<section class="features-section">
+  <h2>¿Por Qué Elegir Farmacia SaludVital?</h2>
+  <div class="feature-grid">
+    <div class="feature-item">
+      <h3>Asesoría Experta</h3>
+      <p>Nuestro equipo de profesionales está listo para resolver tus dudas y orientarte.</p>
+    </div>
+    <div class="feature-item">
+      <h3>Amplio Surtido</h3>
+      <p>Encuentra una extensa gama de productos para todas tus necesidades de salud.</p>
+    <div class="feature-item">
+      <h3>Entrega a Domicilio</h3>
+      <p>Recibe tus productos cómodamente en la puerta de tu casa.</p>
+    </div>
+    <div class="feature-item">
+      <h3>Atención Personalizada</h3>
+      <p>Te escuchamos y te ofrecemos soluciones adaptadas a ti.</p>
+    </div>
+  </div>
+</section>
+
+<footer id="companyNameFooter">
+  &copy; 2025 Farmacia SaludVital. Todos los derechos reservados. | Aviso de Privacidad | Términos y Condiciones
+</footer>
+
+<!-- Admin Panel Floater -->
+<div class="admin-panel-floater">
+  <div id="adminPanelContent" class="admin-panel-content">
+    <label for="companyNameInput">Cambiar nombre:</label>
+    <input type="text" id="companyNameInput" placeholder="Ej: Farmacia Central">
+    <button id="updateCompanyNameBtn">Actualizar</button>
+  </div>
+  <button id="toggleAdminPanelBtn" class="admin-panel-floater-btn">⚙️</button>
+</div>
+
+<!-- SCRIPT PARA AUTOMATIZAR EL NOMBRE DE LA EMPRESA -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Función para actualizar el nombre de la empresa en la página
+    function updateCompanyName(newCompanyName) {
+      if (!newCompanyName) {
+        newCompanyName = "SaludVital"; // Nombre por defecto si el input está vacío
+      }
+
+      // 1. Título de la página (<title>)
+      const titleElement = document.getElementById('companyNameTitle');
+      if (titleElement) {
+        titleElement.textContent = `${newCompanyName} - Tu Salud, Nuestra Prioridad`;
+      }
+
+      // 2. Logo en el encabezado (texto y alt de la imagen)
+      const logoTextElement = document.getElementById('companyNameLogoText');
+      if (logoTextElement) {
+        logoTextElement.textContent = newCompanyName;
+      }
+      const logoImgElement = document.getElementById('companyNameLogoImg');
+      if (logoImgElement) {
+        logoImgElement.alt = `Logo ${newCompanyName}`;
+      }
+
+      // 3. Título principal (H1 en la sección Hero)
+      const heroHeadingElement = document.getElementById('companyNameHeroHeading');
+      if (heroHeadingElement) {
+        heroHeadingElement.textContent = `${newCompanyName}: Cuidando de Ti y tu Familia`;
+      }
+
+      // 4. Pie de página (Footer)
+      const footerElement = document.getElementById('companyNameFooter');
+      if (footerElement) {
+        footerElement.innerHTML = `&copy; 2025 ${newCompanyName}. Todos los derechos reservados. | Aviso de Privacidad | Términos y Condiciones`;
+      }
+    }
+
+    // Establecer el nombre inicial de la empresa al cargar la página
+    const initialCompanyName = "SaludVital"; // Nombre por defecto al cargar
+    updateCompanyName(initialCompanyName);
+    const companyNameInput = document.getElementById('companyNameInput');
+    companyNameInput.value = initialCompanyName; // Poner el nombre inicial en el input
+
+    // Obtener referencias al input y al botón de actualización
+    const updateButton = document.getElementById('updateCompanyNameBtn');
+
+    // Añadir un "event listener" al botón para que actúe al hacer clic
+    updateButton.addEventListener('click', function() {
+      const newName = companyNameInput.value; // Obtener el valor del campo de texto
+      updateCompanyName(newName); // Llamar a la función para actualizar el nombre
+    });
+
+    // Opcional: También actualizar al presionar Enter en el campo de texto
+    companyNameInput.addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        updateButton.click(); // Simular un clic en el botón
+      }
+    });
+
+    // Lógica para mostrar/ocultar el panel de administración flotante
+    const toggleAdminPanelBtn = document.getElementById('toggleAdminPanelBtn');
+    const adminPanelContent = document.getElementById('adminPanelContent');
+
+    toggleAdminPanelBtn.addEventListener('click', function() {
+      adminPanelContent.classList.toggle('active');
+    });
+  });
+</script>
+
+</body>
+</html>
