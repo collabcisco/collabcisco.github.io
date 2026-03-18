@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard de Reservas AVIS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --primary: #d4001a;
+      --primary-dark: #a30013;
+      --bg: #f4f6fb;
+      --card-bg: #ffffff;
+      --text: #1b1f3b;
+      --muted: #6c7283;
+      --shadow: 0 15px 35px rgba(0,0,0,0.08);
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 32px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header img {
+      height: 48px;
+    }
+    header .timestamp {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    main {
+      padding: 32px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .table-wrapper {
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+    th, td {
+      padding: 14px 12px;
+      text-align: left;
+    }
+    th {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      border-bottom: 2px solid #eef1f5;
+    }
+    tr:not(:last-child) td {
+      border-bottom: 1px solid #f1f2f6;
+    }
+    tr:hover {
+      background: #fdf1f2;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+    }
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      main {
+        padding: 24px 16px 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="AVIS" />
+    <div class="timestamp" id="lastUpdate">Última actualización: —</div>
+  </header>
+
+  <main>
+    <section class="table-wrapper">
+      <h2 style="margin-top:0;margin-bottom:16px;">Reservas</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Reserva</th>
+            <th>Cliente</th>
+            <th>Contacto</th>
+            <th>Recogida</th>
+            <th>Devolución</th>
+            <th>Auto</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody id="reservationsBody">
+          <tr>
+            <td colspan="7" class="empty-state">Cargando información...</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    const RESERVAS_URL = 'https://697bbe4c889a1aecfeb0b44a.mockapi.io/reservas';
+    const CLIENTES_URL = 'https://6892811ec49d24bce867aefa.mockapi.io/clientes';
+    const REFRESH_MS = 30000;
+
+    const lastUpdateEl = document.getElementById('lastUpdate');
+    const reservationsBodyEl = document.getElementById('reservationsBody');
+
+    function formatDate(dateString, options = {}) {
+      return new Intl.DateTimeFormat('es-MX', {
+        dateStyle: options.dateStyle || 'medium',
+        timeStyle: options.timeStyle || 'short'
+      }).format(new Date(dateString));
+    }
+
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat('es-MX', {
+        style: 'currency',
+        currency: 'MXN'
+      }).format(amount);
+    }
+
+    async function fetchData() {
+      try {
+        const [reservasRes, clientesRes] = await Promise.all([
+          fetch(RESERVAS_URL),
+          fetch(CLIENTES_URL)
+        ]);
+        if (!reservasRes.ok || !clientesRes.ok) {
+          throw new Error('No se pudo obtener la información');
+        }
+        const reservas = await reservasRes.json();
+        const clientes = await clientesRes.json();
+        renderDashboard(reservas, clientes);
+        lastUpdateEl.textContent = `Última actualización: ${formatDate(Date.now(), { dateStyle: 'short', timeStyle: 'medium' })}`;
+      } catch (error) {
+        reservationsBodyEl.innerHTML = `<tr><td colspan="7" class="empty-state">Error al cargar datos: ${error.message}</td></tr>`;
+      }
+    }
+
+    function renderDashboard(reservas, clientes) {
+      const clientMap = new Map(clientes.map(c => [c.customerID, c]));
+      const merged = reservas.map(reserva => ({
+        ...reserva,
+        cliente: clientMap.get(reserva.cliente_id) || null
+      })).sort((a, b) => new Date(a.fecha_recogida) - new Date(b.fecha_recogida));
+      renderTable(merged);
+    }
+
+    function renderTable(reservas) {
+      if (!reservas.length) {
+        reservationsBodyEl.innerHTML = '<tr><td colspan="7" class="empty-state">No hay reservas registradas.</td></tr>';
+        return;
+      }
+      reservationsBodyEl.innerHTML = reservas.map(reserva => {
+        const cliente = reserva.cliente;
+        const start = formatDate(reserva.fecha_recogida);
+        const end = formatDate(reserva.fecha_devolucion);
+        return `
+          <tr>
+            <td>${reserva.reserva_id || '-'}</td>
+            <td>
+              <strong>${cliente ? cliente.name : 'Cliente sin registrar'}</strong><br/>
+              <span style="color: var(--muted); font-size: 0.85rem;">ID: ${reserva.cliente_id || '—'}</span>
+            </td>
+            <td>
+              <div>${cliente?.email || '—'}</div>
+              <div>${cliente?.number || '—'}</div>
+            </td>
+            <td>
+              <div>${start}</div>
+              <small style="color: var(--muted);">${reserva.lugar_recogida}</small>
+            </td>
+            <td>
+              <div>${end}</div>
+              <small style="color: var(--muted);">${reserva.lugar_devolucion}</small>
+            </td>
+            <td>${reserva.tipo_auto} · ${reserva.modelo_auto || 'Modelo asignado al recoger'}</td>
+            <td>${formatCurrency(reserva.precio_total || 0)}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    fetchData();
+    setInterval(fetchData, REFRESH_MS);
+  </script>
+</body>
+</html>
