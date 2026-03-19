@@ -1,14 +1,14 @@
 {
   "agent": {
     "version": "0.1.0",
-    "appTitle": "Webex Contact Center - Timsa",
-    "logo": "https://collabcisco.github.io/demo/timsa/logo.png",
+    "appTitle": "Webex Contact Center - Distribuidora Modelo",
+    "logo": "https://collabcisco.github.io/demo/modelonicolas/logo.png",
     "stopNavigateOnAcceptTask": false,
     "dragDropEnabled": true,
     "notificationTimer": 8,
     "maximumNotificationCount": 3,
     "browserNotificationTimer": 8,
-    "taskPageIllustration": "https://collabcisco.github.io/demo/timsa/logo.png",
+    "taskPageIllustration": "https://collabcisco.github.io/demo/modelonicolas/logo.png",
     "wxmConfigured": false,
     "desktopChatApp": {
       "webexConfigured": true
@@ -386,7 +386,7 @@
                 "width": 5,
                 "height": 13,
                 "attributes": {
-                  "src": "https://collabcisco.github.io/collabmex/retail/consultarpedidos.html"
+                  "src": "https://collabcisco.github.io/collabmex/modelonicolas/consultarpedidos.html"
                 },
                   "wrapper": {
                                     "title": "Clientes",
