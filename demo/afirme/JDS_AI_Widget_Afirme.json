@@ -1,14 +1,14 @@
 {
   "agent": {
     "version": "0.1.0",
-    "appTitle": "Webex Contact Center - Banca",
-    "logo": "https://collabcisco.github.io/collabmex/banca/logo.png",
+    "appTitle": "Webex Contact Center - Afirme",
+    "logo": "https://collabcisco.github.io/demo/afirme/logo.png",
     "stopNavigateOnAcceptTask": false,
     "dragDropEnabled": true,
     "notificationTimer": 8,
     "maximumNotificationCount": 3,
     "browserNotificationTimer": 8,
-    "taskPageIllustration": "https://collabcisco.github.io/collabmex/banca/logo.png",
+    "taskPageIllustration": "https://collabcisco.github.io/demo/afirme/logo.png",
     "wxmConfigured": false,
     "desktopChatApp": {
       "webexConfigured": true
@@ -212,6 +212,38 @@
               {
                 "comp": "slot",
                 "attributes": {
+                  "name": "RT_TRANSCRIPT_TAB"
+                }
+              }
+            ],
+            "visibility": "RT_TRANSCRIPT"
+          },
+          {
+            "comp": "md-tab-panel",
+            "attributes": {
+              "slot": "panel",
+              "class": "widget-pane"
+            },
+            "children": [
+              {
+                "comp": "slot",
+                "attributes": {
+                  "name": "RT_TRANSCRIPT"
+                }
+              }
+            ],
+            "visibility": "RT_TRANSCRIPT"
+          },
+          {
+            "comp": "md-tab",
+            "attributes": {
+              "slot": "tab",
+              "class": "widget-pane-tab"
+            },
+            "children": [
+              {
+                "comp": "slot",
+                "attributes": {
                   "name": "SCREEN_POP_TAB"
                 }
               }
@@ -353,7 +385,7 @@
                 "width": 5,
                 "height": 13,
                 "attributes": {
-                  "src": "https://collabcisco.github.io/collabmex/banca/clientes.html"
+                  "src": "https://collabcisco.github.io/demo/afirme/clientes.html"
                 },
                   "wrapper": {
                                     "title": "Clientes",
