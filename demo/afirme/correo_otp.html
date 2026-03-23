@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código de Verificación de Banco</title>
+    <style>
+        /* Reset CSS para compatibilidad de email */
+        body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; }
+
+        /* Estilos generales */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4; 
+            color: #333333; 
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            border-top: 5px solid #008248; /* Verde Afirme */
+        }
+
+        .header {
+            background-color: #008248; /* Verde Afirme */
+            padding: 20px 25px;
+            text-align: center;
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .header img {
+            height: 40px;
+            vertical-align: middle;
+            margin-right: 10px;
+            border-radius: 8px;
+        }
+
+        .content {
+            padding: 30px 25px;
+            text-align: center;
+        }
+
+        .content h1 {
+            color: #008248; /* Verde Afirme */
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .otp-box {
+            background-color: #e6f4ea; /* Verde muy claro */
+            border: 1px solid #008248; /* Borde Verde Afirme */
+            padding: 20px;
+            margin: 25px auto;
+            border-radius: 8px;
+            max-width: 250px;
+            font-size: 36px;
+            font-weight: 700;
+            color: #008248; /* Verde Afirme */
+            letter-spacing: 5px;
+            text-align: center;
+            display: block;
+        }
+
+        .warning {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin-top: 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #856404;
+            text-align: left;
+        }
+
+        .footer {
+            background-color: #2d3436; /* Gris oscuro neutro */
+            color: #ffffff;
+            padding: 20px 25px;
+            text-align: center;
+            font-size: 12px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100% !important;
+                margin: 0 !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+            }
+            .content, .header, .footer {
+                padding: 20px !important;
+            }
+            .otp-box {
+                font-size: 30px !important;
+                padding: 15px !important;
+            }
+            .header {
+                font-size: 20px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <!-- Espacio para logo si se requiere -->
+            AFIRME
+        </div>
+        <div class="content">
+            <h1>Verificación de Seguridad</h1>
+            <p>Hola $(n11.name), Hemos recibido una solicitud para acceder a tu cuenta o confirmar una transacción. Para completar esta acción, por favor utiliza el siguiente código de verificación de un solo uso (OTP):</p>
+
+            <div class="otp-box">
+                <span id="otpCode">$(n8.generateOTP.OTP)</span>
+            </div>
+
+            <p>Este código es válido por <strong>5 minutos</strong>.</p>
+            <p>Si no solicitaste este código, por favor ignora este correo electrónico o contáctanos de inmediato.</p>
+        </div>
+        <div class="footer">
+            &copy; 2025 Banco. Todos los derechos reservados. | <a href="#">Aviso de Privacidad</a> | <a href="#">Términos y Condiciones</a>
+        </div>
+    </div>
+</body>
+</html>
