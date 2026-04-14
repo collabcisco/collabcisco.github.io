@@ -3,207 +3,115 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kiosko Telmex | Webex Click-to-Call</title>
+  <title>Telmex Kiosko - Webex Click to Call</title>
   <style>
-    :root{
-      --blue:#0057b8;
-      --bg:#f4f7fb;
-      --text:#0f172a;
-      --ok:#0f766e;
-      --err:#b91c1c;
-      --muted:#475569;
+    body { margin:0; font-family:Arial,sans-serif; background:#f4f7fb; display:grid; place-items:center; min-height:100vh; }
+    .card { width:min(760px,92vw); background:#fff; border-radius:16px; box-shadow:0 12px 28px rgba(0,0,0,.12); padding:24px; }
+    h1 { margin:0 0 8px; color:#0f172a; }
+    p { margin:0 0 16px; color:#475569; }
+    button {
+      border:0; border-radius:12px; padding:14px 20px; font-size:1.05rem; font-weight:700;
+      background:#0057b8; color:#fff; cursor:pointer;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Arial, Helvetica, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      min-height:100vh;
-      display:grid;
-      place-items:center;
-    }
-    .kiosk{
-      width:min(860px,94vw);
-      background:#fff;
-      border-radius:18px;
-      box-shadow:0 12px 28px rgba(0,0,0,.12);
-      overflow:hidden;
-    }
-    .head{
-      background:var(--blue);
-      color:#fff;
-      padding:18px 24px;
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .logo{
-      width:40px;height:40px;border-radius:10px;
-      background:#fff;color:var(--blue);
-      display:grid;place-items:center;font-weight:700;
-    }
-    .title{font-size:1.2rem;font-weight:700}
-    .body{
-      padding:30px 24px 26px;
-      text-align:center;
-    }
-    h1{margin:0 0 10px;font-size:1.8rem}
-    p{margin:0 0 18px;color:var(--muted)}
-    .btn{
-      border:0;
-      background:var(--blue);
-      color:#fff;
-      padding:16px 26px;
-      font-size:1.1rem;
-      font-weight:700;
-      border-radius:12px;
-      cursor:pointer;
-      min-width:270px;
-    }
-    .btn:disabled{opacity:.6;cursor:not-allowed}
-    .status{
-      margin-top:14px;
-      min-height:24px;
-      font-weight:700;
-      color:var(--ok);
-    }
-    .status.error{color:var(--err)}
-    .meta{
-      margin-top:20px;
-      color:var(--muted);
-      border-top:1px solid #e2e8f0;
-      padding-top:14px;
-      font-size:.96rem;
-    }
-    .foot{
-      background:#eef4ff;
-      color:#334155;
-      text-align:center;
-      padding:12px;
-      font-size:.92rem;
-    }
+    button:disabled { opacity:.55; cursor:not-allowed; }
+    .status { margin-top:14px; min-height:24px; font-weight:700; color:#0f766e; }
+    .error { color:#b91c1c; }
   </style>
 </head>
 <body>
-  <main class="kiosk">
-    <header class="head">
-      <div class="logo">T</div>
-      <div class="title">Centro de Atención Telmex</div>
-    </header>
+  <main class="card">
+    <h1>Centro de Atención Telmex</h1>
+    <p>Presiona para llamar a un asesor.</p>
 
-    <section class="body">
-      <h1>¿Necesitas ayuda?</h1>
-      <p>Presiona el botón para comunicarte con un asesor.</p>
-
-      <button id="callBtn" class="btn" disabled>Llamar a extensión 4010</button>
-      <div id="status" class="status">Inicializando servicio...</div>
-
-      <div class="meta">
-        Horario: Lunes a viernes, 8:00 a 20:00 · Tiempo estimado: menos de 1 minuto
-      </div>
-    </section>
-
-    <footer class="foot">Telmex México | Atención a clientes</footer>
+    <button id="callBtn" disabled>Llamar a extensión 4010</button>
+    <div id="status" class="status">Inicializando Webex Calling...</div>
   </main>
 
-  <!-- =========================================================
-       1) CARGA DEL SDK WEBEX CALLING (poner URL oficial)
-       ========================================================= -->
-  <!-- <script src="URL_OFICIAL_WEBEX_CALLING_SDK"></script> -->
+  <!-- 1) Script oficial del Web Calling SDK (pon aquí el de la guía) -->
+  <!-- <script src="...SDK_URL_OFICIAL..."></script> -->
 
   <script>
-    // =========================
-    // Config demo
-    // =========================
+    // ==============================
+    // CONFIG
+    // ==============================
     const DESTINO = "4010";
 
-    // ⚠️ Recomendado: pedir token a backend seguro
-    // Demo: endpoint que tú implementarás en local:
-    const TOKEN_ENDPOINT = "/api/webex/token";
+    // ⚠️ Demo: si YA tienes token guest/JWE lo puedes pegar temporalmente aquí.
+    // Recomendado: obtenerlo desde backend.
+    const GUEST_JWT_OR_JWE_TOKEN = "eyJwMnMiOiJmVk5LRHNlalVpSGpLRmxKWWNBeFZ6aHBIOFdRdmV6ZTNOTUFIUWhtSU9lbVpZclIxUFBPMHFOQVEtOE1VZF8tSk9QSTk1MDdZUGh1RkYyY3FRRnF1RUZkNnciLCJwMmMiOjc5ODMsImtpZCI6ImttczovL2ttcy11cy53YngyLmNvbS9rZXlzLzUwZTNjNjI1LWRmZWMtNDJkMi05ODE2LWIzODBhMmEzNmVhYyIsImN0eSI6IkpXVCIsImVuYyI6IkExOTJDQkMtSFMzODQiLCJhbGciOiJQQkVTMi1IUzM4NCtBMTkyS1cifQ.Ye5Lq9cF8W6nW6sJPcyNJislPDFUCgTfw4z8SRpyn6lTbLSDGLXNfkiy3ptP63o3YmOnOg28B1M.gMIkSk7HERC0rhc__CfDQw.mXs0o3lCt6UlM5ax0c8EKBW__ehcFxsznBOsIvZF6dN5DiKjwCjWuG_Lg5aX4Lm5XufP7yIJ9VkDh60jbZ7bWzblQt5VlpcO6E2Jr8x2yVomI1rD6HcqDS4oc3dN-ETLWWjoggVdh6Oac3iozWmqLfT5Y4BHV1JPwVynJttaK-GrTZ0g88YXDy9tBtViDoj02hP82CMAVisZNSamXDYkCUhLG4Mg2vIbb_weRGd6sxCWWNp7fJly_HJsVmBCjf4JOcd-uymJtV-VvK_FLsj7dg2xoVJl_kZE6ZEGheySB5pQlwXiYqsvJ18tZT1Sed6MnszlyNcwQTE4Hu5pP2qh2Wi7j5Ys3przRuqbiga5UAbjS4Vqoiatn4_e8czfzlw-gNVi2xtZiwQSQ6O0kgI08-mfq4Yi-wfdhLL1xrJQpbqVuOoRGWPT18KQ82SyReL21wjwobO5BsAtX_CLsO2ngltCIZGdkNq3lp7W_BewmaeMY5PzppCWF0fxM2xqExpWQ6XYD0elom1pOhjaSNLY9xJHy0KZ1eb1T5sbWRebRUpLnvVzpGg5CjqYIWrqifP-M98AzwJxvBTIvBpZhMV9g5GdcaWyKLl61B-i0BkmuRW8OKjfNU6qWgU_bDBIxzcgrihpGmkDC6EN1WdjaI8FaKDUhJc6jAoh4DvztB7Sn0cJWAe4TbrB4nXxtZgR-Yww6CeGgMUZfUydx-fzXo_uSmRm1VZH_U-CxEF_2Nen0eI.i3Ze5TTaknNGfEQuMLt5tcDVwnptsFh0";
 
     const callBtn = document.getElementById("callBtn");
     const statusEl = document.getElementById("status");
 
-    let callingClient = null;
-    let currentCall = null;
+    let sdkClient = null;
+    let activeCall = null;
 
-    function setStatus(message, isError = false){
-      statusEl.textContent = message;
+    function setStatus(msg, isError = false) {
+      statusEl.textContent = msg;
       statusEl.classList.toggle("error", isError);
     }
 
-    async function getAccessToken(){
-      // Espera que tu backend responda { access_token: "..." }
-      const res = await fetch(TOKEN_ENDPOINT, { method: "GET" });
-      if(!res.ok) throw new Error("No se pudo obtener token");
-      const data = await res.json();
-      if(!data.access_token) throw new Error("Token inválido");
-      return data.access_token;
-    }
+    async function initSdk() {
+      try {
+        setStatus("Inicializando SDK...");
 
-    async function initWebexCalling(){
-      try{
-        setStatus("Inicializando Webex Calling...");
-
-        const accessToken = await getAccessToken();
-
-        // =====================================================
-        // 2) INICIALIZACIÓN REAL DEL SDK (pegar quickstart aquí)
-        // Ejemplo conceptual:
-        // callingClient = await WebexCalling.init({
-        //   accessToken
+        // 2) Inicialización real según guía click-to-call
+        // ------------------------------------------------
+        // Ejemplo conceptual (ajusta nombres exactos de la guía):
+        //
+        // sdkClient = await WebexCallingSDK.create({
+        //   token: GUEST_JWT_OR_JWE_TOKEN
         // });
-        // =====================================================
+        //
+        // await sdkClient.initialize();
+        // ------------------------------------------------
 
-        // Simulación temporal para demo visual:
-        await new Promise(r => setTimeout(r, 800));
-        callingClient = { ready: true };
+        // Simulación temporal:
+        await new Promise(r => setTimeout(r, 900));
+        sdkClient = { ready: true };
 
         callBtn.disabled = false;
         setStatus("Listo para llamar");
-      }catch(err){
-        console.error(err);
+      } catch (e) {
+        console.error(e);
         setStatus("Error al inicializar Webex Calling", true);
       }
     }
 
-    async function callExtension(){
-      try{
+    async function startCall() {
+      try {
         callBtn.disabled = true;
-        setStatus(`Conectando a la extensión ${DESTINO}...`);
+        setStatus(`Conectando a ${DESTINO}...`);
 
-        // =====================================================
-        // 3) CLICK-TO-CALL REAL (pegar método oficial aquí)
-        // Ejemplo conceptual:
-        // currentCall = await callingClient.dial(DESTINO);
+        // 3) Dial real según guía click-to-call
+        // ------------------------------------------------
+        // activeCall = await sdkClient.dial(DESTINO);
         //
-        // currentCall.on("connected", () => setStatus("Llamada conectada"));
-        // currentCall.on("disconnected", () => {
+        // activeCall.on("connected", () => setStatus("Llamada conectada"));
+        // activeCall.on("disconnected", () => {
         //   setStatus("Llamada finalizada");
         //   callBtn.disabled = false;
         // });
-        // currentCall.on("error", () => {
+        // activeCall.on("error", (err) => {
+        //   console.error(err);
         //   setStatus("Error en llamada", true);
         //   callBtn.disabled = false;
         // });
-        // =====================================================
+        // ------------------------------------------------
 
         // Simulación temporal:
         await new Promise(r => setTimeout(r, 1200));
         setStatus(`Llamada en curso con extensión ${DESTINO}`);
         callBtn.disabled = false;
-
-      }catch(err){
-        console.error(err);
+      } catch (e) {
+        console.error(e);
         setStatus("No se pudo iniciar la llamada", true);
         callBtn.disabled = false;
       }
     }
 
-    window.addEventListener("load", initWebexCalling);
-    callBtn.addEventListener("click", callExtension);
+    window.addEventListener("load", initSdk);
+    callBtn.addEventListener("click", startCall);
   </script>
 </body>
-</html>
 </html>
