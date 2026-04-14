@@ -3,94 +3,207 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kiosko Telmex - Click to Call Webex</title>
+  <title>Kiosko Telmex | Webex Click-to-Call</title>
   <style>
-    body { font-family: Arial, sans-serif; background:#f4f7fb; margin:0; display:grid; place-items:center; min-height:100vh; }
-    .card { width:min(760px,92vw); background:#fff; border-radius:16px; box-shadow:0 10px 28px rgba(0,0,0,.12); padding:24px; }
-    h1 { margin:0 0 10px; color:#0f172a; }
-    p { margin:0 0 18px; color:#334155; }
-    button { background:#0057b8; color:#fff; border:none; border-radius:12px; padding:14px 22px; font-size:1.05rem; font-weight:700; cursor:pointer; }
-    button:disabled { opacity:.6; cursor:not-allowed; }
-    .status { margin-top:14px; font-weight:600; color:#0f766e; min-height:22px; }
-    .error { color:#b91c1c; }
+    :root{
+      --blue:#0057b8;
+      --bg:#f4f7fb;
+      --text:#0f172a;
+      --ok:#0f766e;
+      --err:#b91c1c;
+      --muted:#475569;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+    }
+    .kiosk{
+      width:min(860px,94vw);
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 12px 28px rgba(0,0,0,.12);
+      overflow:hidden;
+    }
+    .head{
+      background:var(--blue);
+      color:#fff;
+      padding:18px 24px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .logo{
+      width:40px;height:40px;border-radius:10px;
+      background:#fff;color:var(--blue);
+      display:grid;place-items:center;font-weight:700;
+    }
+    .title{font-size:1.2rem;font-weight:700}
+    .body{
+      padding:30px 24px 26px;
+      text-align:center;
+    }
+    h1{margin:0 0 10px;font-size:1.8rem}
+    p{margin:0 0 18px;color:var(--muted)}
+    .btn{
+      border:0;
+      background:var(--blue);
+      color:#fff;
+      padding:16px 26px;
+      font-size:1.1rem;
+      font-weight:700;
+      border-radius:12px;
+      cursor:pointer;
+      min-width:270px;
+    }
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .status{
+      margin-top:14px;
+      min-height:24px;
+      font-weight:700;
+      color:var(--ok);
+    }
+    .status.error{color:var(--err)}
+    .meta{
+      margin-top:20px;
+      color:var(--muted);
+      border-top:1px solid #e2e8f0;
+      padding-top:14px;
+      font-size:.96rem;
+    }
+    .foot{
+      background:#eef4ff;
+      color:#334155;
+      text-align:center;
+      padding:12px;
+      font-size:.92rem;
+    }
   </style>
 </head>
 <body>
-  <main class="card">
-    <h1>Centro de Atención Telmex</h1>
-    <p>Presiona para llamar a un asesor.</p>
-    <button id="initBtn">Inicializar</button>
-    <button id="callBtn" disabled>Llamar a extensión 4010</button>
-    <div id="status" class="status">Pendiente de inicialización</div>
+  <main class="kiosk">
+    <header class="head">
+      <div class="logo">T</div>
+      <div class="title">Centro de Atención Telmex</div>
+    </header>
+
+    <section class="body">
+      <h1>¿Necesitas ayuda?</h1>
+      <p>Presiona el botón para comunicarte con un asesor.</p>
+
+      <button id="callBtn" class="btn" disabled>Llamar a extensión 4010</button>
+      <div id="status" class="status">Inicializando servicio...</div>
+
+      <div class="meta">
+        Horario: Lunes a viernes, 8:00 a 20:00 · Tiempo estimado: menos de 1 minuto
+      </div>
+    </section>
+
+    <footer class="foot">Telmex México | Atención a clientes</footer>
   </main>
 
-  <!-- Cargar SDK oficial Webex Calling según documentación -->
-  <!-- <script src="...sdk oficial..."></script> -->
+  <!-- =========================================================
+       1) CARGA DEL SDK WEBEX CALLING (poner URL oficial)
+       ========================================================= -->
+  <!-- <script src="URL_OFICIAL_WEBEX_CALLING_SDK"></script> -->
 
   <script>
+    // =========================
+    // Config demo
+    // =========================
     const DESTINO = "4010";
-    const initBtn = document.getElementById("initBtn");
+
+    // ⚠️ Recomendado: pedir token a backend seguro
+    // Demo: endpoint que tú implementarás en local:
+    const TOKEN_ENDPOINT = "/api/webex/token";
+
     const callBtn = document.getElementById("callBtn");
     const statusEl = document.getElementById("status");
 
-    let callingClient;
-    let activeCall;
+    let callingClient = null;
+    let currentCall = null;
 
-    function setStatus(msg, isError = false) {
-      statusEl.textContent = msg;
+    function setStatus(message, isError = false){
+      statusEl.textContent = message;
       statusEl.classList.toggle("error", isError);
     }
 
-    async function initCalling() {
-      try {
-        initBtn.disabled = true;
+    async function getAccessToken(){
+      // Espera que tu backend responda { access_token: "..." }
+      const res = await fetch(TOKEN_ENDPOINT, { method: "GET" });
+      if(!res.ok) throw new Error("No se pudo obtener token");
+      const data = await res.json();
+      if(!data.access_token) throw new Error("Token inválido");
+      return data.access_token;
+    }
+
+    async function initWebexCalling(){
+      try{
         setStatus("Inicializando Webex Calling...");
 
-        // 1) Pedir token temporal a tu backend seguro
-        // const res = await fetch("/api/webex/token");
-        // const { access_token } = await res.json();
+        const accessToken = await getAccessToken();
 
-        // 2) Inicializar SDK con el flujo del quickstart/click-to-call
-        // (Pegar aquí bloque exacto de la documentación)
-        // callingClient = await WebexCalling.init({ accessToken: access_token, ... });
+        // =====================================================
+        // 2) INICIALIZACIÓN REAL DEL SDK (pegar quickstart aquí)
+        // Ejemplo conceptual:
+        // callingClient = await WebexCalling.init({
+        //   accessToken
+        // });
+        // =====================================================
 
-        // Simulación
+        // Simulación temporal para demo visual:
         await new Promise(r => setTimeout(r, 800));
+        callingClient = { ready: true };
 
         callBtn.disabled = false;
-        setStatus("Inicializado correctamente");
-      } catch (err) {
+        setStatus("Listo para llamar");
+      }catch(err){
         console.error(err);
-        initBtn.disabled = false;
-        setStatus("Error al inicializar", true);
+        setStatus("Error al inicializar Webex Calling", true);
       }
     }
 
-    async function makeCall() {
-      try {
+    async function callExtension(){
+      try{
         callBtn.disabled = true;
-        setStatus("Conectando llamada...");
+        setStatus(`Conectando a la extensión ${DESTINO}...`);
 
-        // 3) Método de click-to-call del SDK (doc oficial)
-        // activeCall = await callingClient.dial(DESTINO);
+        // =====================================================
+        // 3) CLICK-TO-CALL REAL (pegar método oficial aquí)
+        // Ejemplo conceptual:
+        // currentCall = await callingClient.dial(DESTINO);
+        //
+        // currentCall.on("connected", () => setStatus("Llamada conectada"));
+        // currentCall.on("disconnected", () => {
+        //   setStatus("Llamada finalizada");
+        //   callBtn.disabled = false;
+        // });
+        // currentCall.on("error", () => {
+        //   setStatus("Error en llamada", true);
+        //   callBtn.disabled = false;
+        // });
+        // =====================================================
 
-        // 4) Suscripción a eventos de llamada (connected/disconnected/error)
-        // activeCall.on("connected", () => setStatus("Llamada conectada"));
-        // activeCall.on("disconnected", () => { setStatus("Llamada finalizada"); callBtn.disabled = false; });
-        // activeCall.on("error", () => { setStatus("Error en llamada", true); callBtn.disabled = false; });
+        // Simulación temporal:
+        await new Promise(r => setTimeout(r, 1200));
+        setStatus(`Llamada en curso con extensión ${DESTINO}`);
+        callBtn.disabled = false;
 
-        // Simulación
-        await new Promise(r => setTimeout(r, 1100));
-        setStatus("Llamada en curso con extensión 4010");
-      } catch (err) {
+      }catch(err){
         console.error(err);
         setStatus("No se pudo iniciar la llamada", true);
         callBtn.disabled = false;
       }
     }
 
-    initBtn.addEventListener("click", initCalling);
-    callBtn.addEventListener("click", makeCall);
+    window.addEventListener("load", initWebexCalling);
+    callBtn.addEventListener("click", callExtension);
   </script>
 </body>
+</html>
 </html>
