@@ -1,3 +1,9 @@
 { "id": "$(transID)", "specversion": "1.0", "type": "Online", "source": "Website", "identity": "$(n2.inboundWebhook.telefono)", "identitytype": "temporaryId", "datacontenttype": "application/json", "data": {     "Recordatorio": "Enviado por Whatsapp",     "Producto": "Tarjeta Platino",     "Fecha Pago": "04-04-2026",     "Estado de Pago": "Próximo a Vencer", "uiData": { "title": "PagoTarjeta", "iconType": "In Progress", "subTitle": "Pago", "filterTags":["PagoTarjeta"] } } }
 
 { "id": "$(transID)", "specversion": "1.0", "type": "Online", "source": "Website", "identity": "$(n2.inboundWebhook.telefono)", "identitytype": "temporaryId", "datacontenttype": "application/json", "data": {     "Producto": "Tarjeta Oro",     "Motivo": "Reposición",     "Estado": "Enviada", "uiData": { "title": "Tarjeta", "iconType": "Announcement", "subTitle": "EnvioTarjeta", "filterTags":["EnvioTarjeta"] } } }
+
+
+{ "id": "$(transID)", "specversion": "1.0", "type": "Online", "source": "Website", "identity": "$(n2.aiAgent.telefono)", "identitytype": "temporaryId", "datacontenttype": "application/json", "data": {     "Producto": "$(n2.aiAgent.tarjeta)",     "Motivo": "$(n2.aiAgent.motivo)",     "Estado": "Solicitud Recibida", "uiData": { "title": "Reposición de Tarjeta", "iconType": "Survey Response Collected", "subTitle": "Solicitud", "filterTags":["Solicitud"] } } }
+
+
+{ "id": "$(transID)", "specversion": "1.0", "type": "Online", "source": "Website", "identity": "$(n2.aiAgent.telefono)", "identitytype": "temporaryId", "datacontenttype": "application/json", "data": {     "ID Pedido": "$(pedido)",     "Productos": "$(n2.aiAgent.productos)",     "Costo": "$(n2.aiAgent.costo) MXN",     "Estado": "Recibido", "uiData": { "title": "Pedidos", "iconType": "confirmAppointment", "subTitle": "Nuevo Pedido", "filterTags":["Nuevo Pedido"] } } }
