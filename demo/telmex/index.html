@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kiosko Telmex - Click to Call Webex</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f7fb; margin:0; display:grid; place-items:center; min-height:100vh; }
+    .card { width:min(760px,92vw); background:#fff; border-radius:16px; box-shadow:0 10px 28px rgba(0,0,0,.12); padding:24px; }
+    h1 { margin:0 0 10px; color:#0f172a; }
+    p { margin:0 0 18px; color:#334155; }
+    button { background:#0057b8; color:#fff; border:none; border-radius:12px; padding:14px 22px; font-size:1.05rem; font-weight:700; cursor:pointer; }
+    button:disabled { opacity:.6; cursor:not-allowed; }
+    .status { margin-top:14px; font-weight:600; color:#0f766e; min-height:22px; }
+    .error { color:#b91c1c; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Centro de Atención Telmex</h1>
+    <p>Presiona para llamar a un asesor.</p>
+    <button id="initBtn">Inicializar</button>
+    <button id="callBtn" disabled>Llamar a extensión 4010</button>
+    <div id="status" class="status">Pendiente de inicialización</div>
+  </main>
+
+  <!-- Cargar SDK oficial Webex Calling según documentación -->
+  <!-- <script src="...sdk oficial..."></script> -->
+
+  <script>
+    const DESTINO = "4010";
+    const initBtn = document.getElementById("initBtn");
+    const callBtn = document.getElementById("callBtn");
+    const statusEl = document.getElementById("status");
+
+    let callingClient;
+    let activeCall;
+
+    function setStatus(msg, isError = false) {
+      statusEl.textContent = msg;
+      statusEl.classList.toggle("error", isError);
+    }
+
+    async function initCalling() {
+      try {
+        initBtn.disabled = true;
+        setStatus("Inicializando Webex Calling...");
+
+        // 1) Pedir token temporal a tu backend seguro
+        // const res = await fetch("/api/webex/token");
+        // const { access_token } = await res.json();
+
+        // 2) Inicializar SDK con el flujo del quickstart/click-to-call
+        // (Pegar aquí bloque exacto de la documentación)
+        // callingClient = await WebexCalling.init({ accessToken: access_token, ... });
+
+        // Simulación
+        await new Promise(r => setTimeout(r, 800));
+
+        callBtn.disabled = false;
+        setStatus("Inicializado correctamente");
+      } catch (err) {
+        console.error(err);
+        initBtn.disabled = false;
+        setStatus("Error al inicializar", true);
+      }
+    }
+
+    async function makeCall() {
+      try {
+        callBtn.disabled = true;
+        setStatus("Conectando llamada...");
+
+        // 3) Método de click-to-call del SDK (doc oficial)
+        // activeCall = await callingClient.dial(DESTINO);
+
+        // 4) Suscripción a eventos de llamada (connected/disconnected/error)
+        // activeCall.on("connected", () => setStatus("Llamada conectada"));
+        // activeCall.on("disconnected", () => { setStatus("Llamada finalizada"); callBtn.disabled = false; });
+        // activeCall.on("error", () => { setStatus("Error en llamada", true); callBtn.disabled = false; });
+
+        // Simulación
+        await new Promise(r => setTimeout(r, 1100));
+        setStatus("Llamada en curso con extensión 4010");
+      } catch (err) {
+        console.error(err);
+        setStatus("No se pudo iniciar la llamada", true);
+        callBtn.disabled = false;
+      }
+    }
+
+    initBtn.addEventListener("click", initCalling);
+    callBtn.addEventListener("click", makeCall);
+  </script>
+</body>
+</html>
