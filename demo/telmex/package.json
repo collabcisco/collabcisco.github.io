@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@webex/calling": "^3.12.0"
+  }
+}
