@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Webex Coffee Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --espresso: #1a120b;
+      --roasted-bean: #3c2a21;
+      --latte-cream: #d5b9a1;
+      --crema-gold: #d4a373;
+      --bg-dark: #0f0a08;
+      --glass: rgba(255, 255, 255, 0.05);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body { font-family: 'Outfit', sans-serif; background-color: var(--bg-dark); color: #e0d8d0; padding-bottom: 3rem; }
+
+    header { background: var(--espresso); padding: 1.2rem 3rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--roasted-bean); }
+    .logo-right { height: 45px; display: flex; align-items: center; }
+    .logo-right img { height: 100%; object-fit: contain; }
+    .brand-title { font-size: 1.6rem; font-weight: 800; color: var(--latte-cream); display: flex; align-items: center; gap: 10px; }
+
+    .orders-dashboard { padding: 3rem 2rem; max-width: 1400px; margin: 0 auto; }
+    .order-columns-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; }
+
+    .order-column { background: var(--roasted-bean); padding: 1.5rem; border-radius: 24px; border: 1px solid rgba(213, 185, 161, 0.1); }
+    .order-column h3 { text-align: center; color: var(--crema-gold); margin-bottom: 1.5rem; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px; }
+
+    .order-card { background: var(--glass); backdrop-filter: blur(10px); padding: 1.5rem; border-radius: 20px; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; }
+    .order-card:hover { transform: scale(1.02); border-color: var(--crema-gold); }
+    
+    .coffee-img { width: 100%; height: 120px; object-fit: contain; margin: 0.5rem 0; border-radius: 12px; }
+
+    .order-card h4 { color: var(--crema-gold); font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .order-card p { margin-bottom: 0.3rem; }
+    .order-card button { width: 100%; margin-top: 1rem; padding: 0.8rem; background: var(--crema-gold); color: var(--espresso); border: none; border-radius: 12px; font-weight: 700; cursor: pointer; }
+    .order-card button:hover { background: #e5b585; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div style="width: 200px;"></div> 
+  <div class="brand-title">☕ Webex Coffee Hub</div>
+  <div class="logo-right"><img src="logo.png" alt="Logo"></div>
+</header>
+
+<main class="orders-dashboard">
+  <div class="order-columns-container">
+    <div id="received-column" class="order-column"><h3>Recibido</h3></div>
+    <div id="preparing-column" class="order-column"><h3>Preparando</h3></div>
+    <div id="shipped-column" class="order-column"><h3>Enviado</h3></div>
+  </div>
+</main>
+
+<script>
+  const MOCKAPI_URL = 'https://690cbd72a6d92d83e84f32ee.mockapi.io/pedidos';
+  const WEBHOOK_URL = 'https://hooks.us.webexconnect.io/events/AWYCWAAPJA';
+
+  const coffeeMap = {
+    "1": { name: "Espresso", img: "1.png" },
+    "2": { name: "Americano", img: "2.png" },
+    "3": { name: "Lungo", img: "3.png" },
+    "4": { name: "Cafe con Leche", img: "4.png" },
+    "5": { name: "Cappuccino", img: "5.png" },
+    "6": { name: "Latte", img: "6.png" },
+    "7": { name: "Cappuccino Vainilla", img: "7.png" },
+    "8": { name: "Late Vainilla", img: "8.png" },
+    "9": { name: "Chocolate Abuelita", img: "9.png" },
+    "10": { name: "Moka Canela", img: "10.png" },
+    "11": { name: "Mokaccino", img: "11.png" },
+    "12": { name: "Choco Vainilla", img: "12.png" }
+  };
+
+  function createOrderCard(order) {
+    const card = document.createElement('div');
+    card.className = 'order-card';
+    const coffeeData = coffeeMap[order.items] || { name: "Desconocido", img: "1.png" };
+    
+    let btn = order.status !== 'shipped' ? `<button onclick="updateOrderStatus('${order.id}', '${order.orderId}', '${order.status === 'received' ? 'preparing' : 'shipped'}')">Actualizar Estado</button>` : `<button disabled style="background:#555; color:#ccc">Finalizado</button>`;
+    
+    // Estructura: Número de pedido primero
+    card.innerHTML = `
+      <h4>Pedido #${order.orderId}</h4>
+      <img src="${coffeeData.img}" class="coffee-img" alt="${coffeeData.name}">
+      <p>Cliente: ${order.customerName}</p>
+      <p><strong>Cafe:</strong> ${coffeeData.name}</p>
+      ${btn}
+    `;
+    return card;
+  }
+
+  function renderOrders(orders) {
+    const cols = { received: document.getElementById('received-column'), preparing: document.getElementById('preparing-column'), shipped: document.getElementById('shipped-column') };
+    Object.values(cols).forEach(c => c.innerHTML = c.querySelector('h3').outerHTML);
+    orders.forEach(order => {
+      const card = createOrderCard(order);
+      if (cols[order.status]) cols[order.status].appendChild(card);
+    });
+  }
+
+  async function fetchOrders() {
+    try { const res = await fetch(MOCKAPI_URL); renderOrders(await res.json()); } catch (e) {}
+  }
+
+  async function updateOrderStatus(mId, bId, next) {
+    await fetch(`${MOCKAPI_URL}/${mId}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ status: next }) });
+    await fetch(WEBHOOK_URL, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ orderId: bId, status: next }) });
+    fetchOrders();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => { fetchOrders(); setInterval(fetchOrders, 5000); });
+</script>
+
+</body>
+</html>
