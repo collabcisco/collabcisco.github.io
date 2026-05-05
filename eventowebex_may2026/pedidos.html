@@ -97,6 +97,8 @@
   function renderOrders(orders) {
     const cols = { received: document.getElementById('received-column'), preparing: document.getElementById('preparing-column'), shipped: document.getElementById('shipped-column') };
     Object.values(cols).forEach(c => c.innerHTML = c.querySelector('h3').outerHTML);
+      // Sort orders by orderId descending (from highest to lowest)
+  orders.sort((a, b) => b.orderId - a.orderId);
     orders.forEach(order => {
       const card = createOrderCard(order);
       if (cols[order.status]) cols[order.status].appendChild(card);
