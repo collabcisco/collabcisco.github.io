@@ -202,6 +202,38 @@
               }
             ]
           },
+                   {
+            "comp": "md-tab",
+            "attributes": {
+              "slot": "tab",
+              "class": "widget-pane-tab"
+            },
+            "children": [
+              {
+                "comp": "slot",
+                "attributes": {
+                  "name": "RT_TRANSCRIPT_TAB"
+                }
+              }
+            ],
+            "visibility": "RT_TRANSCRIPT"
+          },
+          {
+            "comp": "md-tab-panel",
+            "attributes": {
+              "slot": "panel",
+              "class": "widget-pane"
+            },
+            "children": [
+              {
+                "comp": "slot",
+                "attributes": {
+                  "name": "RT_TRANSCRIPT"
+                }
+              }
+            ],
+            "visibility": "RT_TRANSCRIPT"
+          },
           {
             "comp": "md-tab",
             "attributes": {
