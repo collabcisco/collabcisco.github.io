@@ -1,0 +1,27 @@
+{
+  "id": "$(transID)",
+  "specversion": "1.0",
+  "type": "Online",
+  "source": "Website",
+  "identity": "$(n2.aiAgent.telefono)",
+  "identitytype": "temporaryId",
+  "datacontenttype": "application/json",
+  "data": {
+    "Fecha": "$(n2.aiAgent.dia)",
+    "Hora": "$(n2.aiAgent.hora)",
+    "Estudiante": "$(n2.aiAgent.nombre_estudiante)",
+    "Estado": "Agendada",
+    "Motivo": "$(n2.aiAgent.razon_cita)",
+    "Profesor": "Juan Perez",
+    "Link Estudiante": "$(LinkCliente)",
+    "Link Profesor": "$(LinkEspecialista)",
+    "uiData": {
+      "title": "Consultas",
+      "iconType": "confirmAppointment",
+      "subTitle": "Nueva Asesoria",
+      "filterTags": [
+        "Nueva Asesoria"
+      ]
+    }
+  }
+}
