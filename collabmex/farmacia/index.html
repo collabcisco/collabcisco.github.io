@@ -23,13 +23,14 @@
     body { font-family: 'Inter', sans-serif; background-color: var(--light-bg); color: var(--dark-text); line-height: 1.5; }
 
     /* Header */
-    header { background-color: var(--white); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-light); position: sticky; top: 0; z-index: 1000; }
+    header { background-color: var(--white); padding: 0.8rem 2.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-light); position: sticky; top: 0; z-index: 1000; gap: 1rem; }
     header .logo { height: 45px; display: flex; align-items: center; font-size: 1.8rem; font-weight: 700; color: var(--primary-green); text-decoration: none; }
     header .logo img { height: 40px; margin-right: 10px; border-radius: var(--border-radius-sm); }
-    nav a { color: var(--dark-text); margin-left: 1.5rem; text-decoration: none; font-weight: 500; }
+    nav { flex-grow: 1; text-align: center; }
+    nav a { color: var(--dark-text); margin-left: 2rem; text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
     nav a:hover { color: var(--primary-green); }
 
-    /* Botón original preservado */
+    /* Botón */
     .contact-dropdown { position: relative; display: inline-block; margin-left: 1rem; }
     .btn-contact {
       background-color: var(--primary-green);
@@ -43,34 +44,46 @@
       transition: background-color 0.3s ease, transform 0.2s ease;
       box-shadow: 0 4px 10px rgba(32, 201, 151, 0.3);
     }
-    .btn-contact:hover { background-color: #1a9e7d; transform: translateY(-2px); }
+    .btn-contact:hover { background-color: #1a9e7d; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(32, 201, 151, 0.4); }
 
-    .dropdown-content { display: none; position: absolute; background-color: #ffffff; min-width: 260px; box-shadow: var(--shadow-medium); z-index: 1; right: 0; border-radius: var(--border-radius-sm); margin-top: 8px; border: 1px solid #eee; }
+    /* Dropdown */
+    .dropdown-content { display: none; position: absolute; background-color: #ffffff; min-width: 420px; box-shadow: var(--shadow-medium); z-index: 1; right: 0; border-radius: var(--border-radius-sm); margin-top: 10px; border: 1px solid #eee; }
     .dropdown-content.show { display: block; }
-    .dropdown-item { padding: 10px 14px; text-decoration: none; display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid #f0f0f0; gap: 4px; }
-    .dropdown-item-content { display: flex; align-items: center; gap: 6px; font-size: 0.95rem; }
-    .copy-button { background: none; border: none; color: #777; cursor: pointer; padding: 3px; }
-    .copy-feedback { position: absolute; top: -20px; background-color: #5cb85c; color: white; padding: 3px 6px; border-radius: 4px; font-size: 0.75rem; opacity: 0; pointer-events: none; }
+    .dropdown-item { padding: 12px 16px; text-decoration: none; display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid #f0f0f0; gap: 5px; }
+    .dropdown-item:hover { background-color: #f8f9fa; color: var(--primary-green); }
+    .dropdown-item-content { display: flex; align-items: center; gap: 8px; font-size: 1rem; white-space: nowrap; }
+    .copy-button { background: none; border: none; color: #777; cursor: pointer; padding: 4px; }
+    .copy-feedback { position: absolute; top: -25px; background-color: #5cb85c; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8em; opacity: 0; pointer-events: none; }
     .copy-feedback.show { opacity: 1; }
-    .whatsapp-qr-code { max-width: 80px; height: auto; margin-top: 3px; }
+    .whatsapp-qr-code { max-width: 100px; height: auto; margin-top: 5px; }
 
-    /* Hero ajustado a 300px */
-    .hero { display: flex; align-items: center; justify-content: center; padding: 2rem; background: linear-gradient(135deg, #e0fdf0 0%, #d1f7f9 100%); min-height: 300px; gap: 2rem; }
-    .hero-content { max-width: 50%; }
+    /* Hero */
+    .hero { display: flex; align-items: center; justify-content: center; padding: 2rem 2.5rem; background: linear-gradient(135deg, #e0fdf0 0%, #d1f7f9 100%); min-height: 300px; gap: 2rem; }
+    .hero-content { max-width: 50%; z-index: 1; }
     .hero-content h1 { font-size: 2.8rem; margin-bottom: 0.5rem; color: var(--primary-green); }
-    .hero-content p { font-size: 1.1rem; margin-bottom: 1.2rem; color: #555; }
-    .hero-image { max-width: 40%; }
-    .hero-image img { width: 100%; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-medium); }
-    .btn { background-color: var(--primary-green); color: white; padding: 0.8rem 1.8rem; border-radius: var(--border-radius-sm); text-decoration: none; font-weight: 600; }
+    .hero-content p { font-size: 1.1rem; margin-bottom: 1rem; color: #555; }
+       .hero-image { 
+      max-width: 40%; 
+      max-height: 220px; /* Ajusta este valor para controlar la altura */
+      overflow: hidden;
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-medium);
+    }
+    .hero-image img { 
+      width: 100%; 
+      height: 100%;
+      object-fit: cover; /* Esto asegura que la imagen se ajuste bien sin estirarse */
+    }
+    .btn { background-color: var(--primary-green); color: white; padding: 0.8rem 2rem; border-radius: var(--border-radius-sm); text-decoration: none; font-weight: 600; }
 
-    /* Secciones */
-    .sections-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; padding: 1.5rem 2rem; max-width: 1100px; margin: 0 auto; }
+    /* Secciones ajustadas ligeramente */
+    .sections-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; padding: 1.5rem 2.5rem; max-width: 1200px; margin: 0 auto; }
     .section-card { background-color: var(--white); padding: 1.2rem; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-light); text-align: center; }
     .section-card h2 { margin-bottom: 0.4rem; color: var(--primary-green); font-size: 1.4rem; }
     .section-card p { font-size: 0.9rem; color: #666; margin-bottom: 0.6rem; }
     .section-card img { width: 100%; max-height: 130px; object-fit: cover; border-radius: var(--border-radius-sm); }
 
-    footer { background-color: var(--primary-green); color: white; text-align: center; padding: 0.8rem; margin-top: 0.8rem; font-size: 0.8rem; }
+    footer { background-color: var(--primary-green); color: white; text-align: center; padding: 1rem; margin-top: 1rem; font-size: 0.8rem; }
   </style>
 </head>
 <body>
@@ -87,21 +100,24 @@
     <div class="dropdown-content" id="contactDropdown">
       <a href="tel:+525590886970,4" class="dropdown-item">
         <div class="dropdown-item-content">
-          <i class="fas fa-phone"></i> <span>Llámanos: +52 55 9088 6970</span>
+          <i class="fas fa-phone"></i>
+          <span>Llámanos: +52 55 9088 6970 / +14244471254 (opción 2)</span>
           <button class="copy-button" data-copy-target="+525590886970,2"><i class="fas fa-copy"></i></button>
         </div>
         <span class="copy-feedback">¡Copiado!</span>
       </a>
       <a href="mailto:wxconnect.demo@gmail.com" class="dropdown-item">
         <div class="dropdown-item-content">
-          <i class="fas fa-envelope"></i> <span>Email: wxconnect.demo@gmail.com</span>
+          <i class="fas fa-envelope"></i>
+          <span>Email: wxconnect.demo@gmail.com</span>
           <button class="copy-button" data-copy-target="wxconnect.demo@gmail.com"><i class="fas fa-copy"></i></button>
         </div>
         <span class="copy-feedback">¡Copiado!</span>
       </a>
       <a href="https://wa.me/14086764583?text=collabmex" target="_blank" class="dropdown-item">
         <div class="dropdown-item-content">
-          <i class="fab fa-whatsapp"></i> <span>WhatsApp: +1 408 676 4583</span>
+          <i class="fab fa-whatsapp"></i>
+          <span>WhatsApp: +1 408 676 4583 (collabmex --> Salud)</span>
           <button class="copy-button" data-copy-target="+14086764583"><i class="fas fa-copy"></i></button>
         </div>
         <img src="qr-code.png" alt="QR" class="whatsapp-qr-code">
@@ -114,8 +130,8 @@
 <section class="hero">
   <div class="hero-content">
     <h1>Farmacia SaludVital</h1>
-    <p>Tu bienestar es nuestra prioridad. Encuentra todo lo que necesitas.</p>
-    <a href="#productos" class="btn">Explora Productos</a>
+    <p>Tu bienestar es nuestra prioridad. Encuentra todo lo que necesitas para tu salud, con la mejor asesoría profesional.</p>
+    <a href="#productos" class="btn">Explora Nuestros Productos</a>
   </div>
   <div class="hero-image"><img src="farmacia-saludvital-hero.png" alt="Salud"></div>
 </section>
@@ -128,18 +144,18 @@
   </section>
   <section class="section-card">
     <h2>Cuidado Personal</h2>
-    <p>Productos para toda la familia.</p>
+    <p>Productos para el cuidado para toda la familia.</p>
     <img src="cuidado.png" alt="Cuidado">
   </section>
   <section class="section-card">
-    <h2>Vitaminas</h2>
-    <p>Fortalece tu salud hoy.</p>
+    <h2>Vitaminas y Suplementos</h2>
+    <p>Fortalece tu salud.</p>
     <img src="vitaminas.png" alt="Vitaminas">
   </section>
 </div>
 
 <footer>
-  <p>&copy; 2026 Todos los derechos reservados | Por Veronica Diaz</p>
+  <p>&copy; 2026 Todos los derechos reservados | Por Veronica Diaz (vdiazrod@cisco.com)</p>
 </footer>
 
 <script>
