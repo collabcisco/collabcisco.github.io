@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soporte Técnico by Veronica Diaz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    :root {
+      --primary-blue: #0284c7;
+      --secondary-green: #059669;
+      --light-gray: #f0f9ff;
+      --dark-text: #000000;
+      --border-radius-lg: 12px;
+      --border-radius-sm: 8px;
+      --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08);
+      --shadow-medium: 0 6px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background-color: var(--light-gray); color: var(--dark-text); line-height: 1.6; }
+
+    header { background-color: #ffffff; padding: 0.8rem 1.8rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-light); position: sticky; top: 0; z-index: 1000; gap: 0.8rem; }
+    header .logo { height: 40px; display: flex; align-items: center; font-size: 1.6rem; font-weight: 700; color: var(--primary-blue); text-decoration: none; }
+    header .logo img { height: 70px; margin-right: 8px; border-radius: var(--border-radius-sm); }
+    nav { flex-grow: 1; text-align: center; }
+    nav a { color: var(--dark-text); margin: 0 0.8rem; text-decoration: none; font-weight: 500; }
+
+    /* Botón original preservado */
+    .contact-dropdown { position: relative; display: inline-block; margin-left: 1.2rem; }
+    .btn-contact { background-color: var(--primary-blue); color: white; padding: 0.6rem 1.2rem; border: none; border-radius: var(--border-radius-sm); font-weight: 600; font-size: 1rem; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3); }
+    .btn-contact:hover { background-color: #0369a1; transform: translateY(-2px); }
+
+    .dropdown-content { display: none; position: absolute; background-color: #ffffff; min-width: 260px; box-shadow: var(--shadow-medium); z-index: 1; right: 0; border-radius: var(--border-radius-sm); overflow: hidden; margin-top: 8px; transform-origin: top right; transform: scale(0.95); opacity: 0; transition: all 0.3s ease-out; border: 1px solid #eee; }
+    .dropdown-content.show { display: block; transform: scale(1); opacity: 1; }
+    .dropdown-item { color: var(--dark-text); padding: 10px 14px; text-decoration: none; display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid #f0f0f0; gap: 4px; }
+    .dropdown-item:hover { background-color: #e0f2fe; color: var(--primary-blue); }
+    .dropdown-item-content { display: flex; align-items: center; gap: 6px; white-space: nowrap; font-size: 0.95em; }
+    .copy-button { background: none; border: none; color: #777; cursor: pointer; padding: 3px; }
+    .copy-feedback { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); background-color: var(--secondary-green); color: white; padding: 3px 6px; border-radius: 4px; font-size: 0.75em; opacity: 0; pointer-events: none; }
+    .copy-feedback.show { opacity: 1; top: -30px; }
+    .whatsapp-qr-code { max-width: 80px; margin-top: 4px; border-radius: var(--border-radius-sm); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+
+    .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem 1.8rem; background: linear-gradient(135deg, #bae6fd 0%, #7dd3fc 100%); min-height: 250px; }
+    .hero-content { max-width: 650px; }
+    .hero-content h1 { font-size: 2.4rem; margin-bottom: 0.7rem; color: var(--dark-text); font-weight: 700; }
+    .btn { display: inline-block; background-color: var(--primary-blue); color: white; padding: 0.7rem 1.6rem; border-radius: var(--border-radius-sm); text-decoration: none; font-weight: 600; }
+
+    .sections-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.2rem; padding: 1.2rem 1.8rem; max-width: 1050px; margin: 0 auto; }
+    .section-card { background-color: white; padding: 1.5rem; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-light); text-align: center; }
+    .section-card img { width: 100%; max-height: 150px; object-fit: contain; border-radius: var(--border-radius-sm); margin-top: 1rem; }
+    
+    /* Footer oscuro */
+    footer { background-color: #1e293b; color: white; text-align: center; padding: 1.5rem; margin-top: 2rem; font-size: 1rem; }
+     footer a { color: var(--secondary-green); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="#" class="logo"><img src="logo.png" alt="Logo">Soporte Técnico</a>
+  <nav>
+    <a href="#">Inicio</a>
+    <a href="#">Tickets</a>
+    <a href="#">Base de Conocimiento</a>
+  </nav>
+  <div class="contact-dropdown">
+    <button class="btn-contact" id="contactBtn">Contáctanos</button>
+    <div class="dropdown-content" id="contactDropdown">
+      <a href="tel:*************,4" class="dropdown-item">
+        <div class="dropdown-item-content">
+          <i class="fas fa-phone"></i>
+          <span>Llámanos: **************** / ************ (opción 4)</span>
+          <button class="copy-button" data-copy-target="+525590886970,1"><i class="fas fa-copy"></i></button>
+        </div>
+        <span class="copy-feedback">¡Copiado!</span>
+      </a>
+      <a href="mailto:wxconnect.demo@gmail.com" class="dropdown-item">
+        <div class="dropdown-item-content">
+          <i class="fas fa-envelope"></i>
+          <span>Email: wxconnect.demo@gmail.com</span>
+          <button class="copy-button" data-copy-target="info@educatech.edu"><i class="fas fa-copy"></i></button>
+        </div>
+        <span class="copy-feedback">¡Copiado!</span>
+      </a>
+      <a href="https://wa.me/14086764583" target="_blank" class="dropdown-item">
+        <div class="dropdown-item-content">
+          <i class="fab fa-whatsapp"></i>
+          <span>WhatsApp: *************** (collabmex --> Educacion)</span>
+          <button class="copy-button" data-copy-target="+14086764583"><i class="fas fa-copy"></i></button>
+        </div>
+        <img src="qr-code.png" alt="QR" class="whatsapp-qr-code">
+        <span class="copy-feedback">¡Copiado!</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Centro de Ayuda</h1>
+    <p>Estamos aquí para resolver tus dudas técnicas y optimizar tus herramientas.</p>
+    <br>
+    <a href="#" class="btn">Abrir Ticket</a>
+  </div>
+</section>
+
+<div class="sections-container">
+  <section class="section-card">
+    <h2>Reportar Incidente</h2>
+    <p>Abre un ticket con nuestro equipo técnico.</p>
+    <img src="incidente.png" alt="Soporte">
+  </section>
+  <section class="section-card">
+    <h2>Estado del Sistema</h2>
+    <p>Monitoreo en tiempo real de servicios.</p>
+    <img src="estado.png" alt="Estado">
+  </section>
+  <section class="section-card">
+    <h2>Preguntas Frecuentes</h2>
+    <p>Consulta nuestra base de conocimientos.</p>
+    <img src="faq.png" alt="FAQ">
+  </section>
+</div>
+
+<footer>
+  <p>&copy; 2026. Todos los derechos reservados. | Por <a href="mailto:vdiazrod@cisco.com">Veronica Diaz</a> (vdiazrod@cisco.com)</p>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const contactBtn = document.getElementById('contactBtn');
+    const contactDropdown = document.getElementById('contactDropdown');
+    const copyButtons = document.querySelectorAll('.copy-button');
+
+    contactBtn.addEventListener('click', (e) => { contactDropdown.classList.toggle('show'); e.stopPropagation(); });
+    window.addEventListener('click', () => contactDropdown.classList.remove('show'));
+
+    copyButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const text = this.dataset.copyTarget;
+        const feedback = this.closest('.dropdown-item').querySelector('.copy-feedback');
+        navigator.clipboard.writeText(text).then(() => {
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 1500);
+        });
+      });
+    });
+  });
+</script>
+</body>
+</html>
