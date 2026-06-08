@@ -1,0 +1,55 @@
+
+https://github.com/CiscoDevNet/webex-contact-center-crm-integrations/blob/main/MS%20Dynamics/msdynamics-ivr-http-connector/README.md
+
+Certificate ID
+39b8856a-fced-4693-b882-b97445ffe988
+
+APP ID f552ed49-0e01-4098-8cca-24569083e7e9
+
+Tenant ID a67857b0-f97d-49c8-b4e9-891ac2dceaad
+
+
+4C02F0F2C5B64C5087C1F7566BA749B97294D486
+
+
+login.microsoftonline.com/%3Ca67857b0-f97d-49c8-b4e9-891ac2dceaad%3E/oauth2/v2.0/token
+
+
+
+Referrer: Control Hub notification toaster-links
+Browser URL: https://admin.webex.com/wxcc/integrations/connectors
+Control Hub Build: 20260530-f7d8296
+View Org ID: 8399a370-4452-4fd7-b63b-6de4357d72d8
+Logged-in User ID: 35b4ebb3-fd0f-40b8-bcaa-8883defff89b
+Logged-in User Org ID: 8399a370-4452-4fd7-b63b-6de4357d72d8
+Logged-in User Clock UTC: Fri, 05 Jun 2026 01:39:39 GMT
+Customer Type: Pending
+
+Message: Invalid Config, Please check and retry
+
+
+https://login.microsoftonline.com/a67857b0-f97d-49c8-b4e9-891ac2dceaad/oauth2/v2.0/token
+Client ID d09db8e8-9e58-447a-9f69-6342b76aed3e
+
+.el8Q~~1bJBCwUTrSXHAdv9bxD0rUl~fr0VhAc3C
+ee8c9a52-7921-4240-ab07-141cbdb56de1
+
+https://org5f12b059.api.crm.dynamics.com/
+
+cr555_Contact_Contact_cr555_Polizas
+
+
+
+contacts?$select=fullname,telephone1,contactid,emailaddress1,address1_postalcode&$expand=cr555_Contact_Contact_cr555_Polizas($select=value[0].cr555_Contact_Contact_cr555_Polizas)&$filter=contains(telephone1,'********1355')
+
+
+ORIGINAL
+contacts?$select=fullname,telephone1,contactid,emailaddress1,address1_postalcode&$filter=contains(telephone1,'{{ANI}}')
+
+PRUEBAS
+contacts?$select=fullname,telephone1,contactid,emailaddress1,address1_postalcode&$expand=cr555_Contact_Contact_cr555_Polizas($select=cr555_newcolumn,cr555_tipo,cr555_vencimiento)&$filter=contains(telephone1,'{{ANI}}')
+
+contacts?$select=fullname,telephone1,contactid,emailaddress1,address1_postalcode&$expand=cr555_polizas_Cliente_contact($select=cr555_newcolumn,cr555_tipo,cr555_vencimiento)&$filter=contains(telephone1,'{{ANI}}')
+
+
+https://org5f12b059.api.crm.dynamics.com/api/data/v9.2/contacts(fa171e32-e75e-f111-a825-70a8a5b1b810)?$expand=*
