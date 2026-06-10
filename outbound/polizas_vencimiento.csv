@@ -1,3 +1,3 @@
 ﻿NumeroPoliza,NombreCliente,EmailCliente,TipoPoliza,FechaVencimiento,DiasParaVencer,Estado
-POL-1001,Juan Pérez,vdiazrod@cisco.com,Auto,20/06/26,15,Por vencer
-POL-1002,María López,vdiazrod+1@cisco.com,Vida,18/06/26,13,Por vencer
+POL-1001,Veronica Diaz,vdiazrod@cisco.com,Auto,20/06/26,15,Por vencer
+POL-1002,Samuel Orobio,samuel.orobio@ikusi.com,Vida,18/06/26,13,Por vencer

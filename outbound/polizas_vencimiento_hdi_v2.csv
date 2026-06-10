@@ -1,0 +1,5 @@
+﻿NumeroPoliza,NombreCliente,EmailCliente,TipoPoliza,FechaVencimiento,DiasParaVencer,Estado
+POL-1001,Arturo Gomez,arturo.gomez@hdi.com.mx,Auto,20/06/26,10,Por vencer
+POL-1002,Flavio Mendoza,flavio.mendoza@hdi.com.mx,Gastos Médicos,18/06/26,8,Por vencer
+POL-1002,Samuel Orobio,samuel.orobio@ikusi.com,Gastos Médicos,18/06/26,8,Por vencer
+,,,,,,
