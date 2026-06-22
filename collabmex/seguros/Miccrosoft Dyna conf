@@ -31,7 +31,7 @@ Message: Invalid Config, Please check and retry
 https://login.microsoftonline.com/a67857b0-f97d-49c8-b4e9-891ac2dceaad/oauth2/v2.0/token
 Client ID d09db8e8-9e58-447a-9f69-6342b76aed3e
 
-.el8Q~~1bJBCwUTrSXHAdv9bxD0rUl~fr0VhAc3C
+Client Secret .el8Q~~1bJBCwUTrSXHAdv9bxD0rUl~fr0VhAc3C
 ee8c9a52-7921-4240-ab07-141cbdb56de1
 
 https://org5f12b059.api.crm.dynamics.com/
@@ -53,3 +53,100 @@ contacts?$select=fullname,telephone1,contactid,emailaddress1,address1_postalcode
 
 
 https://org5f12b059.api.crm.dynamics.com/api/data/v9.2/contacts(fa171e32-e75e-f111-a825-70a8a5b1b810)?$expand=*
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Recordatorio de Pago de Póliza</title>
+</head>
+
+<body style="margin:0; padding:0; background-color:#f4f6f4; font-family:Arial, sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f6f4; padding:20px;">
+    <tr>
+      <td align="center">
+
+        <!-- Contenedor principal -->
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border-radius:8px; overflow:hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background-color:#2e7d32; padding:20px; text-align:center;">
+
+              <!-- Logo -->
+              <img src="https://collabcisco.github.io/demo/hdi/logo.png"
+                   alt="Logo"
+                   style="width:140px; margin-bottom:10px; display:block; margin-left:auto; margin-right:auto;">
+
+              <h2 style="margin:0; color:#ffffff;">Recordatorio de Pago de Póliza</h2>
+            </td>
+          </tr>
+
+          <!-- Cuerpo -->
+          <tr>
+            <td style="padding:25px; color:#333333; font-size:14px; line-height:1.6;">
+
+              <p>Estimado(a) <strong>$(n2.customEvent.NombreCliente)</strong>,</p>
+
+              <p>Te recordamos que tu póliza está próxima a vencer. A continuación, los detalles:</p>
+
+              <table width="100%" cellpadding="8" cellspacing="0" style="border:1px solid #cfe8d3; border-radius:6px;">
+                <tr>
+                  <td><strong>Número de Póliza:</strong></td>
+                  <td>$(n2.customEvent.NumeroPoliza)</td>
+                </tr>
+                <tr>
+                  <td><strong>Tipo de Póliza:</strong></td>
+                  <td>$(n2.customEvent.TipoPoliza)</td>
+                </tr>
+                <tr>
+                  <td><strong>Fecha de Vencimiento:</strong></td>
+                  <td>$(n2.customEvent.FechaVencimiento)</td>
+                </tr>
+                <tr>
+                  <td><strong>Días para vencer:</strong></td>
+                  <td><strong style="color:#2e7d32;">$(n2.customEvent.DiasParaVencer) días</strong></td>
+                </tr>
+              </table>
+
+              <p style="margin-top:20px;">
+                Para evitar la suspensión de tu cobertura, te recomendamos realizar tu pago lo antes posible.
+              </p>
+
+              <p style="text-align:center; margin:30px 0;">
+                <a href="#"
+                   style="background-color:#2e7d32; color:#ffffff; padding:12px 22px; text-decoration:none; border-radius:5px; display:inline-block;">
+                  Realizar pago
+                </a>
+              </p>
+
+              <p>Si ya realizaste tu pago, puedes omitir este mensaje.</p>
+
+              <p>Saludos cordiales,<br><strong>Equipo de atención a clientes</strong></p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color:#eef5ee; text-align:center; padding:15px; font-size:12px; color:#666;">
+              Este es un mensaje automático, por favor no responder a este correo.
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+
+_________
+
+JDS
+{ "id": "$(transID)", "specversion": "1.0", "type": "Online", "source": "Website", "identity": "$(n2.customEvent.EmailCliente)", "identitytype": "temporaryId", "datacontenttype": "application/json", "data": { "Fecha": "$(n3.send.sentDateTime)", "Recordatorio": "Pago Próximo a Vencer", "Poliza": "$(n2.customEvent.NumeroPoliza)", "Tipo": "$(n2.customEvent.TipoPoliza)", "Vencimiento": "$(n2.customEvent.FechaVencimiento)", "uiData": { "title": "Recordatorios", "iconType": "calendarDate", "subTitle": "Recordatorio Enviado", "filterTags":["Recordatorio Enviado"] } } }

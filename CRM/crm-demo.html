@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM - Webex CC Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .ms-blue { background-color: #002050; } /* Color corporativo Dynamics */
+        .ms-light-bg { background-color: #f3f2f1; }
+        .sidebar-item:hover { background-color: #edebe9; border-left: 4px solid #0078d4; }
+        .card { background: white; border: 1px solid #e1dfdd; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body class="ms-light-bg text-gray-800 font-sans" x-data="crmApp()">
+
+    <!-- Barra Superior -->
+    <header class="ms-blue text-white h-12 flex items-center justify-between px-4 shadow-md">
+        <div class="flex items-center gap-4">
+            <i class="fas fa-th"></i>
+            <span class="font-semibold text-sm">CRM Demo</span>
+            <span class="border-l border-blue-400 pl-4 text-xs text-blue-200">Centro de Servicio al Cliente</span>
+        </div>
+        <div class="flex items-center gap-4 text-sm">
+            <i class="fas fa-search"></i>
+            <i class="fas fa-cog"></i>
+            <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-xs">VD</div>
+        </div>
+    </header>
+
+    <div class="flex h-[calc(100vh-48px)]">
+        <!-- Navegación Lateral -->
+        <nav class="w-48 bg-white border-r border-gray-300 flex flex-col text-sm">
+            <div class="p-4 font-bold text-gray-500 uppercase text-[10px]">Principal</div>
+            <div class="sidebar-item p-3 cursor-pointer flex items-center gap-3"><i class="fas fa-home text-blue-600"></i> Inicio</div>
+            <div class="sidebar-item p-3 cursor-pointer flex items-center gap-3"><i class="fas fa-clock"></i> Reciente</div>
+            
+            <div class="p-4 font-bold text-gray-500 uppercase text-[10px] mt-4">Clientes</div>
+            <div class="sidebar-item p-3 cursor-pointer flex items-center gap-3 bg-gray-100 border-left-4 border-blue-600">
+                <i class="fas fa-address-book text-blue-600"></i> Contactos
+            </div>
+            <div class="sidebar-item p-3 cursor-pointer flex items-center gap-3"><i class="fas fa-building"></i> Cuentas</div>
+
+            <div class="p-4 font-bold text-gray-500 uppercase text-[10px] mt-4">Servicio</div>
+            <div class="sidebar-item p-3 cursor-pointer flex items-center gap-3"><i class="fas fa-ticket-alt"></i> Casos</div>
+            <div class="sidebar-item p-3 cursor-pointer flex items-center gap-3"><i class="fas fa-shield-alt"></i> Pólizas</div>
+        </nav>
+
+        <!-- Contenido Principal -->
+        <main class="flex-1 overflow-y-auto p-6">
+            <!-- Barra de Comandos -->
+            <div class="flex justify-between items-center mb-6 bg-white p-2 border border-gray-300 rounded">
+                <div class="flex gap-4 text-sm text-blue-700">
+                    <button class="hover:bg-gray-100 px-2 py-1"><i class="fas fa-plus"></i> Nuevo</button>
+                    <button class="hover:bg-gray-100 px-2 py-1"><i class="fas fa-save"></i> Guardar y cerrar</button>
+                    <button class="hover:bg-gray-100 px-2 py-1"><i class="fas fa-sync"></i> Actualizar</button>
+                </div>
+            </div>
+
+            <!-- Ficha del Cliente -->
+            <template x-if="cliente">
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-2xl text-blue-600">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-light" x-text="cliente.nombre"></h1>
+                            <p class="text-sm text-gray-500">Contacto • <span x-text="cliente.empresa"></span></p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-6">
+                        <!-- Columna 1: Datos Generales -->
+                        <div class="card p-4">
+                            <h3 class="font-bold border-b pb-2 mb-4 text-sm uppercase">Información General</h3>
+                            <div class="space-y-4 text-sm">
+                                <div><label class="text-gray-500 block text-xs">Nombre completo</label> <span x-text="cliente.nombre"></span></div>
+                                <div><label class="text-gray-500 block text-xs">Correo electrónico</label> <span x-text="cliente.email"></span></div>
+                                <div><label class="text-gray-500 block text-xs">Teléfono (ANI)</label> <span class="text-blue-600 font-mono" x-text="cliente.telefono"></span></div>
+                            </div>
+
+                            <h3 class="font-bold border-b pb-2 mb-4 mt-8 text-sm uppercase">Pólizas Activas</h3>
+                            <div class="space-y-2">
+                                <template x-for="poliza in cliente.polizas">
+                                    <div class="p-2 bg-blue-50 border-l-4 border-blue-500 text-xs">
+                                        <div class="font-bold" x-text="poliza.tipo"></div>
+                                        <div x-text="'ID: ' + poliza.id"></div>
+                                        <div class="text-gray-500" x-text="'Vence: ' + poliza.vence"></div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Columna 2: Línea de Tiempo (Actividades) -->
+                        <div class="card p-4">
+                            <h3 class="font-bold border-b pb-2 mb-4 text-sm uppercase">Línea de tiempo</h3>
+                            <div class="relative">
+                                <template x-for="act in cliente.actividades">
+                                    <div class="mb-4 ml-6 relative">
+                                        <div class="absolute -left-8 top-1 w-4 h-4 rounded-full bg-gray-200 flex items-center justify-center text-[10px]">
+                                            <i :class="act.tipo === 'Llamada' ? 'fas fa-phone' : 'fas fa-envelope'"></i>
+                                        </div>
+                                        <div class="text-xs font-bold" x-text="act.asunto"></div>
+                                        <div class="text-[10px] text-gray-500" x-text="act.fecha"></div>
+                                        <div class="text-xs mt-1" x-text="act.desc"></div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Columna 3: Casos -->
+                        <div class="card p-4">
+                            <h3 class="font-bold border-b pb-2 mb-4 text-sm uppercase">Casos Recientes</h3>
+                            <div class="space-y-3">
+                                <template x-for="caso in cliente.casos">
+                                    <div class="border p-2 rounded hover:bg-gray-50 cursor-pointer">
+                                        <div class="text-xs font-bold text-blue-700" x-text="caso.titulo"></div>
+                                        <div class="flex justify-between mt-2 text-[10px]">
+                                            <span class="px-2 py-0.5 bg-green-100 text-green-800 rounded" x-text="caso.estado"></span>
+                                            <span class="text-gray-400" x-text="caso.prioridad"></span>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Estado Vacío -->
+            <template x-if="!cliente">
+                <div class="h-full flex flex-col items-center justify-center text-gray-400">
+                    <i class="fas fa-search-plus text-6xl mb-4"></i>
+                    <p>Esperando datos de Webex Contact Center...</p>
+                    <p class="text-xs mt-2">Simula una llamada pasando el parámetro ?ani=5512345678</p>
+                </div>
+            </template>
+        </main>
+    </div>
+
+    <script>
+        function crmApp() {
+            return {
+                cliente: null,
+                init() {
+                    // Simulación de Base de Datos
+                    const db = [
+                        {
+                            nombre: "Verónica Díaz",
+                            telefono: "5512345678",
+                            email: "vdiazrod@cisco.com",
+                            empresa: "Cisco Systems",
+                            polizas: [
+                                { id: "POL-9982", tipo: "Seguro de Gastos Médicos", vence: "12/Dic/2026" },
+                                { id: "AUTO-441", tipo: "Seguro de Auto Premium", vence: "01/Ene/2025" }
+                            ],
+                            actividades: [
+                                { tipo: "Llamada", asunto: "Consulta de cobertura", fecha: "Hoy 10:30 AM", desc: "El cliente pregunta por red de hospitales." },
+                                { tipo: "Email", asunto: "Envío de póliza", fecha: "Ayer", desc: "Se envió duplicado de carátula." }
+                            ],
+                            casos: [
+                                { titulo: "Reembolso pendiente", estado: "En Proceso", prioridad: "Alta" },
+                                { titulo: "Cambio de domicilio", estado: "Cerrado", prioridad: "Baja" }
+                            ]
+                        }
+                    ];
+
+                    // Lógica de Screen Pop: Leer el ANI de la URL
+                    const params = new URLSearchParams(window.location.search);
+                    const ani = params.get('ani');
+
+                    if (ani) {
+                        // Buscamos al cliente por su teléfono (ANI)
+                        const encontrado = db.find(c => c.telefono === ani);
+                        if (encontrado) {
+                            this.cliente = encontrado;
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

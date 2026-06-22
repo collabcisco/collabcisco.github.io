@@ -1,0 +1,131 @@
+dojowebex@gmail.com
+
+Autenticacion
+ATATT3xFfGF0fVit7TDvG6rp6B5ia669JpxhCbbXL5VSBPK7agLmK76GWE9Mj8_6VFvdkzC1O4FSwbR9aTC4oyZl7LHF0l_CDmwJ94JU5ixeQcjP3CKCKkLYDVCrEm5evaBcNt1DwCES5CsJrcr4ONjHIXn-0U8_osG9j9CFf94kGpJPT0FsrIU=2DFFA6A6
+https://www.base64encode.org/
+correo:Token
+BASE64 ZG9qb3dlYmV4QGdtYWlsLmNvbTpBVEFUVDN4RmZHRjBmVml0N1REdkc2cnA2QjVpYTY2OUpweGhDYmJYTDVWU0JQSzdhZ0xtSzc2R1dFOU1qOF82VkZ2ZGt6QzFPNEZTd2JSOWFUQzRveVpsN0xIRjBsX0NEbXdKOTRKVTVpeGVRY2pQM0NLQ0trTFlEVkNyRW01ZXZhQmNOdDFEd0NFUzVDc0pyY3I0T05qSElYbi0wVThfb3NHOWo5Q0ZmOTRrR3BKUFQwRnNySVU9MkRGRkE2QTY=
+
+POST
+https://dojowebex.atlassian.net/rest/api/3/issue
+
+GET
+https://dojowebex.atlassian.net/rest/api/3/issue/SOP-1
+
+
+
+{
+  "fields": {
+    "project": {
+      "key": "SOP"
+    },
+    "issuetype": {
+      "id": "10010"
+    },
+    "summary": "$(n2.aiAgent.title)",
+    "reporter": {
+      "id": "712020:b5d4ca29-a71e-48e8-a2d5-794fcb7b1f34"
+    },
+    "customfield_10010": "8",
+    "description": {
+      "type": "doc",
+      "version": 1,
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "$(n2.aiAgent.description)",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+
+{
+  "fields": {
+    "project": {
+      "key": "SOP"
+    },
+    "issuetype": {
+      "id": "10010"
+    },
+    "summary": "Prueba SOP4",
+    "reporter": {
+      "id": "712020:b5d4ca29-a71e-48e8-a2d5-794fcb7b1f34"
+    },
+    "customfield_10010": "8",
+    "description": {
+      "type": "doc",
+      "version": 1,
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "probando integracion",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+Resultado:
+{
+    "id": "10003",
+    "key": "SOP-4",
+    "self": "https://dojowebex.atlassian.net/rest/api/3/issue/10003"
+}
+
+ID Cliente
+Cuando configures el nodo HTTP Request que hace este GET, en la sección de Output Variables, debes usar el "JSON Path" para extraerlo:
+
+GET 
+https://dojowebex.atlassian.net/rest/api/3/user/search?query=vdiazrod@cisco.com
+
+JSON Path: $[0].accountId
+Variable Name: v_reporter_id
+
+
+
+ANTES 
+{
+  "fields": {
+    "project": {
+      "key": "HELP"
+    },
+    "issuetype": {
+      "id": "10002"
+    },
+    "summary": "$(n2.aiAgent.title)",
+    "customfield_10010": "14",
+    "customfield_10119": "$(n2.aiAgent.reported_by)",
+    "description": {
+      "type": "doc",
+      "version": 1,
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "text": "$(n2.aiAgent.description)",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    }
+  }
+
+
+  PAGINA incidentes
+  User: jaguarwxcc@gmail.com
+  Pass: dCloud123!
+  https://dojowebex.atlassian.net/jira/servicedesk/projects/SOP/section/incidents/custom/1?cloudId=f1659b0c-97bf-49f5-bb33-3f7843bb2334&visitedUserSeg=true

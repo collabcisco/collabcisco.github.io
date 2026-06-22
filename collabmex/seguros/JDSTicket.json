@@ -1,0 +1,20 @@
+{ "id": "$(transID)", 
+"specversion": "1.0", 
+"type": "Online", 
+"source": "Website", 
+"identity": "$(n2.aiAgent.telefono)", 
+"identitytype": "temporaryId", 
+"datacontenttype": "application/json", 
+"data": {     
+    "ID Ticket": "$(n13.key)",     
+    "Titulo": "$(n2.aiAgent.title)",     
+    "Estado": "Nuevo",     
+    "Reportado por": "(n14.name)", 
+    "uiData": { 
+        "title": "Ticket", 
+        "iconType": "confirmAppointment", 
+        "subTitle": "Nuevo Ticket", 
+        "filterTags":["Nuevo Ticket"] 
+        } 
+        } 
+}
