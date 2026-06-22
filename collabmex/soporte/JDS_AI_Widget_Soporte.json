@@ -1,9 +1,9 @@
 {
   "agent": {
     "version": "0.1.0",
-    "appTitle": "Webex Contact Center - Salud",
-    "logo": "https://collabcisco.github.io/collabmex/farmacia/logo.png",
-    "taskPageIllustration": "https://collabcisco.github.io/collabmex/farmacia/logo.png",
+    "appTitle": "Webex Contact Center - Soporte",
+    "logo": "https://collabcisco.github.io/collabmex/soporte/logo.png",
+    "taskPageIllustration": "https://collabcisco.github.io/collabmex/soporte/logo.png",
     "stopNavigateOnAcceptTask": false,
     "dragDropEnabled": true,
     "notificationTimer": 8,
@@ -386,7 +386,7 @@
                 "width": 5,
                 "height": 13,
                 "attributes": {
-                  "src": "https://collabcisco.github.io/collabmex/farmacia/consultarpedidos.html"
+                  "src": "https://collabcisco.github.io/collabmex/soporte/Tickets.html"
                 },
                   "wrapper": {
                                     "title": "Clientes",
