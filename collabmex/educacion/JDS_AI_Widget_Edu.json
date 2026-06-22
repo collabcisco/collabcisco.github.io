@@ -1,14 +1,14 @@
 {
   "agent": {
     "version": "0.1.0",
-    "appTitle": "Webex Contact Center - Ibero",
-    "logo": "https://collabcisco-ps.github.io/publicsector/educacion/logo.png",
+    "appTitle": "Webex Contact Center - Salud",
+    "logo": "https://collabcisco.github.io/collabmex/educacion/logo.png",
+    "taskPageIllustration": "https://collabcisco.github.io/collabmex/educacion/logo.png",
     "stopNavigateOnAcceptTask": false,
     "dragDropEnabled": true,
     "notificationTimer": 8,
     "maximumNotificationCount": 3,
     "browserNotificationTimer": 8,
-    "taskPageIllustration": "https://collabcisco-ps.github.io/publicsector/educacion/logo.png",
     "wxmConfigured": false,
     "desktopChatApp": {
       "webexConfigured": true
@@ -202,7 +202,8 @@
               }
             ]
           },
-          {
+
+                   {
             "comp": "md-tab",
             "attributes": {
               "slot": "tab",
@@ -370,10 +371,10 @@
         },
         {
           "nav": {
-            "label": "Estudiantes",
+            "label": "Clientes",
             "icon": "https://collabcisco.github.io/collabmex/intro/iconcustomer.png",
             "iconType": "other",
-            "navigateTo": "estudiantes",
+            "navigateTo": "clientes",
             "align": "top"
           },
           "page": {
@@ -385,10 +386,10 @@
                 "width": 5,
                 "height": 13,
                 "attributes": {
-                  "src": "https://collabcisco-ps.github.io/publicsector/educacion/estudiantes.html"
+                  "src": "https://collabcisco.github.io/collabmex/educacion/citas.html"
                 },
                   "wrapper": {
-                                    "title": "Estudiantes",
+                                    "title": "Clientes",
                                     "maximizeAreaName": "app-maximize-area"
                                 }
               }
