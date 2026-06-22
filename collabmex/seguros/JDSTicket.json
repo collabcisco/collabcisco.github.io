@@ -9,12 +9,36 @@
     "ID Ticket": "$(n13.key)",     
     "Titulo": "$(n2.aiAgent.title)",     
     "Estado": "Nuevo",     
-    "Reportado por": "(n14.name)", 
+    "Reportado por": "$(n14.name)", 
     "uiData": { 
-        "title": "Ticket", 
+        "title": "Ticket" , 
         "iconType": "confirmAppointment", 
         "subTitle": "Nuevo Ticket", 
         "filterTags":["Nuevo Ticket"] 
         } 
         } 
 }
+
+{ "id": "$(transID)", 
+"specversion": "1.0", 
+"type": "Online", 
+"source": "Website", 
+"identity": "$(n6.number)", 
+"identitytype": "temporaryId", 
+"datacontenttype": "application/json", 
+"data": {     
+    "ID Ticket": "$(n2.inboundWebhook.ticket_key)",     
+    "Titulo": "$(n2.inboundWebhook.description)",     
+    "Estado": "$(n2.inboundWebhook.status)",     
+    "Reportado por": "$(n2.inboundWebhook.reported_by)", 
+    "uiData": { 
+        "title": "Ticket" , 
+        "iconType": "In Progress", 
+        "subTitle": "Estado Ticket", 
+        "filterTags":["Estado Ticket"] 
+        } 
+        } 
+}
+
+
+{ "id": "$(transID)", "specversion": "1.0", "type": "Online", "source": "Website", "identity": "$(n6.number)", "identitytype": "temporaryId", "datacontenttype": "application/json", "data": {     "ID Pedido": "$(n2.inboundWebhook.orderId)",     "Productos": "$(n5.items)",     "Costo": "$(n5.costo) MXN",     "Estado": "Preparando Envio", "uiData": { "title": "Pedidos", "iconType": "In Progress", "subTitle": "Preparando Pedido", "filterTags":["Preparando Pedido"] } } }
