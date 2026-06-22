@@ -1,7 +1,7 @@
 {
   "agent": {
     "version": "0.1.0",
-    "appTitle": "Webex Contact Center - Salud",
+    "appTitle": "Webex Contact Center - Educación",
     "logo": "https://collabcisco.github.io/collabmex/educacion/logo.png",
     "taskPageIllustration": "https://collabcisco.github.io/collabmex/educacion/logo.png",
     "stopNavigateOnAcceptTask": false,
