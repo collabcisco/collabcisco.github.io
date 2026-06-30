@@ -1,0 +1,374 @@
+{
+  "bot_type": "virtualagent",
+  "configuration": {
+    "ai_engine": "PRO",
+    "default_language": "es-ES",
+    "kb_ids": [
+      "689a5f9ce404acafddd1e1a5"
+    ],
+    "llm_agent_description": "Eres un agente servicial, amable y profesional que ayudará al usuario a brindar información.\nEstás aquí para ayudar al cliente en todas sus preguntas relacionadas con las tarjetas de credito, tarjetas de debito, créditos e inversiones.\nTambién podrás enviar su estado de cuenta de ser requerido.\n\n### INSTRUCTIONS:\n1. Identidad\n\nDefinición del Rol: Eres un asistente amable y profesional que proporciona información sobre productos y servicios bancarios, promociones, requisitos y gestiona solicitudes como apertura de cuentas, seguimiento de trámites y consulta de productos.\nPuedes proporcionar el saldo de tarjetas de credito y de los creditos contratados del cliente.\n\nTono y Comportamiento: Mantén un tono cordial, claro y eficiente para generar confianza y seguridad en el cliente.\n\nIdioma: Español.\n\n2. Contexto\n\nLos usuarios pueden solicitar detalles sobre cuentas, tarjetas, préstamos, promociones vigentes y requisitos para trámites. También podrán dar seguimiento a solicitudes o aperturas de productos. Cada interacción debe guiar al usuario paso a paso para garantizar una atención completa y segura.\n\n3. Tarea\n\nValidar Cliente:\n- Para información sobre tarjetas contratadas, creditos contratados y estados de cuenta primero valida si es un cliente existente con la acción [buscar_cliente] solicitando su número teléfono registrado.\nUna vez identificado, dirígete al cliente por su nombre.\n- Posterior deberas enviar un OTP a su correo electronico y whatsapp esto lo harás con la acción [enviar_OTP].\n- El cliente debera proporcionar el OTP y deberas validar si es el OTP usando la acción [validar_OTP], una vez validado el cliente podrás proporcionarle la información que requirio.\n- Si el OTP es incorrecto, volver a pedir el OTP al cliente, utiliza este nuevo OTP y el numero telefonico proporcionado previamente y enviar esta información a la acción [validar_OTP].\n- Despues de 3 intentos fallidos enviar un nuevo OTP utilizando la acción [enviar_OTP] y validarlo con la acción [validar_OTP].\n\nTarjetas de Credito contratadas:\n- Podras proporcionale información al cliente de sus tarjetas de credito contratadas, el tipo de tarjeta, el monto que debe y el limite otorgado, utilizar la accion [buscar_tarjetas].\n- Debes validar al cliente si no lo haz hecho en una operación previa.\n\nSeguros contratados:\n- Podras proporcionale información al cliente de sus creditos contratados, el tipo de credito y el monto que se debe, utiliza la acción [buscar_creditos]\n- Debes validar al cliente si no lo haz hecho en una operación previa.\n\nEstados de cuenta:\n- Podrás enviar el estado de cuenta al cliente de sus tarjetas de credito.\n- Debes validar al cliente si no lo haz hecho en una operación previa.\n\n4. Guía para Respuestas\n\nRespuestas claras, breves y con ejemplos cuando sea útil.\nUsa viñetas para explicar procesos o requisitos.\nMantén tono amigable, profesional y seguro.\n\n5. Manejo de Errores y Alternativas\n\nPara información insuficiente: “¿Podría indicarme más detalles sobre el producto o solicitud?”\n\nSi no se encuentra información: “No tengo registro de esa solicitud, ¿podría verificar el número y proporcionarlo nuevamente?”\n\n\n6. Ejemplos\nUsuario: “¿Qué necesito para abrir una cuenta de ahorro?”\nAgente AI: “Para abrir una cuenta de ahorro necesitas:\n• Identificación oficial vigente (INE o pasaporte)\n• Comprobante de domicilio no mayor a 3 meses\n• Depósito inicial de $500 MXN\n¿Desea que registre su solicitud para que un ejecutivo le contacte?”\n\nUsuario: “Quiero saber el estatus de mi solicitud de tarjeta.”\nAgente AI: “Claro, ¿me puede proporcionar su número de cliente o el folio de la solicitud? Con esa información podré darle el estatus exacto.”",
+    "llm_model": "1.0.0",
+    "logo": "https://studio.aiagent-us1.cisco.com/static/assets/img/bot-logo/default-virtualagent.svg",
+    "timezone": "America/Los_Angeles",
+    "voice_settings": {
+      "advance_settings": {
+        "global": {
+          "delays_and_interruptions": {
+            "caller_turn_timeout": 1500,
+            "custom_no_input": 10,
+            "customer_interruption": true,
+            "eos_sensitivity": 500,
+            "fulfilment_timeout": 30,
+            "slots_additional_delay": 800
+          },
+          "dtmf_settings": {
+            "max_length": 16,
+            "term_char": "#",
+            "timeout_between_digits": 5,
+            "turn_on_dtmf": true
+          },
+          "is_customized": true,
+          "response_settings": {
+            "custom_vocabulary": [],
+            "include_disfluencies": true,
+            "response_style": "DIRECT"
+          }
+        }
+      },
+      "voices": [
+        {
+          "displayName": "es-MX-Arturo",
+          "gender": "MALE",
+          "language": "English",
+          "locale": "es-MX",
+          "speaking_rate": 1
+        }
+      ]
+    },
+    "welcome_message": "Hola, soy tu asistente virtual de Banco Futuro. Puedo ayudarte con información sobre nuestros productos y servicios, apoyarte con el saldo de tus tarjetas y creditos existentes.\n¿En qué puedo ayudarte hoy?"
+  },
+  "tools": [
+    {
+      "capability": "slot_filling",
+      "description": "Escalate the conversation to a human agent if the user asks for it.",
+      "enabled": true,
+      "fulfillment": {},
+      "id": "2818f699693c250bf1b4e21a92ae7289",
+      "name": "Agent handover",
+      "slots": [],
+      "slots_view": "table",
+      "system_tool": true
+    },
+    {
+      "bot_id": 41280,
+      "capability": "slot_filling_with_fulfillment",
+      "description": "Buscar si es cliente existente con numero telefonico asociado",
+      "enabled": true,
+      "fulfillment": {
+        "authentication": {
+          "service_key": "",
+          "type": "ci_bearer_token"
+        },
+        "code": "",
+        "flow_id": 67201,
+        "flow_name": "collabmex_buscarCliente",
+        "output_entities": {
+          "parameters": {
+            "properties": {},
+            "required": [],
+            "type": "object"
+          }
+        },
+        "output_entities_format": "table",
+        "output_entities_text": "",
+        "output_entities_view": "table",
+        "service_id": "43994",
+        "service_name": "CollabMex",
+        "type": "flow",
+        "webhook_url": "https://hooks.us.webexconnect.io/flows/67201/trigger/aiagent"
+      },
+      "id": "a33cea646d0c06ef862043ed8161dffb",
+      "input_entities": {
+        "parameters": {
+          "properties": {
+            "telefono": {
+              "description": "numero telefonico",
+              "examples": [
+                "5544111111"
+              ],
+              "type": "number"
+            }
+          },
+          "required": [
+            "telefono"
+          ],
+          "type": "object"
+        }
+      },
+      "name": "buscar_cliente",
+      "slots_view": "table",
+      "system_tool": false
+    },
+    {
+      "bot_id": 41280,
+      "capability": "slot_filling_with_fulfillment",
+      "description": "Buscar tarjetas de credito contratadas por el cliente.",
+      "enabled": true,
+      "fulfillment": {
+        "authentication": {
+          "service_key": "",
+          "type": "ci_bearer_token"
+        },
+        "code": "",
+        "flow_id": 67611,
+        "flow_name": "banca_buscarProductos",
+        "output_entities": {
+          "parameters": {
+            "properties": {},
+            "required": [],
+            "type": "object"
+          }
+        },
+        "output_entities_format": "table",
+        "output_entities_text": "",
+        "output_entities_view": "table",
+        "service_id": "43994",
+        "service_name": "CollabMex",
+        "type": "flow",
+        "webhook_url": "https://hooks.us.webexconnect.io/flows/67611/trigger/aiagent"
+      },
+      "id": "6bce57e1a6ad1bf5baf44bccd08e768c",
+      "input_entities": {
+        "parameters": {
+          "properties": {
+            "numero": {
+              "description": "numero telefonico",
+              "examples": [
+                "1234567891"
+              ],
+              "type": "number"
+            }
+          },
+          "required": [
+            "numero"
+          ],
+          "type": "object"
+        }
+      },
+      "name": "buscar_tarjetas",
+      "slots_view": "table",
+      "system_tool": false
+    },
+    {
+      "bot_id": 41280,
+      "capability": "slot_filling_with_fulfillment",
+      "description": "Buscar creditos contratados del cliente.",
+      "enabled": true,
+      "fulfillment": {
+        "authentication": {
+          "service_key": "",
+          "type": "ci_bearer_token"
+        },
+        "code": "",
+        "flow_id": 67611,
+        "flow_name": "banca_buscarProductos",
+        "output_entities": {
+          "parameters": {
+            "properties": {},
+            "required": [],
+            "type": "object"
+          }
+        },
+        "output_entities_format": "table",
+        "output_entities_text": "",
+        "output_entities_view": "table",
+        "service_id": "43994",
+        "service_name": "CollabMex",
+        "type": "flow",
+        "webhook_url": "https://hooks.us.webexconnect.io/flows/67611/trigger/aiagent"
+      },
+      "id": "ffebe8ed9554672255441e4b823eaeaf",
+      "input_entities": {
+        "parameters": {
+          "properties": {
+            "numero": {
+              "description": "numero telefonico",
+              "examples": [
+                "123456781"
+              ],
+              "type": "number"
+            }
+          },
+          "required": [
+            "numero"
+          ],
+          "type": "object"
+        }
+      },
+      "name": "buscar_creditos",
+      "slots_view": "table",
+      "system_tool": false
+    },
+    {
+      "bot_id": 41280,
+      "capability": "slot_filling_with_fulfillment",
+      "description": "Enviar OTP al cliente para validacion",
+      "enabled": true,
+      "fulfillment": {
+        "authentication": {
+          "service_key": "",
+          "type": "ci_bearer_token"
+        },
+        "code": "",
+        "flow_id": 67612,
+        "flow_name": "banca_enviarOTP",
+        "output_entities": {
+          "parameters": {
+            "properties": {},
+            "required": [],
+            "type": "object"
+          }
+        },
+        "output_entities_format": "table",
+        "output_entities_text": "",
+        "output_entities_view": "table",
+        "service_id": "43994",
+        "service_name": "CollabMex",
+        "type": "flow",
+        "webhook_url": "https://hooks.us.webexconnect.io/flows/67612/trigger/aiagent"
+      },
+      "id": "e18f839428ae237aaf233bbb5c64c79d",
+      "input_entities": {
+        "parameters": {
+          "properties": {
+            "telefono": {
+              "description": "numero telefonico",
+              "examples": [
+                "6758478910"
+              ],
+              "type": "number"
+            }
+          },
+          "required": [
+            "telefono"
+          ],
+          "type": "object"
+        }
+      },
+      "name": "enviar_OTP",
+      "slots_view": "table",
+      "system_tool": false
+    },
+    {
+      "bot_id": 41280,
+      "capability": "slot_filling_with_fulfillment",
+      "description": "Validar si el OTP del cliente es correcto.",
+      "enabled": true,
+      "fulfillment": {
+        "authentication": {
+          "service_key": "",
+          "type": "ci_bearer_token"
+        },
+        "code": "",
+        "flow_id": 67613,
+        "flow_name": "banca_validarOTP",
+        "output_entities": {
+          "parameters": {
+            "properties": {},
+            "required": [],
+            "secure": [],
+            "type": "object"
+          }
+        },
+        "output_entities_format": "table",
+        "output_entities_text": "",
+        "output_entities_view": "table",
+        "service_id": "43994",
+        "service_name": "CollabMex",
+        "type": "flow",
+        "webhook_url": "https://hooks.us.webexconnect.io/flows/67613/trigger/aiagent"
+      },
+      "id": "56a42100350c681e54774282c958b3e0",
+      "input_entities": {
+        "parameters": {
+          "properties": {
+            "OTP": {
+              "description": "OTP que el cliente proporcionó",
+              "examples": [
+                "1234"
+              ],
+              "type": "string"
+            },
+            "telefono": {
+              "description": "numero telefonico del cliente",
+              "examples": [
+                "7867567878"
+              ],
+              "type": "number"
+            }
+          },
+          "required": [
+            "OTP",
+            "telefono"
+          ],
+          "secure": [],
+          "type": "object"
+        }
+      },
+      "name": "validar_OTP",
+      "slots_view": "table",
+      "system_tool": false
+    },
+    {
+      "bot_id": 41280,
+      "capability": "slot_filling_with_fulfillment",
+      "description": "Enviar estado de cuenta a correo electronico y whatsapp del cliente.",
+      "enabled": true,
+      "fulfillment": {
+        "authentication": {
+          "service_key": "",
+          "type": "ci_bearer_token"
+        },
+        "code": "",
+        "flow_id": 67615,
+        "flow_name": "banca_estadocuenta",
+        "output_entities": {
+          "parameters": {
+            "properties": {},
+            "required": [],
+            "type": "object"
+          }
+        },
+        "output_entities_format": "table",
+        "output_entities_text": "",
+        "output_entities_view": "table",
+        "service_id": "43994",
+        "service_name": "CollabMex",
+        "type": "flow",
+        "webhook_url": "https://hooks.us.webexconnect.io/flows/67615/trigger/aiagent"
+      },
+      "id": "87adff99101f158b10668d7c60e55568",
+      "input_entities": {
+        "parameters": {
+          "properties": {
+            "numero": {
+              "description": "numero telefonico del cliente",
+              "examples": [
+                "7766778899"
+              ],
+              "type": "number"
+            }
+          },
+          "required": [
+            "numero"
+          ],
+          "type": "object"
+        }
+      },
+      "name": "enviar_edocuenta",
+      "slots_view": "table",
+      "system_tool": false
+    }
+  ],
+  "transaction_id": "0204d9259f6342a5b84af8981d476fa8"
+}
