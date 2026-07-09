@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arca Continental - Gestión de Pedidos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #E31937; /* Rojo Arca Continental / Coca-Cola */
+      --primary-dark: #b3132b;
+      --secondary: #333333; /* Gris oscuro corporativo */
+      --bg-light: #f4f4f4; 
+      --text-dark: #1a1a1a;
+      --border-radius: 8px; /* Bordes un poco más sobrios */
+      --card-bg: #ffffff;
+      --column-bg: #e9ecef;
+      --status-received: #ffc107;
+      --status-preparing: #007bff;
+      --status-shipped: #28a745; /* Verde para éxito/enviado */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* Encabezado estilo Arca */
+    header {
+      background-color: white;
+      color: var(--primary);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border-bottom: 4px solid var(--primary);
+    }
+
+    header img { height: 45px; }
+
+    nav a {
+      color: var(--secondary);
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      transition: color 0.3s;
+    }
+
+    nav a:hover { color: var(--primary); }
+
+    .orders-dashboard {
+      padding: 2rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .orders-dashboard h1 {
+      text-align: center;
+      color: var(--secondary);
+      margin-bottom: 2rem;
+      font-size: 2.2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+    }
+
+    .order-columns-container {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .order-column {
+      flex: 1;
+      min-width: 320px;
+      background-color: var(--column-bg);
+      padding: 1.2rem;
+      border-radius: var(--border-radius);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      border-top: 5px solid var(--secondary);
+    }
+
+    /* Colores de cabecera de columna */
+    .order-column.received { border-top-color: var(--status-received); }
+    .order-column.preparing { border-top-color: var(--status-preparing); }
+    .order-column.shipped { border-top-color: var(--status-shipped); }
+
+    .order-column h3 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    .order-card {
+      background-color: var(--card-bg);
+      padding: 1.2rem;
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      border-left: 6px solid #ccc;
+      transition: transform 0.2s;
+    }
+
+    .order-card:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+
+    .order-card h4 { margin-bottom: 0.6rem; color: var(--primary); font-weight: 700; }
+    .order-card p { font-size: 0.85rem; color: #444; margin-bottom: 0.4rem; }
+    .order-card strong { color: var(--secondary); }
+
+    .status-indicator { 
+      font-weight: 800; 
+      margin-top: 0.8rem; 
+      margin-bottom: 1rem; 
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .order-card button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.7rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 700;
+      width: 100%;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      transition: background 0.3s;
+    }
+
+    .order-card button:hover { background-color: var(--primary-dark); }
+    .order-card button:disabled { background-color: #bbb; cursor: not-allowed; }
+
+    /* Colores de borde de tarjeta */
+    .received .order-card { border-left-color: var(--status-received); }
+    .preparing .order-card { border-left-color: var(--status-preparing); }
+    .shipped .order-card { border-left-color: var(--status-shipped); }
+
+    footer {
+      background-color: var(--secondary);
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+    }
+
+    footer a { color: var(--primary); text-decoration: none; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<header>
+<img src="logo.png" alt="Arca Continental Logo" style="height: 60px;">
+  <nav>
+    <a href="#">Panel de Control</a>
+    <a href="#">Logística</a>
+    <a href="#">Reportes</a>
+  </nav>
+</header>
+
+<main>
+  <section class="orders-dashboard">
+    <h1>Sistema de Gestión de Pedidos</h1>
+    <div class="order-columns-container">
+      <div id="received-column" class="order-column received">
+        <h3>1. Recibidos</h3>
+      </div>
+      <div id="preparing-column" class="order-column preparing">
+        <h3>2. En Preparación</h3>
+      </div>
+      <div id="shipped-column" class="order-column shipped">
+        <h3>3. Despachados</h3>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2026 Demostración Cisco Webex. Todos los derechos reservados.<br>
+  Cisco Webex Demo - <a href="mailto:vdiazrod@cisco.com">Veronica Diaz</a>
+</footer>
+
+<script>
+  const ORDERS_API_URL = 'https://6a4ea046e785c9ef536d06bb.mockapi.io/apiARCA/v1/pedidos';
+  const USERS_API_URL = 'https://6a4ea046e785c9ef536d06bb.mockapi.io/apiARCA/v1/usuarios';
+  const WEBHOOK_URL = 'https://hooks.us.webexconnect.io/events/QW1I70QW3Y';
+
+  const receivedColumn = document.getElementById('received-column');
+  const preparingColumn = document.getElementById('preparing-column');
+  const shippedColumn = document.getElementById('shipped-column');
+
+  async function sendWebhookUpdate(orderId, status) {
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId, status })
+      });
+    } catch (e) { console.error("Error Webhook:", e); }
+  }
+
+  function createOrderCard(order) {
+    const card = document.createElement('div');
+    card.className = 'order-card';
+    
+    let btnText = '';
+    let nextStatus = '';
+    let currentLabel = '';
+
+    if (order.status === 'Procesando') {
+      btnText = 'Pasar a Preparación';
+      nextStatus = 'preparing';
+      currentLabel = '● Pendiente';
+    } else if (order.status === 'preparing') {
+      btnText = 'Confirmar Despacho';
+      nextStatus = 'shipped';
+      currentLabel = '● En Almacén';
+    } else {
+      btnText = 'Entregado';
+      currentLabel = '● Enviado al Cliente';
+    }
+
+    card.innerHTML = `
+      <div>
+        <h4>ORDEN #${order.id}</h4>
+        <p><strong>Cliente:</strong> ${order.customerName}</p>
+        <p><strong>ID:</strong> ${order.usuarioId}</p>
+        <p><strong>Detalle:</strong> ${order.pedido}</p>
+        <p><strong>Monto:</strong> <span style="color:var(--primary); font-weight:bold;">${order.total}</span></p>
+        <p class="status-indicator">${currentLabel}</p>
+      </div>
+      <button ${order.status === 'shipped' ? 'disabled' : ''} data-next="${nextStatus}">
+        ${btnText}
+      </button>
+    `;
+
+    const btn = card.querySelector('button');
+    if (!btn.disabled) {
+      btn.onclick = () => updateOrderStatus(order.id, btn.dataset.next);
+    }
+    return card;
+  }
+
+  async function fetchOrders() {
+    try {
+      const [resO, resU] = await Promise.all([fetch(ORDERS_API_URL), fetch(USERS_API_URL)]);
+      const orders = await resO.json();
+      const users = await resU.json();
+
+      [receivedColumn, preparingColumn, shippedColumn].forEach(c => 
+        c.querySelectorAll('.order-card').forEach(card => card.remove()));
+
+      orders.forEach(order => {
+        const user = users.find(u => u.id === order.usuarioId);
+        order.customerName = user ? user.nombre : "Cliente General";
+
+        const card = createOrderCard(order);
+        if (order.status === 'Procesando') receivedColumn.appendChild(card);
+        else if (order.status === 'preparing') preparingColumn.appendChild(card);
+        else if (order.status === 'shipped') shippedColumn.appendChild(card);
+      });
+    } catch (e) { console.error("Error de conexión:", e); }
+  }
+
+  async function updateOrderStatus(id, newStatus) {
+    try {
+      const res = await fetch(`${ORDERS_API_URL}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus })
+      });
+      if (res.ok) {
+        await sendWebhookUpdate(id, newStatus);
+        fetchOrders();
+      }
+    } catch (e) { console.error("Error al actualizar:", e); }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchOrders();
+    setInterval(fetchOrders, 5000); // Actualización cada 5 segundos
+  });
+</script>
+
+</body>
+</html>
