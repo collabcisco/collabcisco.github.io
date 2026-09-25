@@ -1,0 +1,23 @@
+{
+    "id": "$(n2.aiAgent.transId)",
+    "specversion": "1.0",
+    "type": "Online",
+    "source": "Website",
+    "identity": "$(n6.number)",
+    "identitytype": "temporaryId",
+    "datacontenttype": "application/json",
+    "data": {
+        "Siniestro": "D00-3822-2026",
+        "Vehiculo": "BMW X5 xDrive40i",
+        "Deducible": "$37,675.00, Pagado",
+        "Carta Liberación": "Enviada por Whatsapp",
+        "uiData": {
+            "title": "Siniestro",
+            "iconType": "Bill Pay Success",
+            "subTitle": "Deducible Pagado",
+            "filterTags": [
+                "Siniestro"
+            ]
+        }
+    }
+}
