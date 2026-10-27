@@ -1,206 +1,700 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kiosco de Recepción Digital - Cisco RoomOS</title>
 
+  <!-- SCRIPTS DE TU PROYECTO -->
   <script src="date.format.js"></script>
   <script src="webex.js"></script>
   <script src="index.js" defer></script>
   <script src="alpine.js" defer></script>
 
-  <title>Cisco Visitor Kiosk</title>
+  <style>
+    /* ==========================================================================
+       1. VARIABLES DE COLOR Y ESTILO CORPORATIVO PISA / CISCO
+       ========================================================================== */
+    :root {
+      --primary-color: #00f0ff;          /* Cyan Eléctrico */
+      --primary-hover: #00c8d7;          /* Color al presionar */
+      --accent-blue: #38bdf8;            /* Azul secundario */
+      --accent-green: #10b981;           /* Verde de Check In */
+      --bg-gradient: linear-gradient(135deg, #07111e 0%, #0c1c2e 50%, #0f2742 100%);
+      --card-bg: rgba(17, 30, 49, 0.85);
+      --card-border: rgba(56, 189, 248, 0.25);
+      --card-hover: rgba(30, 58, 95, 0.95);
+      --text-white: #ffffff;
+      --text-muted: #94a3b8;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-  <link rel="icon" href="./assets/logo.png">
-  <link href="styles/style.css" rel="stylesheet">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--bg-gradient);
+      color: var(--text-white);
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* HEADER */
+    header {
+      padding: 22px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(7, 17, 30, 0.5);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand-logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 52px;
+      max-width: 220px;
+    }
+
+    .brand-logo-img {
+      height: 100%;
+      width: auto;
+      max-width: 220px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+    }
+
+    .logo-fallback {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-blue));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 22px;
+      color: #07111e;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+    }
+
+    .brand-text h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text-white);
+    }
+
+    .brand-text p {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-top: 2px;
+    }
+
+    .header-info {
+      text-align: right;
+    }
+
+    .clock {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary-color);
+      letter-spacing: 1px;
+    }
+
+    .date {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* MAIN CONTAINER */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* VISTAS */
+    .view {
+      display: none;
+      width: 100%;
+      animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* VISTA PRINCIPAL (HOME) */
+    .hero-text {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .hero-text h2 {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-text p {
+      font-size: 20px;
+      color: var(--text-muted);
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 35px;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .action-card {
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 24px;
+      padding: 45px 35px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .action-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: var(--primary-color);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .action-card:active, .action-card:hover {
+      background: var(--card-hover);
+      border-color: var(--primary-color);
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(0, 240, 255, 0.25);
+    }
+
+    .action-card:active::before, .action-card:hover::before {
+      opacity: 1;
+    }
+
+    /* ESTADO MARCANDO (ANIMACIÓN EN LA TARJETA) */
+    .action-card.calling {
+      border-color: var(--primary-color);
+      background: rgba(30, 58, 95, 0.95);
+      animation: pulseGlow 1.5s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
+      50% { box-shadow: 0 0 35px rgba(0, 240, 255, 0.85); }
+      100% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
+    }
+
+    .card-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+      font-size: 44px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary-color);
+    }
+
+    .action-card.checkin .card-icon {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.3);
+      color: var(--accent-green);
+    }
+
+    .action-card.checkin::before {
+      background: var(--accent-green);
+    }
+
+    .action-card.checkin:active, .action-card.checkin:hover {
+      border-color: var(--accent-green);
+      box-shadow: 0 15px 40px rgba(16, 185, 129, 0.25);
+    }
+
+    .action-card h3 {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text-white);
+    }
+
+    .action-card p {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .card-badge {
+      margin-top: 20px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--accent-blue);
+    }
+
+    .action-card.checkin .card-badge {
+      color: var(--accent-green);
+    }
+
+    /* VISTA FORMULARIO CHECK IN */
+    .form-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 850px;
+      margin: 0 auto;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .form-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .form-header h3 {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--accent-green);
+    }
+
+    .btn-back {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-white);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group input, .form-group select {
+      background: rgba(7, 17, 30, 0.7);
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 16px 20px;
+      font-size: 18px;
+      color: white;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--accent-green);
+      background: rgba(7, 17, 30, 0.95);
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      padding: 20px;
+      font-size: 22px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .btn-submit:active {
+      transform: scale(0.98);
+    }
+
+    /* VISTA DE ÉXITO */
+    .success-container {
+      background: var(--card-bg);
+      border: 2px solid var(--accent-green);
+      border-radius: 24px;
+      padding: 50px;
+      max-width: 650px;
+      margin: 0 auto;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .success-icon {
+      width: 100px;
+      height: 100px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 2px solid var(--accent-green);
+      border-radius: 50%;
+      margin: 0 auto 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+      color: var(--accent-green);
+    }
+
+    .success-container h2 {
+      font-size: 36px;
+      margin-bottom: 12px;
+      color: var(--text-white);
+    }
+
+    .success-container p {
+      font-size: 18px;
+      color: var(--text-muted);
+      margin-bottom: 25px;
+    }
+
+    .countdown-bar {
+      font-size: 14px;
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 20px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(7, 17, 30, 0.3);
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 10px var(--accent-green);
+    }
+  </style>
 </head>
+<body>
 
-<body x-data="dataModel" x-cloak :class="theme">
+  <!-- ==========================================================================
+       2. CABECERA: LOGOTIPO Y TÍTULO DE EMPRESA
+       ========================================================================== -->
   <header>
-    <div @click="location.reload()" class="logo"></div>
-    <div class="time-date">
-      <div class="date" x-text="date"></div>
-      <div class="time" x-text="time"></div>
+    <div class="brand">
+      <div class="brand-logo-container" id="logoContainer">
+        <img src="assets/cisco-logo.png" 
+             alt="Logo Institucional" 
+             class="brand-logo-img"
+             id="customLogo"
+             onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='flex';">
+        <div class="logo-fallback" id="fallbackLogo" style="display: none;">P</div>
+      </div>
+
+      <div class="brand-text">
+        <h1 id="txtCompanyName">PISA</h1>
+        <p id="txtCompanySubtitle">Lobby Principal • Recepción</p>
+      </div>
+    </div>
+
+    <div class="header-info">
+      <div class="clock" id="clock">--:--:--</div>
+      <div class="date" id="date">Cargando fecha...</div>
     </div>
   </header>
-  <main x-show="page === 'home'">
-    <h1>Welcome</h1>
-    <div>Visitor please select an action below.</div>
-    <form class="select-action" @submit.prevent="">
-      <div class="action">
-        <button @click="checkOut()" class="secondary">Check out</button>
-        <button @click="next()" class="primary">Check in</button>
+
+  <!-- ==========================================================================
+       3. CONTENEDOR PRINCIPAL DE PANTALLAS
+       ========================================================================== -->
+  <main>
+
+    <!-- 1. VISTA PRINCIPAL (HOME) -->
+    <section id="viewHome" class="view active">
+      <div class="hero-text">
+        <h2>¡Bienvenido!</h2>
+        <p>Por favor selecciona una opción en la pantalla para comenzar</p>
       </div>
-    </form>
-    <div class="mini-apps">
-      <button class="call" @click="call()">Call Reception</button>
-      <button class="taxi" @click="page = 'taxi'">Taxi</button>
-      <button class="map" @click="page = 'map'">Map</button>
-    </div>
-  </main>
-  <main x-show="page === 'checkIn'">
-    <h1>Check in</h1>
-    <div>Please enter your name and email below.</div>
-    <form class="check-in" @submit.prevent="">
-      <div>
-        <input placeholder="Full name" id="name" x-model="name" />
+
+      <div class="action-grid">
+        <!-- BOTÓN 1: LLAMAR RECEPCIÓN (Invoca directamente tu función call()) -->
+        <div class="action-card" id="btnCallCard" onclick="call()">
+          <div class="card-icon" id="callIcon">📞</div>
+          <h3 id="txtCallTitle">Llamar Recepción</h3>
+          <p id="txtCallSubtitle">Habla en video en vivo con nuestra recepcionista para asistencia inmediata</p>
+          <span class="card-badge" id="txtCallBadge">Videollamada en Directo</span>
+        </div>
+
+        <!-- BOTÓN 2: CHECK IN -->
+        <div class="action-card checkin" onclick="showCheckInForm()">
+          <div class="card-icon">📋</div>
+          <h3>Check In</h3>
+          <p>Regístrate si tienes una cita previa o vienes a una reunión programada</p>
+          <span class="card-badge">Registro de Visitante</span>
+        </div>
       </div>
-      <div>
-        <input placeholder="Your email address" x-model="email" @keydown.enter.prevent="if (validForm) next()"/>
-      </div>
-      <div class="action">
-        <button @click="home()" class="secondary">Back</button>
-        <button @click="next()" :disabled="!validForm" class="primary">Continue</button>
-      </div>
-    </form>
-  </main>
-  <main x-show="page === 'findHost'">
-    <h1>Find your host</h1>
-    <div x-show="!currentHost">Please enter the name of your host.</div>
-    <form class="check-in" @submit.prevent="">
-      <div>
-        <input placeholder="Host name" id="host" x-model="hostSearch" @input="searchHost()" />
-      </div>
-      <div class="help" x-text="searchStatus"></div>
-      <div class="found-hosts" x-show="foundHosts.length">
-        <template x-for="host in foundHosts">
-          <div class="host" @click="selectHost(host)">
-            <div class="avatar" :style="getAvatar(host)"></div>
-            <div class="name" x-text="host && host.displayName"></div>
+    </section>
+
+    <!-- 2. VISTA FORMULARIO CHECK IN -->
+    <section id="viewForm" class="view">
+      <div class="form-container">
+        <div class="form-header">
+          <h3>Registro de Entrada (Check In)</h3>
+          <button class="btn-back" onclick="showView('viewHome')">← Cancelar y Volver</button>
+        </div>
+
+        <form id="checkInForm" onsubmit="submitCheckIn(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="visitorName">Tu Nombre Completo *</label>
+              <input type="text" id="visitorName" placeholder="Ej. Juan Pérez García" required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+              <label for="visitorCompany">Empresa de Procedencia</label>
+              <input type="text" id="visitorCompany" placeholder="Ej. Proveedor / Particular" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+              <label for="hostName">¿A quién visitas? (Anfitrión) *</label>
+              <input type="text" id="hostName" placeholder="Ej. Ing. Carlos Mendoza" required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+              <label for="visitReason">Motivo de la Visita</label>
+              <select id="visitReason">
+                <option value="Reunión Programada">Reunión Programada</option>
+                <option value="Entrega de Paquetería">Entrega de Paquetería</option>
+                <option value="Entrevista de Trabajo">Entrevista de Trabajo</option>
+                <option value="Mantenimiento / Servicios">Mantenimiento / Servicios</option>
+                <option value="Otro">Otro Asunto</option>
+              </select>
+            </div>
           </div>
-        </template>
-      </div>
-      <div class="action">
-        <button @click="back()" class="secondary">Back</button>
-      </div>
-    </form>
-  </main>
-  <main x-show="page === 'confirmHost'">
-    <h1>Selected Host</h1>
-    <div class="selected-host" x-show="currentHost">
-      <div class="avatar" :style="getAvatar(currentHost)"></div>
-      <div class="name" x-text="currentHost && currentHost.displayName"></div>
-    </div>
-    <div class="action">
-      <button @click="back()" class="secondary">Back</button>
-      <button :disabled="!currentHost" @click="next()" class="primary">Continue</button>
-    </div>
-  </main>
-  <main x-show="page === 'photo'">
-    <h1>Take a photo</h1>
-    <div class="box">
-      <video class="webcam" x-show="!photo" autoplay></video>
-      <canvas class="photo" x-show="photo"></canvas>
-      <div class="countdown" x-text="photoTime" x-show="photoTime > 0"></div>
-      <div class="photo-flash"></div>
-    </div>
-    <div class="action">
-      <button :disabled="photoTime > 0" @click="back()" class="secondary">Back</button>
-      <button :disabled="photoTime > 0" @click="takePhotoCountdown()" class="primary" x-show="!photo">Take photo</button>
-      <button @click="takePhotoCountdown()" x-show="photo">Re-take</button>
-      <button :disabled="photoTime > 0" @click="next()" x-show="photo" class="primary">Next</button>
-      <br/>
-      <button @click="next()" class="link">Skip photo</button>
-    </div>
-    <audio src="assets/shutter.mp3" id="shutter-sound"></audio>
-  </main>
-  <main x-show="page === 'confirm'">
-    <h1>Confirm details</h1>
 
-    <div class="business-card">
-      <img class="photo" :src="photoSrc()" />
-      <div class="name" x-text="name"></div>
-      <div class="email" x-text="email"></div>
-      <div class="visiting">Visiting:
-        <span x-text="currentHost && currentHost.displayName"></span>
+          <button type="submit" class="btn-submit">
+            <span>✔</span> Confirmar Registro y Notificar
+          </button>
+        </form>
       </div>
-    </div>
-    <div class="action">
-      <button @click="back()" class="secondary">Back</button>
-      <button @click="next()" :disabled="!validForm" class="primary">Register</button>
-    </div>
-  </main>
-  <main x-show="page === 'registered'">
-    <h1>Welcome <span x-text="name"></span></h1>
-    <div>Your badge is printing. Please wear it during your stay.
-    <p/>
-    We sent a message to
-      <span x-text="currentHost && currentHost.displayName"></span>
-      that you have arrived.
-    <p/>
-    Grab a coffee or have yourself a drink while you wait.</div>
-    <form class="registered" @submit.prevent="">
-      <div class="action">
-        <button @click="home()" class="primary">OK</button>
-      </div>
-    </form>
-  </main>
-  <main x-show="page === 'checkOut'">
-    <h1>Check out</h1>
-    <div>Enter your email to check out.</div>
-    <form @submit.prevent="">
-      <div>
-        <input placeholder="Email address" x-model="email" @keydown.enter.prevent="if (validForm) next()"/>
-      </div>
-      <div class="action">
-        <button @click="home()" class="secondary">Back</button>
-        <button @click="next()" :disabled="!validForm" class="primary">Continue</button>
-      </div>
-    </form>
-  </main>
-  <main x-show="page === 'taxi'">
-    <h1>Call Taxi</h1>
-    <div>Enter your phone number, so the taxi can call you when it arrives.</div>
-    <form @submit.prevent="">
-      <div>
-        <input
-          placeholder="Your phone number"
-          x-model="phoneNumber"
-          @keydown.enter.prevent="if (validForm) next()"
-        />
-      </div>
-      <div class="action">
-        <button @click="home()" class="secondary">Back</button>
-        <button @click="next()" :disabled="!validForm" class="primary">Continue</button>
-      </div>
-    </form>
-  </main>
-  <main x-show="page === 'taxiConfirmed'">
-    <h1>Taxi ordered</h1>
-    <div>It will call your phone when it arrives.</div>
-    <div>
-      Taxi number: <span x-text="taxiNumber"></span>
-    </div>
-    <div class="action">
-      <button @click="home()" class="primary">Done</button>
-    </div>
-  </main>
-  <main x-show="page === 'checkOutResult'">
-    <h1>Checked out</h1>
-    <div>You were checked out. See you soon!</div>
-    <div class="action">
-      <button @click="home()" :disabled="!validForm" class="primary">Continue</button>
-    </div>
-  </main>
-  <main x-show="page === 'map'">
-    <h1>Area map</h1>
-    <iframe
-      :src="mapUrl"
-      width="600"
-      height="450"
-      style="border:0;"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
+    </section>
 
-    <div class="action">
-      <button @click="home()">Back</button>
-    </div>
+    <!-- 3. VISTA DE ÉXITO -->
+    <section id="viewSuccess" class="view">
+      <div class="success-container">
+        <div class="success-icon">✓</div>
+        <h2>¡Registro Completado!</h2>
+        <p id="successMessage">Hemos notificado a tu anfitrión de tu llegada. Por favor toma asiento en el lobby.</p>
+        <div class="countdown-bar" id="countdownText">Volviendo a la pantalla principal en 10 segundos...</div>
+      </div>
+    </section>
+
   </main>
 
+  <!-- FOOTER -->
+  <footer>
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      <span>Dispositivo Cisco RoomOS Conectado</span>
+    </div>
+    <div>Toca la pantalla para interactuar</div>
+  </footer>
 
+  <!-- ==========================================================================
+       4. JAVASCRIPT DE VISTAS Y ENLACE CON TU FUNCIÓN CALL()
+       ========================================================================== -->
+  <script>
+    const APP_CONFIG = {
+      COMPANY_NAME: 'PISA',
+      SUBTITLE: 'Lobby Principal • Recepción',
+      RECEPTION_SIP_URI: 'vdiazrod@cisco.com',
+      AUTO_RESET_SECONDS: 10
+    };
+
+    // Aplicar textos configurados
+    document.getElementById('txtCompanyName').innerText = APP_CONFIG.COMPANY_NAME;
+    document.getElementById('txtCompanySubtitle').innerText = APP_CONFIG.SUBTITLE;
+
+    let countdownTimer = null;
+
+    // Reloj en tiempo real
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds}`;
+
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const dateStr = now.toLocaleDateString('es-ES', options);
+      document.getElementById('date').innerText = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Control de navegación entre pantallas
+    function showView(viewId) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      const target = document.getElementById(viewId);
+      if (target) target.classList.add('active');
+
+      if (viewId === 'viewHome') {
+        clearInterval(countdownTimer);
+        resetCallButtonState();
+      }
+    }
+
+    // ========================================================================
+    // FUNCIÓN CALL(): Se ejecuta al hacer clic en la tarjeta "Llamar Recepción"
+    // ========================================================================
+    function call() {
+      const card = document.getElementById('btnCallCard');
+      const title = document.getElementById('txtCallTitle');
+      const badge = document.getElementById('txtCallBadge');
+
+      if (card) card.classList.add('calling');
+      if (title) title.innerText = 'Marcando...';
+      if (badge) badge.innerText = 'Conectando videollamada...';
+
+      console.log('Llamando a recepción...');
+
+      // 1. Si tu archivo index.js o webex.js definió una función personalizada:
+      if (typeof window.executeKioskCall === 'function') {
+        window.executeKioskCall();
+      } else if (typeof webex !== 'undefined' && typeof webex.dial === 'function') {
+        webex.dial(APP_CONFIG.RECEPTION_SIP_URI);
+      } else if (window.xapi && typeof window.xapi.command === 'function') {
+        window.xapi.command('Dial', { Number: APP_CONFIG.RECEPTION_SIP_URI });
+      }
+
+      setTimeout(resetCallButtonState, 5000);
+    }
+
+    function resetCallButtonState() {
+      const card = document.getElementById('btnCallCard');
+      const title = document.getElementById('txtCallTitle');
+      const badge = document.getElementById('txtCallBadge');
+      if (card) card.classList.remove('calling');
+      if (title) title.innerText = 'Llamar Recepción';
+      if (badge) badge.innerText = 'Videollamada en Directo';
+    }
+
+    // Formulario Check In
+    function showCheckInForm() {
+      document.getElementById('checkInForm').reset();
+      showView('viewForm');
+    }
+
+    function submitCheckIn(event) {
+      event.preventDefault();
+      const visitorName = document.getElementById('visitorName').value;
+      const hostName = document.getElementById('hostName').value;
+
+      document.getElementById('successMessage').innerText = 
+        `¡Gracias ${visitorName}! Hemos notificado a ${hostName} para informarle que estás aquí.`;
+
+      showView('viewSuccess');
+
+      let timeLeft = APP_CONFIG.AUTO_RESET_SECONDS;
+      const countdownElem = document.getElementById('countdownText');
+      countdownElem.innerText = `Volviendo a la pantalla principal en ${timeLeft} segundos...`;
+
+      countdownTimer = setInterval(() => {
+        timeLeft--;
+        if (timeLeft > 0) {
+          countdownElem.innerText = `Volviendo a la pantalla principal en ${timeLeft} segundos...`;
+        } else {
+          clearInterval(countdownTimer);
+          showView('viewHome');
+        }
+      }, 1000);
+    }
+  </script>
 </body>
-
 </html>
