@@ -15,7 +15,7 @@ const ALLOWED_HOSTS = [
 ];
 
 // Reemplaza con tu endpoint real de Webex Connect
-const WEBEX_CONNECT_HOOK_URL = "https://TU_HOOK_DE_WEBEX_CONNECT";
+const WEBEX_CONNECT_HOOK_URL = "https://hooks.us.webexconnect.io/events/9GFXGOWCKQ";
 
 const dataModel = {
   // home > checkIn > findHost > confirmHost > photo > confim > registered | checkOut > checkOutResult
