@@ -82,7 +82,7 @@ const dataModel = {
   },
 
   call() {
-    const defaultNumber = 'CxCDeskMini@collablatam.com';
+    const defaultNumber = 'cxc_recepcionista_-_desk_mini@collablatam.rooms.webex.com';
     const number = new URLSearchParams(location.search).get('reception') || defaultNumber;
     location.href = `sip:${number}`;
   },
