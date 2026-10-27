@@ -6,7 +6,7 @@ Details:
 * Email: **$email**
 `;
 
-// NUEVO: Hosts permitidos para el campo "¿A quién visitas?"
+// Hosts permitidos para "¿A quién visitas?"
 const ALLOWED_HOSTS = [
   "Veronica Diaz",
   "Jacob Toala",
@@ -14,16 +14,22 @@ const ALLOWED_HOSTS = [
   "Marco Conde"
 ];
 
-// NUEVO: URL del hook de Webex Connect (reemplaza con tu endpoint real)
-const WEBEX_CONNECT_HOOK_URL = "https://hooks.us.webexconnect.io/events/9GFXGOWCKQ";
+// Reemplaza con tu endpoint real de Webex Connect
+const WEBEX_CONNECT_HOOK_URL = "https://TU_HOOK_DE_WEBEX_CONNECT";
 
 const dataModel = {
-// home > checkIn > findHost > confirmHost > photo > confim > registered | checkOut > checkOutResult
+  // home > checkIn > findHost > confirmHost > photo > confim > registered | checkOut > checkOutResult
   page: 'home',
   name: '',
   email: '',
   hostSearch: '',
-  visitReason: 'Reunión Programada', // NUEVO
+  visitReason: 'Reunión Programada',
+
+  // NUEVO para autocomplete compatible con Webex Board
+  allowedHosts: ALLOWED_HOSTS,
+  filteredHosts: [],
+  showHostSuggestions: false,
+
   currentHost: null,
   date: 'October 6, 2022',
   time: '10:35 AM',
@@ -45,11 +51,11 @@ const dataModel = {
     this.theme = params.get('theme');
 
     if (this.theme) {
-      // <link href="styles/theme-night.css" rel="stylesheet">
       const head = document.getElementsByTagName("head")[0];
       head.insertAdjacentHTML(
         "beforeend",
-        `<link rel="stylesheet" href="styles/theme-cisco.css" />`);
+        `<link rel="stylesheet" href="styles/theme-cisco.css" />`
+      );
     }
   },
 
@@ -61,8 +67,10 @@ const dataModel = {
   reset() {
     this.name = '';
     this.email = '';
-    this.hostSearch = ''; // NUEVO
-    this.visitReason = 'Reunión Programada'; // NUEVO
+    this.hostSearch = '';
+    this.visitReason = 'Reunión Programada';
+    this.filteredHosts = [];
+    this.showHostSuggestions = false;
     this.currentHost = null;
     this.foundHosts = [];
     this.searchStatus = '';
@@ -81,11 +89,9 @@ const dataModel = {
     const emailPattern = /\w+@\w+/;
     if (this.page === 'checkIn') {
       return this.name.trim().length && this.email.match(emailPattern);
-    }
-    else if (this.page === 'checkOut') {
+    } else if (this.page === 'checkOut') {
       return this.email.match(emailPattern);
-    }
-    else if (this.page === 'taxi') {
+    } else if (this.page === 'taxi') {
       return this.phoneNumber.length > 3;
     }
     return true;
@@ -93,46 +99,35 @@ const dataModel = {
 
   checkIn() {
     this.page = 'checkIn';
-    this.focus('#name');
+    this.filteredHosts = [...this.allowedHosts];
+    this.focus('#visitorName');
   },
 
   focus(id) {
     setTimeout(() => {
       const firstInput = document.querySelector(id);
-      if (firstInput) {
-        firstInput.focus();
-      }
+      if (firstInput) firstInput.focus();
     }, 100);
   },
 
-  findHost() {
-    this.page = 'findHost';
-    this.focus('#host');
+  // NUEVO: filtrar anfitriones
+  filterHosts() {
+    const q = (this.hostSearch || '').trim().toLowerCase();
+    if (!q) {
+      this.filteredHosts = [...this.allowedHosts];
+      return;
+    }
+    this.filteredHosts = this.allowedHosts.filter(h => h.toLowerCase().includes(q));
   },
 
-  register() {
-    this.page = 'registered';
-    const msg = hostMessage
-      .replace('$name', this.name.trim())
-      .replace('$email', this.email.trim());
-    if (!this.currentHost) {
-      return;
-    }
+  // NUEVO: seleccionar anfitrión
+  pickHost(host) {
+    this.hostSearch = host;
+    this.filteredHosts = [];
+    this.showHostSuggestions = false;
+  },
 
-    const email = this.currentHost.emails[0];
-    const token = this.getToken();
-
-    if (!token) {
-      return;
-    }
-    sendMessage(token, email, msg, this.photo)
-      .catch(e => {
-        console.warn(e);
-        alert('We were not able to send a message to the host at this time.');
-      });
-   },
-
-  // NUEVO: Enviar registro al hook de Webex Connect
+  // NUEVO: envío al hook Webex Connect
   async confirmRegisterAndNotify() {
     if (!this.name.trim()) {
       alert('Ingresa tu nombre completo.');
@@ -146,7 +141,7 @@ const dataModel = {
 
     const payload = {
       nombreCompleto: this.name.trim(),
-      empresa: this.email.trim(), // en tu formulario este campo representa empresa
+      empresa: this.email.trim(),
       aQuienVisita: this.hostSearch.trim(),
       motivoVisita: this.visitReason || ''
     };
@@ -158,15 +153,36 @@ const dataModel = {
         body: JSON.stringify(payload)
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
       this.page = 'registered';
     } catch (error) {
       console.error('Error al enviar hook:', error);
       alert('No se pudo notificar al anfitrión. Intenta de nuevo.');
     }
+  },
+
+  findHost() {
+    this.page = 'findHost';
+    this.focus('#host');
+  },
+
+  register() {
+    this.page = 'registered';
+    const msg = hostMessage
+      .replace('$name', this.name.trim())
+      .replace('$email', this.email.trim());
+
+    if (!this.currentHost) return;
+
+    const email = this.currentHost.emails[0];
+    const token = this.getToken();
+    if (!token) return;
+
+    sendMessage(token, email, msg, this.photo).catch(e => {
+      console.warn(e);
+      alert('We were not able to send a message to the host at this time.');
+    });
   },
 
   selectHost(host) {
@@ -182,60 +198,31 @@ const dataModel = {
   },
 
   next() {
-    // home > checkIn > findHost > photo > confim > registered
     const { page } = this;
 
-    if (page === 'home') {
-      this.checkIn();
-    }
-    else if (page === 'checkIn') {
-      this.findHost();
-    }
-    else if (page === 'findHost') {
-      this.confirmHost();
-    }
-    else if (page === 'confirmHost') {
-      this.showPhotoPage();
-    }
-    else if (page === 'photo') {
-      this.showConfirmation();
-    }
-    else if (page === 'confirm') {
-      this.register();
-    }
-    else if (page === 'checkOut') {
-      this.page = 'checkOutResult';
-    }
+    if (page === 'home') this.checkIn();
+    else if (page === 'checkIn') this.findHost();
+    else if (page === 'findHost') this.confirmHost();
+    else if (page === 'confirmHost') this.showPhotoPage();
+    else if (page === 'photo') this.showConfirmation();
+    else if (page === 'confirm') this.register();
+    else if (page === 'checkOut') this.page = 'checkOutResult';
     else if (page === 'taxi') {
       this.taxiNumber = Math.ceil(Math.random() * 10000);
       this.page = 'taxiConfirmed';
-    }
-
-    else {
+    } else {
       console.error('unknown next page');
     }
   },
 
   back() {
     const { page } = this;
-    if (page === 'checkIn') {
-      this.home();
-    }
-    else if (page === 'findHost') {
-      this.checkIn();
-    }
-    else if (page === 'confirmHost') {
-      this.findHost();
-    }
-    else if (page === 'photo') {
-      this.confirmHost();
-    }
-    else if (page === 'confirm') {
-      this.showPhotoPage();
-    }
-    else {
-      console.error('unknown previous page');
-    }
+    if (page === 'checkIn') this.home();
+    else if (page === 'findHost') this.checkIn();
+    else if (page === 'confirmHost') this.findHost();
+    else if (page === 'photo') this.confirmHost();
+    else if (page === 'confirm') this.showPhotoPage();
+    else console.error('unknown previous page');
   },
 
   showConfirmation() {
@@ -253,25 +240,24 @@ const dataModel = {
       if (navigator.mediaDevices.getUserMedia) {
         this.videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
         const video = document.querySelector('.webcam');
-        video.srcObject = this.videoStream;
+        if (video) video.srcObject = this.videoStream;
       }
-    }
-    catch(e) {
+    } catch (e) {
       console.error('not able to get video', e);
     }
   },
 
   stopCamera() {
     if (this.videoStream) {
-      this.videoStream.getTracks().forEach(track => {
-        track.stop();
-      });
+      this.videoStream.getTracks().forEach(track => track.stop());
     }
   },
 
   takePhotoCountdown() {
     this.photo = null;
-    document.querySelector('.photo-flash').classList.remove('blink');
+    const flash = document.querySelector('.photo-flash');
+    if (flash) flash.classList.remove('blink');
+
     clearInterval(this.photoTimer);
     this.photoTime = 3;
     this.photoTimer = setInterval(() => {
@@ -284,26 +270,29 @@ const dataModel = {
   },
 
   takePhoto() {
-    if (this.page !== 'photo') {
-      return;
-    }
+    if (this.page !== 'photo') return;
 
-    document.querySelector('#shutter-sound').play();
-    document.querySelector('.photo-flash').classList.add('blink');
+    const shutter = document.querySelector('#shutter-sound');
+    if (shutter) shutter.play();
+
+    const flash = document.querySelector('.photo-flash');
+    if (flash) flash.classList.add('blink');
+
+    const canvas = document.querySelector('.photo');
+    const video = document.querySelector('.webcam');
+    if (!canvas || !video) return;
 
     const w = 600;
     const h = 337;
-    const canvas = document.querySelector('.photo');
     canvas.setAttribute('width', w);
     canvas.setAttribute('height', h);
 
-    const video = document.querySelector('.webcam');
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0, 600, 337);
+    ctx.drawImage(video, 0, 0, w, h);
 
     const format = 'jpeg';
-    this.photo = canvas.toBlob(photo => {
-      this.photo = new File([photo], this.name + '.' + format, { type: "image/" + format, });
+    canvas.toBlob(photo => {
+      this.photo = new File([photo], this.name + '.' + format, { type: 'image/' + format });
     }, 'image/' + format);
   },
 
@@ -315,10 +304,9 @@ const dataModel = {
       this.searchStatus = 'Searching...';
       searchPerson(word, token, list => {
         this.foundHosts = list;
-        this.searchStatus= 'Found: ' + list.length;
+        this.searchStatus = 'Found: ' + list.length;
       });
-    }
-    else {
+    } else {
       this.foundHosts = [];
       this.searchStatus = '';
     }
@@ -347,8 +335,6 @@ const dataModel = {
 
   photoSrc() {
     if (!this.photo) return;
-    const url = window.URL.createObjectURL(this.photo);
-    console.log('created', url);
-    return url;
+    return window.URL.createObjectURL(this.photo);
   }
 };
