@@ -1,0 +1,430 @@
+/* ==========================================================================
+   CISCO VISITOR KIOSK - MODERN HIGH-TECH THEME (ROOMOS OPTIMIZED)
+   ========================================================================== */
+
+:root {
+  --main-accent: #00f0ff;          /* Cyan Eléctrico */
+  --accent-green: #10b981;         /* Verde Check In */
+  --accent-blue: #38bdf8;          /* Azul Secundario */
+  --bg-gradient: linear-gradient(135deg, #07111e 0%, #0c1c2e 50%, #0f2742 100%);
+  --card-bg: rgba(17, 30, 49, 0.85);
+  --card-border: rgba(56, 189, 248, 0.28);
+  --text-white: #ffffff;
+  --text-muted: #94a3b8;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 'Karla', Helvetica, Arial, sans-serif;
+}
+
+@font-face {
+  font-family: 'Karla';
+  src: url('../assets/Karla.ttf');
+}
+
+/* Evita parpadeo durante la carga de Alpine.js */
+[x-cloak] { display: none !important; }
+
+* {
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--bg-gradient);
+  color: var(--text-white);
+  padding: 1.2em;
+  font-size: 38px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+/* HEADER */
+header {
+  position: absolute;
+  top: 1.2em;
+  left: 1.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(100% - 3em);
+  font-size: 0.7em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logo {
+  width: 5.5em;
+  height: 2.2em;
+  background: center/contain url('../assets/logo.png') no-repeat, center/contain url('../assets/cisco-logo.png') no-repeat;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 8px rgba(0, 210, 255, 0.35));
+}
+
+.time-date {
+  text-align: right;
+}
+
+.time {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: var(--main-accent);
+  letter-spacing: 1px;
+}
+
+.date {
+  font-size: 0.8em;
+  color: var(--text-muted);
+}
+
+/* MAIN CONTAINERS */
+main {
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+  margin: 0 0 0.2em 0;
+  font-size: 1.6em;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.2em;
+  color: var(--text-white);
+}
+
+main > div {
+  font-size: 0.75em;
+  color: var(--text-muted);
+  margin-bottom: 0.8em;
+  line-height: 1.4;
+}
+
+/* FORMULARIOS E INPUTS */
+form {
+  margin: 0.8em 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  align-items: center;
+  width: 100%;
+}
+
+input {
+  width: 480px;
+  background: rgba(7, 17, 30, 0.75);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.7em;
+  padding: 0.8em 1.2em;
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+input:focus {
+  border-color: var(--main-accent);
+  background: rgba(7, 17, 30, 0.95);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3), inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+input::placeholder {
+  color: #64748b;
+}
+
+/* BOTONES */
+button {
+  font-family: inherit;
+  font-size: 0.75em;
+  font-weight: 700;
+  padding: 0.85em 1.8em;
+  outline: none;
+  margin: 0 0.4em;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+/* BOTONES DENTRO DE .ACTION */
+.action {
+  margin-top: 1em;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2em;
+}
+
+.action button {
+  min-width: 290px;
+  border-radius: 20px;
+}
+
+/* BOTÓN PRIMARIO (CHECK IN / OK) */
+button.primary {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+}
+
+button.primary:hover, button.primary:active {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(16, 185, 129, 0.55);
+}
+
+/* BOTÓN SECUNDARIO (LLAMAR RECEPCIÓN / BACK) */
+button.secondary {
+  background: var(--card-bg);
+  color: var(--text-white);
+  border: 2px solid var(--card-border);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+button.secondary:hover, button.secondary:active {
+  background: rgba(30, 58, 95, 0.95);
+  border-color: var(--main-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(0, 240, 255, 0.3);
+}
+
+/* ==========================================================================
+   SOLUCIÓN AL ÍCONO REPETIDO: Se elimina el background-image del botón call
+   ========================================================================== */
+button.call {
+  background-image: none !important; /* QUITA EL ÍCONO REPETIDO */
+  background-repeat: no-repeat !important;
+}
+
+button.call::before, button.call::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* BOTÓN TIPO ENLACE */
+button.link {
+  border: 0;
+  background-color: transparent;
+  color: var(--accent-blue);
+  font-size: 0.65em;
+  text-decoration: underline;
+  min-width: auto;
+  box-shadow: none;
+  padding: 0.5em;
+}
+
+:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* BÚSQUEDA DE ANFITRIÓN (FIND HOST) */
+.found-hosts {
+  width: 480px;
+  max-height: 280px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.65em;
+  gap: 0.5em;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--card-border);
+  padding: 0.6em;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.host {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  cursor: pointer;
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.6em 0.8em;
+  transition: all 0.2s;
+}
+
+.host:hover, .host:active {
+  border-color: var(--main-accent);
+  background: rgba(30, 58, 95, 0.9);
+  transform: scale(1.02);
+}
+
+.selected-host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2em;
+  background: var(--card-bg);
+  border: 2px solid var(--card-border);
+  border-radius: 20px;
+  padding: 0.8em 1.5em;
+  margin: 0.5em auto;
+}
+
+.help {
+  font-size: 0.6em;
+  color: var(--accent-blue);
+  font-style: italic;
+}
+
+.name {
+  text-align: left;
+  font-weight: 700;
+}
+
+.avatar {
+  background-color: #1e293b;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  height: 3.5em;
+  width: 3.5em;
+  border: 2px solid var(--main-accent);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+}
+
+/* FOTO Y WEBCAM */
+.box {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid var(--card-border);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  margin: 0.4em auto;
+}
+
+.webcam, .photo {
+  width: 580px;
+  height: 326px;
+  background-color: #000000;
+  border: 0;
+  object-fit: cover;
+  display: block;
+}
+
+.countdown, .photo-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 130px;
+  font-weight: 900;
+  color: var(--main-accent);
+  text-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
+}
+
+.blink {
+  animation-name: flash;
+  animation-duration: 0.3s;
+}
+
+@keyframes flash {
+  0% { background-color: #fff0; }
+  50% { background-color: #ffff; }
+  100% { background-color: #fff0; }
+}
+
+/* TARJETA DE CONFIRMACIÓN (BUSINESS CARD) */
+.business-card {
+  position: relative;
+  padding: 1.2em;
+  padding-left: 7.5em;
+  border-radius: 20px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+  font-size: 0.6em;
+  min-height: 8.5em;
+  margin-bottom: 1.2em;
+  background: var(--card-bg);
+  border: 2px solid var(--card-border);
+  color: var(--text-white);
+  backdrop-filter: blur(12px);
+}
+
+.business-card .photo {
+  position: absolute;
+  top: 1.2em;
+  left: 1.2em;
+  width: 4.8em;
+  height: 4.8em;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #1e293b;
+  border: 2.5px solid var(--main-accent);
+}
+
+.business-card .name {
+  font-size: 1.8em;
+  font-weight: 700;
+  margin-bottom: 0.2em;
+  color: #ffffff;
+}
+
+.business-card .email {
+  font-size: 0.85em;
+  text-align: left;
+  color: var(--text-muted);
+}
+
+.business-card .visiting {
+  text-align: left;
+  margin-top: 1.2em;
+  font-size: 0.9em;
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.business-card .visiting span {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* RESPONSIVE FULLSCREEN */
+@media (max-height: 1000px) {
+  body {
+    font-size: 30px;
+  }
+}

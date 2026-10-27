@@ -80,7 +80,7 @@ const dataModel = {
   },
 
   call() {
-    const defaultNumber = 'vdiazrod@cisco.com';
+    const defaultNumber = 'marco_conde@connext.com.mx';
     const number = new URLSearchParams(location.search).get('reception') || defaultNumber;
     location.href = `sip:${number}`;
   },
