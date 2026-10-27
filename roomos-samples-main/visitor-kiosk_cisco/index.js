@@ -11,7 +11,10 @@ const ALLOWED_HOSTS = [
   "Veronica Diaz",
   "Jacob Toala",
   "Arturo Prieto",
-  "Marco Conde"
+  "Jesus Gutierrez",
+  "Jacob Toala",
+  "Luz Morfin",
+  "Andres Corral"
 ];
 
 // Reemplaza con tu endpoint real de Webex Connect
