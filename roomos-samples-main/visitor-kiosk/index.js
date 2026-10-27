@@ -6,12 +6,24 @@ Details:
 * Email: **$email**
 `;
 
+// NUEVO: Hosts permitidos para el campo "¿A quién visitas?"
+const ALLOWED_HOSTS = [
+  "Veronica Diaz",
+  "Jacob Toala",
+  "Arturo Prieto",
+  "Marco Conde"
+];
+
+// NUEVO: URL del hook de Webex Connect (reemplaza con tu endpoint real)
+const WEBEX_CONNECT_HOOK_URL = "https://hooks.us.webexconnect.io/events/9GFXGOWCKQ";
+
 const dataModel = {
 // home > checkIn > findHost > confirmHost > photo > confim > registered | checkOut > checkOutResult
   page: 'home',
   name: '',
   email: '',
   hostSearch: '',
+  visitReason: 'Reunión Programada', // NUEVO
   currentHost: null,
   date: 'October 6, 2022',
   time: '10:35 AM',
@@ -39,11 +51,6 @@ const dataModel = {
         "beforeend",
         `<link rel="stylesheet" href="styles/theme-cisco.css" />`);
     }
-    // quick jump to photo page for dev:
-    // this.showPhotoPage();
-    // this.name = 'Tore Bjolseth';
-    // this.email = 'tbjolset@cisco.com';
-    // this.currentHost = { displayName: 'Anna Gjerlaug' };
   },
 
   home() {
@@ -54,6 +61,8 @@ const dataModel = {
   reset() {
     this.name = '';
     this.email = '';
+    this.hostSearch = ''; // NUEVO
+    this.visitReason = 'Reunión Programada'; // NUEVO
     this.currentHost = null;
     this.foundHosts = [];
     this.searchStatus = '';
@@ -88,14 +97,12 @@ const dataModel = {
   },
 
   focus(id) {
-    // need to wait for DOM to be updated
     setTimeout(() => {
       const firstInput = document.querySelector(id);
       if (firstInput) {
         firstInput.focus();
       }
     }, 100);
-
   },
 
   findHost() {
@@ -125,6 +132,43 @@ const dataModel = {
       });
    },
 
+  // NUEVO: Enviar registro al hook de Webex Connect
+  async confirmRegisterAndNotify() {
+    if (!this.name.trim()) {
+      alert('Ingresa tu nombre completo.');
+      return;
+    }
+
+    if (!ALLOWED_HOSTS.includes(this.hostSearch.trim())) {
+      alert('Selecciona un anfitrión válido de la lista.');
+      return;
+    }
+
+    const payload = {
+      nombreCompleto: this.name.trim(),
+      empresa: this.email.trim(), // en tu formulario este campo representa empresa
+      aQuienVisita: this.hostSearch.trim(),
+      motivoVisita: this.visitReason || ''
+    };
+
+    try {
+      const response = await fetch(WEBEX_CONNECT_HOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      this.page = 'registered';
+    } catch (error) {
+      console.error('Error al enviar hook:', error);
+      alert('No se pudo notificar al anfitrión. Intenta de nuevo.');
+    }
+  },
+
   selectHost(host) {
     this.currentHost = host;
     this.hostSearch = '';
@@ -134,7 +178,6 @@ const dataModel = {
   },
 
   getToken() {
-    // TODO perhaps use localStorage intead?
     return new URLSearchParams(location.search).get('token');
   },
 
@@ -174,7 +217,6 @@ const dataModel = {
   },
 
   back() {
-    // home > checkIn > findHost > photo > confim > registered | checkOut
     const { page } = this;
     if (page === 'checkIn') {
       this.home();
@@ -194,7 +236,6 @@ const dataModel = {
     else {
       console.error('unknown previous page');
     }
-
   },
 
   showConfirmation() {
@@ -243,7 +284,6 @@ const dataModel = {
   },
 
   takePhoto() {
-    // user has navigated away, skip
     if (this.page !== 'photo') {
       return;
     }
@@ -260,20 +300,15 @@ const dataModel = {
     const video = document.querySelector('.webcam');
     const ctx = canvas.getContext('2d');
     ctx.drawImage(video, 0, 0, 600, 337);
-    // this.photo = canvas.toDataURL('image/jpeg');
 
     const format = 'jpeg';
     this.photo = canvas.toBlob(photo => {
       this.photo = new File([photo], this.name + '.' + format, { type: "image/" + format, });
     }, 'image/' + format);
-
-    // to compress for jpeg for webex cards, look at:
-    // https://github.com/jpeg-js/jpeg-js/blob/master/lib/encoder.js
   },
 
   searchHost() {
     const word = this.hostSearch.trim();
-
     const token = this.getToken();
 
     if (word.length > 2) {
@@ -310,7 +345,6 @@ const dataModel = {
     this.time = now.format('HH:MM');
   },
 
-  // create img data url from blob
   photoSrc() {
     if (!this.photo) return;
     const url = window.URL.createObjectURL(this.photo);
@@ -318,5 +352,3 @@ const dataModel = {
     return url;
   }
 };
-
-
