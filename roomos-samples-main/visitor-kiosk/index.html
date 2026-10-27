@@ -7,7 +7,7 @@
 
   <style>
     /* ==========================================================================
-       VARIABLES DE COLOR Y ESTILO CORPORATIVO PISA / CISCO
+       1. VARIABLES DE COLOR Y ESTILO CORPORATIVO PISA / CISCO
        ========================================================================== */
     :root {
       --primary-color: #00f0ff;          /* Cyan Eléctrico */
@@ -286,11 +286,6 @@
       transition: all 0.2s;
     }
 
-    .card-badge.error {
-      background: rgba(239, 68, 68, 0.2);
-      color: var(--accent-red);
-    }
-
     .action-card.checkin .card-badge {
       color: var(--accent-green);
     }
@@ -475,7 +470,7 @@
 <body>
 
   <!-- ==========================================================================
-       CABECERA: LOGOTIPO Y TÍTULO
+       CABECERA
        ========================================================================== -->
   <header>
     <div class="brand">
@@ -513,7 +508,7 @@
       </div>
 
       <div class="action-grid">
-        <!-- BOTÓN 1: LLAMAR RECEPCIÓN (Invoca llamada RoomOS postMessage) -->
+        <!-- BOTÓN 1: LLAMAR RECEPCIÓN -->
         <div class="action-card" id="btnCallCard" onclick="call(event)">
           <div class="card-icon" id="callIcon">📞</div>
           <h3 id="txtCallTitle">Llamar Recepción</h3>
@@ -597,7 +592,7 @@
   </footer>
 
   <!-- ==========================================================================
-       DRIVER ROOMOS PURO (SIN WEBSOCKETS ROTOS - 100% POSTMESSAGE)
+       DRIVER EMBEBIDO NATIVO CISCO ROOMOS JSON-RPC 2.0 (ZERO WEBSOCKETS)
        ========================================================================== -->
   <script>
     const APP_CONFIG = {
@@ -609,7 +604,7 @@
 
     let countdownTimer = null;
 
-    // Reloj
+    // Reloj en tiempo real
     function updateClock() {
       const now = new Date();
       const hours = String(now.getHours()).padStart(2, '0');
@@ -630,18 +625,81 @@
       if (diag) diag.innerText = msg;
     }
 
-    // Escuchar respuestas y eventos de RoomOS
-    window.addEventListener('message', (event) => {
-      if (!event.data) return;
-      console.log('Mensaje recibido de RoomOS:', event.data);
+    // ========================================================================
+    // CLIENTE NATIVO xAPI PARA CISCO WEBENGINE
+    // ========================================================================
+    class CiscoWebEngineBridge {
+      constructor() {
+        this.reqId = 1;
+        this.callbacks = new Map();
+        this.target = (window.parent && window.parent !== window) ? window.parent : window;
 
-      if (event.data.event === 'CallDisconnect' || (event.data.data && event.data.data.CallDisconnect)) {
-        showView('viewHome');
+        // Escuchar respuestas de RoomOS
+        window.addEventListener('message', (event) => {
+          if (!event.data) return;
+          const data = event.data;
+          console.log('[RoomOS Message]', data);
+
+          // Si RoomOS notifica fin de llamada
+          if (data.event === 'CallDisconnect' || (data.data && data.data.CallDisconnect)) {
+            showView('viewHome');
+          }
+
+          // Si es respuesta JSON-RPC a una petición nuestra
+          if (data.id && this.callbacks.has(data.id)) {
+            const { resolve, reject } = this.callbacks.get(data.id);
+            this.callbacks.delete(data.id);
+            if (data.error) {
+              setDiag('Error RoomOS: ' + (data.error.message || JSON.stringify(data.error)));
+              reject(data.error);
+            } else {
+              setDiag('✅ RoomOS ejecutó la llamada');
+              resolve(data.result);
+            }
+          }
+        });
       }
-    });
+
+      dial(number) {
+        return new Promise((resolve, reject) => {
+          const id = 'dial-' + (this.reqId++);
+          this.callbacks.set(id, { resolve, reject });
+
+          // Estructura oficial JSON-RPC 2.0 que procesa RoomOS WebEngine
+          const rpcMsg = {
+            jsonrpc: '2.0',
+            method: 'xCommand/Dial',
+            params: { Number: number },
+            id: id
+          };
+
+          // Estructura alternativa xAPI
+          const xapiMsg = {
+            type: 'xapi:command',
+            command: 'Dial',
+            arguments: { Number: number },
+            id: id
+          };
+
+          console.log('[RoomOS Tx]', rpcMsg);
+          this.target.postMessage(rpcMsg, '*');
+          this.target.postMessage(xapiMsg, '*');
+
+          // Si después de 5 segundos no hay error, asume enviado
+          setTimeout(() => {
+            if (this.callbacks.has(id)) {
+              this.callbacks.delete(id);
+              resolve({ status: 'sent' });
+            }
+          }, 5000);
+        });
+      }
+    }
+
+    const ciscoBridge = new CiscoWebEngineBridge();
 
     // ========================================================================
-    // FUNCIÓN CALL(): NATIVA DIRECTA A ROOMOS (ZERO WEBSOCKETS)
+    // FUNCIÓN CALL(): EJECUTADA DIRECTAMENTE AL TOCAR LA TARJETA
     // ========================================================================
     window.call = function(event) {
       if (event) {
@@ -659,44 +717,18 @@
 
       setDiag('Llamando a ' + APP_CONFIG.RECEPTION_SIP_URI + '...');
 
-      // 1. Si window.xapi o parent.xapi está inyectado directamente:
+      // 1. Si window.xapi o parent.xapi está inyectado directamente
       const activeXapi = window.xapi || (window.parent && window.parent.xapi);
       if (activeXapi && typeof activeXapi.command === 'function') {
-        console.log('Ejecutando activeXapi.command(Dial)...');
+        console.log('Invocando activeXapi.command(Dial)...');
         activeXapi.command('Dial', { Number: APP_CONFIG.RECEPTION_SIP_URI })
           .then(() => setDiag('✅ Llamada iniciada en RoomOS'))
           .catch(err => setDiag('Error xAPI: ' + (err.message || err)));
-      }
-
-      // 2. Enviar el comando Dial por el canal postMessage nativo de Cisco WebEngine:
-      try {
-        const dialId = 'dial-' + Date.now();
-        
-        // Estructura JSON-RPC oficial de RoomOS
-        const rpcPayload = {
-          jsonrpc: '2.0',
-          method: 'xCommand/Dial',
-          params: { Number: APP_CONFIG.RECEPTION_SIP_URI },
-          id: dialId
-        };
-
-        // Estructura de comandos Cisco xAPI
-        const xapiPayload = {
-          type: 'xapi:command',
-          command: 'Dial',
-          arguments: { Number: APP_CONFIG.RECEPTION_SIP_URI }
-        };
-
-        if (window.parent && window.parent !== window) {
-          window.parent.postMessage(rpcPayload, '*');
-          window.parent.postMessage(xapiPayload, '*');
-        }
-        window.postMessage(rpcPayload, '*');
-        window.postMessage(xapiPayload, '*');
-
-        setDiag('Comando Dial transmitido a RoomOS');
-      } catch(e) {
-        console.error('Error postMessage:', e);
+      } else {
+        // 2. Transmisión nativa por el puente JSON-RPC postMessage
+        ciscoBridge.dial(APP_CONFIG.RECEPTION_SIP_URI)
+          .then(() => setDiag('✅ Comando Dial transmitido a RoomOS'))
+          .catch(err => setDiag('Fallo RoomOS: ' + (err.message || err)));
       }
 
       setTimeout(resetCallButtonState, 6000);
