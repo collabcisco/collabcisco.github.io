@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Widget Examples</title>
+  <style>
+    body, html {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+    body {
+      background-size: 100% 100%;
+      font-family: arial;
+    }
+    main {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1em;
+    }
+  </style>
+  </head>
+<body>
+  <main>
+    <h2>Web Widget Examples</h2>
+    <a href="?img=instructions.png">Instructions</a>
+    <a href="?img=news.png">News</a>
+    <a href="?img=report-issue.png">Report Issue</a>
+    <a href="?img=room-reminder.png">Room Reminder</a>
+    <a href="?img=stock.png">Stock ticker</a>
+    <a href="?img=weather.png">Weather</a>
+    <a href="?img=build-status.png">Build</a>
+  </main>
+</body>
+
+<script>
+function setImage(url) {
+  document.body.style.backgroundImage = `url(${url})`;
+  console.log('set img', url);
+}
+const img = new URLSearchParams(location.search).get('img');
+if (img) {
+  document.querySelector('main').style.display = 'none';
+  setImage(img);
+}
+</script>
+</html>

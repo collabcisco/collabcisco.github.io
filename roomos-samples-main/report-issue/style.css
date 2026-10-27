@@ -1,0 +1,348 @@
+:root {
+  --border-radius: 30px;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('./assets/AvenirLTStd-Book.otf');
+}
+
+@font-face {
+  font-family: 'AvenirBold';
+  src: url('./assets/AvenirLTStd-Black.otf');
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* avoids alpine.js load blinking */
+[x-cloak] { display: none !important; }
+
+html, body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 25px;
+}
+
+body {
+  font-family: arial;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Avenir;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+section {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  left: 50%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-size: 350px auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: none;
+}
+
+.cisco .logo {
+  background-image: url('./assets/cisco.png');
+  display: flex;
+}
+
+h1 {
+  margin-bottom: 1em;
+  font-size: 1.2em;
+  font-family: AvenirBold;
+}
+
+button {
+  cursor: pointer;
+  font-size: inherit;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+button {
+  border: 1px solid black;
+  border-radius: var(--border-radius);
+  padding: 0.5em 1em;
+  background: transparent;
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-bottom: 2em;
+}
+
+textarea, input {
+  font-size: inherit;
+  padding: 0.5em;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 35vw;
+  margin-bottom: 1em;
+}
+
+textarea:focus, input:focus {
+  background-color: #eee;
+}
+
+:focus {
+  outline: 0;
+}
+
+button, textarea, input {
+  font-family: inherit;
+}
+
+textarea {
+  height: 7em;
+}
+
+button.submit {
+  background-color: black;
+  color: white;
+  position: relative;
+}
+
+button.submit.busy {
+  padding-left: 50px;
+}
+
+button.submit.busy::after {
+  content: "";
+  position: absolute;
+  background-image: url('./assets/loader.png');
+  background-size: contain;
+  top: 10px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+button.submit:hover {
+  background-color: #222;
+}
+
+button.submit:active {
+  background-color: #333;
+}
+
+button.icon {
+  background-position: 25px center;
+  background-repeat: no-repeat;
+  padding-left: 70px;
+  width: 370px;
+}
+
+button.room {
+  background-image: url('./assets/room.png');
+}
+
+button.other {
+  background-image: url('./assets/other.png');
+}
+
+button.audio {
+  background-position: 20px center;
+  background-image: url('./assets/audio.png');
+}
+
+button:hover {
+  background-color: #eee;
+}
+
+button:active {
+  background-color: #ddd;
+}
+
+:disabled {
+  opacity: 0.5;
+}
+
+.error {
+  color: #a22323;
+}
+
+footer {
+  position: absolute;
+  bottom: 2em;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-dialog {
+  position: absolute;
+  top: calc(50% - 200px);
+  left: calc(50% - 200px);
+  width: 400px;
+  height: 400px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #999;
+  border-radius: 2em;
+  box-shadow: 5px 5px 5px #0003;
+}
+
+#qr-code {
+  margin: 1em 0;
+}
+
+.qr-logo {
+  width: 2em;
+  height: 2em;
+}
+
+a:hover, a:active {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.done {
+  height: 30px;
+  background-image: url('./assets/done.png');
+  background-position: left center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 10px 0;
+}
+
+.name:focus {
+  /* hack because roomos doesnt properly scroll the viewport at the moment,
+  so input field is hidden behind keyboard */
+  margin-bottom: 7em;
+}
+
+.fadeup {
+  animation: 0.3s fadeup forwards;
+}
+
+.fadein {
+  animation-name: fadein;
+  animation-duration: 0.4s;
+  animation-delay: 0.2s;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeup {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* modifications for mobile / slim displays */
+@media (max-width: 600px) {
+  body {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  main {
+    height: unset;
+  }
+  .logo {
+    background-size: contain;
+    height: 100px;
+    background-position: center center;
+    width: 100%;
+  }
+  input, textarea {
+    width: 100%;
+  }
+  .logo, section {
+    position: relative;
+    width: 100%;
+    left: unset;
+  }
+  section {
+    height: unset;
+    padding: 1em;
+  }
+  footer {
+    display: none;
+  }
+}
+
+
+body.cisco2 {
+  background-image: url('assets/cisco2.jpg');
+  background-size: cover;
+  background-position: center center;
+}
+
+.cisco2 section {
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.cisco2 button {
+  background-image: none;
+  background-color: #0009;
+  color: white;
+}
+
+.cisco2 h1 {
+  color: white;
+  text-shadow: 1px 1px black;
+}
+
+.cisco2 footer {
+  color: white;
+}
+
+.cisco2 textarea, .cisco2 input {
+  background-color: #0009;
+  color: white;
+}
