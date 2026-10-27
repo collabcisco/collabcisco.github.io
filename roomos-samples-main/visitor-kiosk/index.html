@@ -2,14 +2,19 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Kiosco de Recepción Digital - Cisco RoomOS</title>
 
-  <!-- SCRIPTS DE TU PROYECTO (Donde reside tu lógica de index.js y webex.js) -->
+  <!-- SCRIPTS DE TU PROYECTO (LÓGICA FUNCIONAL DE ALPINES.JS) -->
   <script src="date.format.js"></script>
   <script src="webex.js"></script>
   <script src="index.js" defer></script>
   <script src="alpine.js" defer></script>
+
+  <title>Kiosco de Recepción Digital - Cisco RoomOS</title>
+
+  <link rel="icon" href="./assets/logo.png">
+  <link href="styles/style.css" rel="stylesheet">
 
   <style>
     /* ==========================================================================
@@ -30,19 +35,28 @@
       --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
+    [x-cloak] { display: none !important; }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       user-select: none;
       -webkit-user-select: none;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
       touch-action: manipulation;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
     }
 
     body {
       font-family: var(--font-family);
-      background: var(--bg-gradient);
-      color: var(--text-white);
+      background: var(--bg-gradient) !important;
+      color: var(--text-white) !important;
       min-height: 100vh;
       overflow: hidden;
       display: flex;
@@ -59,6 +73,7 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       background: rgba(7, 17, 30, 0.5);
       backdrop-filter: blur(12px);
+      z-index: 10;
     }
 
     .brand {
@@ -140,17 +155,7 @@
       max-width: 1400px;
       margin: 0 auto;
       width: 100%;
-    }
-
-    /* VISTAS */
-    .view {
-      display: none;
-      width: 100%;
       animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .view.active {
-      display: block;
     }
 
     @keyframes fadeIn {
@@ -187,24 +192,29 @@
       margin: 0 auto;
     }
 
-    .action-card {
-      background: var(--card-bg);
-      border: 2px solid var(--card-border);
-      border-radius: 24px;
-      padding: 45px 35px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    /* TARJETAS BOTÓN (BUTTON CON ESTILO DE TARJETA) */
+    button.action-card {
+      background: var(--card-bg) !important;
+      border: 2px solid var(--card-border) !important;
+      border-radius: 24px !important;
+      padding: 45px 35px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+      cursor: pointer !important;
+      transition: all 0.25s ease !important;
+      position: relative !important;
+      overflow: hidden !important;
+      backdrop-filter: blur(12px) !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+      outline: none !important;
+      font-family: inherit !important;
+      width: 100% !important;
+      color: white !important;
     }
 
-    .action-card::before {
+    button.action-card::before {
       content: '';
       position: absolute;
       top: 0;
@@ -216,28 +226,15 @@
       transition: opacity 0.25s ease;
     }
 
-    .action-card:active, .action-card:hover {
-      background: var(--card-hover);
-      border-color: var(--primary-color);
-      transform: translateY(-4px);
-      box-shadow: 0 15px 40px rgba(0, 240, 255, 0.25);
-    }
-
-    .action-card:active::before, .action-card:hover::before {
-      opacity: 1;
-    }
-
-    /* ESTADO MARCANDO */
-    .action-card.calling {
+    button.action-card:active, button.action-card:hover {
+      background: var(--card-hover) !important;
       border-color: var(--primary-color) !important;
-      background: rgba(30, 58, 95, 0.95) !important;
-      animation: pulseGlow 1.5s infinite;
+      transform: translateY(-4px) !important;
+      box-shadow: 0 15px 40px rgba(0, 240, 255, 0.25) !important;
     }
 
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
-      50% { box-shadow: 0 0 35px rgba(0, 240, 255, 0.85); }
-      100% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
+    button.action-card:active::before, button.action-card:hover::before {
+      opacity: 1;
     }
 
     .card-icon {
@@ -254,29 +251,29 @@
       color: var(--primary-color);
     }
 
-    .action-card.checkin .card-icon {
+    button.action-card.checkin .card-icon {
       background: rgba(16, 185, 129, 0.1);
       border-color: rgba(16, 185, 129, 0.3);
       color: var(--accent-green);
     }
 
-    .action-card.checkin::before {
+    button.action-card.checkin::before {
       background: var(--accent-green);
     }
 
-    .action-card.checkin:active, .action-card.checkin:hover {
-      border-color: var(--accent-green);
-      box-shadow: 0 15px 40px rgba(16, 185, 129, 0.25);
+    button.action-card.checkin:active, button.action-card.checkin:hover {
+      border-color: var(--accent-green) !important;
+      box-shadow: 0 15px 40px rgba(16, 185, 129, 0.25) !important;
     }
 
-    .action-card h3 {
+    button.action-card h3 {
       font-size: 30px;
       font-weight: 700;
       margin-bottom: 10px;
       color: var(--text-white);
     }
 
-    .action-card p {
+    button.action-card p {
       font-size: 16px;
       color: var(--text-muted);
       line-height: 1.4;
@@ -293,8 +290,21 @@
       transition: all 0.2s;
     }
 
-    .action-card.checkin .card-badge {
+    button.action-card.checkin .card-badge {
       color: var(--accent-green);
+    }
+
+    /* ==========================================================================
+       CORRECCIÓN DEL ÍCONO REPETIDO EN EL BOTÓN CALL
+       ========================================================================== */
+    button.call {
+      background-image: none !important; /* QUITA CUALQUIER ÍCONO DE FONDO REPETIDO */
+      background-repeat: no-repeat !important;
+    }
+
+    button.call::before, button.call::after {
+      display: none !important;
+      content: none !important;
     }
 
     /* VISTA FORMULARIO CHECK IN */
@@ -304,6 +314,7 @@
       border-radius: 24px;
       padding: 40px;
       max-width: 850px;
+      width: 100%;
       margin: 0 auto;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     }
@@ -332,6 +343,7 @@
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
+      outline: none;
     }
 
     .form-grid {
@@ -345,6 +357,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+      text-align: left;
     }
 
     .form-group label {
@@ -364,6 +377,7 @@
       color: white;
       outline: none;
       transition: border-color 0.2s;
+      width: 100%;
     }
 
     .form-group input:focus, .form-group select:focus {
@@ -387,6 +401,7 @@
       gap: 12px;
       box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
       transition: all 0.2s ease;
+      outline: none;
     }
 
     .btn-submit:active {
@@ -431,12 +446,6 @@
       margin-bottom: 25px;
     }
 
-    .countdown-bar {
-      font-size: 14px;
-      color: var(--accent-green);
-      font-weight: 600;
-    }
-
     /* FOOTER */
     footer {
       padding: 18px 50px;
@@ -465,13 +474,14 @@
     }
   </style>
 </head>
-<body>
+
+<body x-data="dataModel" x-cloak :class="theme">
 
   <!-- ==========================================================================
        CABECERA
        ========================================================================== -->
   <header>
-    <div class="brand" onclick="location.reload()">
+    <div class="brand" @click="location.reload()">
       <div class="brand-logo-container" id="logoContainer">
         <img src="assets/cisco-logo.png" 
              alt="Logo Institucional" 
@@ -482,227 +492,117 @@
       </div>
 
       <div class="brand-text">
-        <h1 id="txtCompanyName">PISA</h1>
-        <p id="txtCompanySubtitle">Lobby Principal • Recepción</p>
+        <h1>PISA</h1>
+        <p>Lobby Principal • Recepción</p>
       </div>
     </div>
 
     <div class="header-info">
-      <div class="clock" id="clock">--:--:--</div>
-      <div class="date" id="date">Cargando fecha...</div>
+      <div class="clock" x-text="time">--:--:--</div>
+      <div class="date" x-text="date">Cargando fecha...</div>
     </div>
   </header>
 
   <!-- ==========================================================================
-       CONTENEDOR DE PANTALLAS
+       1. PANTALLA PRINCIPAL (HOME)
        ========================================================================== -->
-  <main>
+  <main x-show="page === 'home'">
+    <div class="hero-text">
+      <h2>¡Bienvenido!</h2>
+      <p>Por favor selecciona una opción en la pantalla para comenzar</p>
+    </div>
 
-    <!-- 1. VISTA PRINCIPAL (HOME) -->
-    <section id="viewHome" class="view active">
-      <div class="hero-text">
-        <h2>¡Bienvenido!</h2>
-        <p>Por favor selecciona una opción en la pantalla para comenzar</p>
+    <div class="action-grid">
+      <!-- BOTÓN 1: LLAMAR RECEPCIÓN (Invoca directamente tu función call() de index.js) -->
+      <button type="button" @click="call()" class="action-card secondary call">
+        <div class="card-icon">📞</div>
+        <h3>Llamar Recepción</h3>
+        <p>Habla en video en vivo con nuestra recepcionista para asistencia inmediata</p>
+        <span class="card-badge">Videollamada en Directo</span>
+      </button>
+
+      <!-- BOTÓN 2: CHECK IN -->
+      <button type="button" @click="next()" class="action-card checkin">
+        <div class="card-icon">📋</div>
+        <h3>Check In</h3>
+        <p>Regístrate si tienes una cita previa o vienes a una reunión programada</p>
+        <span class="card-badge">Registro de Visitante</span>
+      </button>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       2. PANTALLA FORMULARIO CHECK IN
+       ========================================================================== -->
+  <main x-show="page === 'checkIn'">
+    <div class="form-container">
+      <div class="form-header">
+        <h3>Registro de Entrada (Check In)</h3>
+        <button type="button" class="btn-back" @click="home()">← Cancelar y Volver</button>
       </div>
 
-      <div class="action-grid">
-        <!-- BOTÓN 1: LLAMAR RECEPCIÓN (Invoca directamente tu función call() de index.js) -->
-        <div class="action-card" id="btnCallCard" onclick="triggerCall(event)">
-          <div class="card-icon" id="callIcon">📞</div>
-          <h3 id="txtCallTitle">Llamar Recepción</h3>
-          <p id="txtCallSubtitle">Habla en video en vivo con nuestra recepcionista para asistencia inmediata</p>
-          <span class="card-badge" id="txtCallBadge">Videollamada en Directo</span>
-        </div>
-
-        <!-- BOTÓN 2: CHECK IN -->
-        <div class="action-card checkin" onclick="showCheckInForm()">
-          <div class="card-icon">📋</div>
-          <h3>Check In</h3>
-          <p>Regístrate si tienes una cita previa o vienes a una reunión programada</p>
-          <span class="card-badge">Registro de Visitante</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2. VISTA FORMULARIO CHECK IN -->
-    <section id="viewForm" class="view">
-      <div class="form-container">
-        <div class="form-header">
-          <h3>Registro de Entrada (Check In)</h3>
-          <button class="btn-back" onclick="showView('viewHome')">← Cancelar y Volver</button>
-        </div>
-
-        <form id="checkInForm" onsubmit="submitCheckIn(event)">
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="visitorName">Tu Nombre Completo *</label>
-              <input type="text" id="visitorName" placeholder="Ej. Juan Pérez García" required autocomplete="off">
-            </div>
-
-            <div class="form-group">
-              <label for="visitorCompany">Empresa de Procedencia</label>
-              <input type="text" id="visitorCompany" placeholder="Ej. Proveedor / Particular" autocomplete="off">
-            </div>
-
-            <div class="form-group">
-              <label for="hostName">¿A quién visitas? (Anfitrión) *</label>
-              <input type="text" id="hostName" placeholder="Ej. Ing. Carlos Mendoza" required autocomplete="off">
-            </div>
-
-            <div class="form-group">
-              <label for="visitReason">Motivo de la Visita</label>
-              <select id="visitReason">
-                <option value="Reunión Programada">Reunión Programada</option>
-                <option value="Entrega de Paquetería">Entrega de Paquetería</option>
-                <option value="Entrevista de Trabajo">Entrevista de Trabajo</option>
-                <option value="Mantenimiento / Servicios">Mantenimiento / Servicios</option>
-                <option value="Otro">Otro Asunto</option>
-              </select>
-            </div>
+      <form @submit.prevent="next()">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="visitorName">Tu Nombre Completo *</label>
+            <input type="text" id="visitorName" x-model="name" placeholder="Ej. Juan Pérez García" required autocomplete="off">
           </div>
 
-          <button type="submit" class="btn-submit">
-            <span>✔</span> Confirmar Registro y Notificar
-          </button>
-        </form>
-      </div>
-    </section>
+          <div class="form-group">
+            <label for="visitorCompany">Empresa de Procedencia</label>
+            <input type="text" id="visitorCompany" x-model="email" placeholder="Ej. Proveedor / Particular" autocomplete="off">
+          </div>
 
-    <!-- 3. VISTA DE ÉXITO -->
-    <section id="viewSuccess" class="view">
-      <div class="success-container">
-        <div class="success-icon">✓</div>
-        <h2>¡Registro Completado!</h2>
-        <p id="successMessage">Hemos notificado a tu anfitrión de tu llegada. Por favor toma asiento en el lobby.</p>
-        <div class="countdown-bar" id="countdownText">Volviendo a la pantalla principal en 10 segundos...</div>
-      </div>
-    </section>
+          <div class="form-group">
+            <label for="hostName">¿A quién visitas? (Anfitrión) *</label>
+            <input type="text" id="hostName" x-model="hostSearch" placeholder="Ej. Ing. Carlos Mendoza" required autocomplete="off">
+          </div>
 
+          <div class="form-group">
+            <label for="visitReason">Motivo de la Visita</label>
+            <select id="visitReason">
+              <option value="Reunión Programada">Reunión Programada</option>
+              <option value="Entrega de Paquetería">Entrega de Paquetería</option>
+              <option value="Entrevista de Trabajo">Entrevista de Trabajo</option>
+              <option value="Mantenimiento / Servicios">Mantenimiento / Servicios</option>
+              <option value="Otro">Otro Asunto</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <span>✔</span> Confirmar Registro y Notificar
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       3. PANTALLA REGISTRO COMPLETADO
+       ========================================================================== -->
+  <main x-show="page === 'registered' || page === 'findHost' || page === 'confirm'">
+    <div class="success-container">
+      <div class="success-icon">✓</div>
+      <h2>¡Registro Completado!</h2>
+      <p>
+        ¡Gracias <strong style="color: white;" x-text="name"></strong>! Hemos notificado a tu anfitrión de tu llegada.
+        <br><br>
+        Por favor toma asiento en el lobby mientras te atienden.
+      </p>
+      <button type="button" class="btn-submit" @click="home()" style="max-width: 300px; margin: 0 auto;">
+        Finalizar
+      </button>
+    </div>
   </main>
 
   <!-- FOOTER -->
   <footer>
     <div class="status-badge">
       <span class="status-dot"></span>
-      <span id="txtDeviceStatus">Dispositivo Cisco RoomOS Conectado</span>
+      <span>Dispositivo Cisco RoomOS Conectado</span>
     </div>
     <div>Toca la pantalla para interactuar</div>
   </footer>
 
-  <!-- ==========================================================================
-       JAVASCRIPT: ENLACE CON TU FUNCIÓN CALL() DE INDEX.JS
-       ========================================================================== -->
-  <script>
-    const APP_CONFIG = {
-      COMPANY_NAME: 'PISA',
-      SUBTITLE: 'Lobby Principal • Recepción',
-      AUTO_RESET_SECONDS: 10
-    };
-
-    let countdownTimer = null;
-
-    // Reloj
-    function updateClock() {
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds}`;
-
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      const dateStr = now.toLocaleDateString('es-ES', options);
-      document.getElementById('date').innerText = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // ========================================================================
-    // DISPARADOR DE LLAMADA: Invoca call() de index.js
-    // ========================================================================
-    function triggerCall(event) {
-      if (event) {
-        event.stopPropagation();
-        event.preventDefault();
-      }
-
-      const card = document.getElementById('btnCallCard');
-      const title = document.getElementById('txtCallTitle');
-      const badge = document.getElementById('txtCallBadge');
-
-      if (card) card.classList.add('calling');
-      if (title) title.innerText = 'Marcando...';
-      if (badge) badge.innerText = 'Conectando con Recepción...';
-
-      console.log('>>> [Kiosk UI] Invocando call() de index.js...');
-
-      // 1. Ejecutar call() definida en tu index.js o en el ámbito global
-      try {
-        if (typeof window.call === 'function') {
-          window.call();
-        } else if (typeof call === 'function') {
-          call();
-        } else if (window.webex && typeof window.webex.dial === 'function') {
-          window.webex.dial('vdiazrod@cisco.com');
-        } else if (window.xapi && typeof window.xapi.command === 'function') {
-          window.xapi.command('Dial', { Number: 'vdiazrod@cisco.com' });
-        }
-      } catch (err) {
-        console.error('Error al invocar call():', err);
-      }
-
-      setTimeout(resetCallButtonState, 6000);
-    }
-
-    function resetCallButtonState() {
-      const card = document.getElementById('btnCallCard');
-      const title = document.getElementById('txtCallTitle');
-      const badge = document.getElementById('txtCallBadge');
-      if (card) card.classList.remove('calling');
-      if (title) title.innerText = 'Llamar Recepción';
-      if (badge) badge.innerText = 'Videollamada en Directo';
-    }
-
-    // Navegación
-    function showView(viewId) {
-      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      const target = document.getElementById(viewId);
-      if (target) target.classList.add('active');
-
-      if (viewId === 'viewHome') {
-        clearInterval(countdownTimer);
-        resetCallButtonState();
-      }
-    }
-
-    function showCheckInForm() {
-      document.getElementById('checkInForm').reset();
-      showView('viewForm');
-    }
-
-    function submitCheckIn(event) {
-      event.preventDefault();
-      const visitorName = document.getElementById('visitorName').value;
-      const hostName = document.getElementById('hostName').value;
-
-      document.getElementById('successMessage').innerText = 
-        `¡Gracias ${visitorName}! Hemos notificado a ${hostName} para informarle que estás aquí.`;
-
-      showView('viewSuccess');
-
-      let timeLeft = APP_CONFIG.AUTO_RESET_SECONDS;
-      const countdownElem = document.getElementById('countdownText');
-      countdownElem.innerText = `Volviendo a la pantalla principal en ${timeLeft} segundos...`;
-
-      countdownTimer = setInterval(() => {
-        timeLeft--;
-        if (timeLeft > 0) {
-          countdownElem.innerText = `Volviendo a la pantalla principal en ${timeLeft} segundos...`;
-        } else {
-          clearInterval(countdownTimer);
-          showView('viewHome');
-        }
-      }, 1000);
-    }
-  </script>
 </body>
 </html>
