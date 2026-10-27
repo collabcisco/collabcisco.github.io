@@ -6,7 +6,7 @@
   <title>Kiosco de Recepción Digital - Cisco RoomOS</title>
 
   <!-- LIBRERÍAS DE TU PROYECTO -->
-  <script src="https://unpkg.com/jsxapi/dist/jsxapi.js" onerror="console.log('CDN jsxapi offline')"></script>
+  <script src="https://unpkg.com/jsxapi/dist/jsxapi.js" onerror="console.log('CDN jsxapi no disponible')"></script>
   <script src="date.format.js" onerror="console.log('date.format.js no encontrado')"></script>
   <script src="webex.js" onerror="console.log('webex.js no encontrado')"></script>
   <script src="index.js" defer onerror="console.log('index.js no encontrado')"></script>
@@ -21,6 +21,7 @@
       --primary-hover: #00c8d7;          /* Color al presionar */
       --accent-blue: #38bdf8;            /* Azul secundario */
       --accent-green: #10b981;           /* Verde de Check In */
+      --accent-red: #ef4444;             /* Rojo de Error */
       --bg-gradient: linear-gradient(135deg, #07111e 0%, #0c1c2e 50%, #0f2742 100%);
       --card-bg: rgba(17, 30, 49, 0.85);
       --card-border: rgba(56, 189, 248, 0.25);
@@ -291,6 +292,12 @@
       font-weight: 600;
       background: rgba(255, 255, 255, 0.08);
       color: var(--accent-blue);
+      transition: all 0.2s;
+    }
+
+    .card-badge.error {
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--accent-red);
     }
 
     .action-card.checkin .card-badge {
@@ -439,7 +446,7 @@
 
     /* FOOTER */
     footer {
-      padding: 20px 50px;
+      padding: 18px 50px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -462,6 +469,21 @@
       border-radius: 50%;
       background: var(--accent-green);
       box-shadow: 0 0 10px var(--accent-green);
+    }
+
+    .status-dot.error {
+      background: var(--accent-red);
+      box-shadow: 0 0 10px var(--accent-red);
+    }
+
+    /* CONSOLA DE DIAGNÓSTICO EN VIVO (VISIBLE PARA VERIFICACIÓN) */
+    .diagnostic-panel {
+      font-size: 12px;
+      color: var(--primary-color);
+      background: rgba(0, 0, 0, 0.5);
+      padding: 4px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
     }
   </style>
 </head>
@@ -506,7 +528,7 @@
       </div>
 
       <div class="action-grid">
-        <!-- BOTÓN 1: LLAMAR RECEPCIÓN (Invoca call() con respuesta visual inmediata) -->
+        <!-- BOTÓN 1: LLAMAR RECEPCIÓN (MARCACIÓN NATIVA CON RESPUESTA EN TIEMPO REAL) -->
         <div class="action-card" id="btnCallCard" onclick="call(event)">
           <div class="card-icon" id="callIcon">📞</div>
           <h3 id="txtCallTitle">Llamar Recepción</h3>
@@ -580,17 +602,17 @@
 
   </main>
 
-  <!-- FOOTER -->
+  <!-- FOOTER CON DIAGNÓSTICO EN VIVO -->
   <footer>
     <div class="status-badge">
-      <span class="status-dot"></span>
-      <span id="txtDeviceStatus">Dispositivo Cisco RoomOS Conectado</span>
+      <span class="status-dot" id="statusDot"></span>
+      <span id="txtDeviceStatus">Cisco RoomOS: Listo</span>
     </div>
-    <div>Toca la pantalla para interactuar</div>
+    <div class="diagnostic-panel" id="txtDiagLog">Destino SIP: vdiazrod@cisco.com</div>
   </footer>
 
   <!-- ==========================================================================
-       4. JAVASCRIPT: DEFINICIÓN DE CALL() DIRECTA Y UNIVERSAL
+       4. JAVASCRIPT: MOTOR xAPI ROBUSTO CON DIAGNÓSTICO EN PANTALLA
        ========================================================================== -->
   <script>
     const APP_CONFIG = {
@@ -601,6 +623,7 @@
     };
 
     let countdownTimer = null;
+    let roomosClient = null;
 
     // Reloj
     function updateClock() {
@@ -617,20 +640,44 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Navegación
-    function showView(viewId) {
-      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      const target = document.getElementById(viewId);
-      if (target) target.classList.add('active');
-
-      if (viewId === 'viewHome') {
-        clearInterval(countdownTimer);
-        resetCallButtonState();
-      }
+    function setDiag(msg, isError = false) {
+      console.log('[RoomOS Kiosk]', msg);
+      const diag = document.getElementById('txtDiagLog');
+      const dot = document.getElementById('statusDot');
+      if (diag) diag.innerText = msg;
+      if (dot) dot.className = isError ? 'status-dot error' : 'status-dot';
     }
 
+    // Inicializar conexión con el equipo de video
+    function setupRoomOSConnection() {
+      if (typeof jsxapi !== 'undefined') {
+        try {
+          roomosClient = jsxapi.connect(window.parent);
+          setDiag('jsxapi enlazado con WebEngine');
+          
+          roomosClient.on('ready', () => {
+            setDiag('✅ Cisco RoomOS xAPI Conectado y Autorizado');
+          });
+
+          roomosClient.on('error', (e) => {
+            setDiag('jsxapi error: ' + (e.message || e), true);
+          });
+        } catch(e) {
+          console.warn('jsxapi init exception:', e);
+        }
+      } else if (window.xapi) {
+        roomosClient = window.xapi;
+        setDiag('✅ xAPI Nativo Inyectado');
+      } else if (window.parent && window.parent.xapi) {
+        roomosClient = window.parent.xapi;
+        setDiag('✅ parent.xapi Inyectado');
+      }
+    }
+    window.addEventListener('DOMContentLoaded', setupRoomOSConnection);
+    setTimeout(setupRoomOSConnection, 1000);
+
     // ========================================================================
-    // FUNCIÓN GLOBAL CALL(): Ejecutada directamente al tocar la tarjeta
+    // FUNCIÓN CALL(): EJECUTA LA MARCACIÓN CON DIAGNÓSTICO EN VIVO
     // ========================================================================
     window.call = function(event) {
       if (event) {
@@ -644,56 +691,79 @@
 
       if (card) card.classList.add('calling');
       if (title) title.innerText = 'Marcando...';
-      if (badge) badge.innerText = 'Iniciando llamada SIP...';
+      if (badge) {
+        badge.innerText = 'Llamando a ' + APP_CONFIG.RECEPTION_SIP_URI;
+        badge.classList.remove('error');
+      }
 
-      console.log('>>> [Kiosk] call() invocada. Destino:', APP_CONFIG.RECEPTION_SIP_URI);
+      setDiag('Enviando comando Dial a ' + APP_CONFIG.RECEPTION_SIP_URI + '...');
 
-      // 1. Intentar llamar a través de webex.dial (webex.js)
+      // Handler de éxito
+      const handleDialSuccess = (res) => {
+        setDiag('✅ Llamada iniciada en RoomOS con éxito');
+        if (title) title.innerText = 'Llamando...';
+        if (badge) badge.innerText = 'Conectado con Recepción';
+        setTimeout(resetCallButtonState, 6000);
+      };
+
+      // Handler de error detallado
+      const handleDialError = (err) => {
+        const errorText = (err && err.message) ? err.message : JSON.stringify(err);
+        setDiag('⚠️ Error RoomOS: ' + errorText, true);
+        if (title) title.innerText = 'Fallo al Marcar';
+        if (badge) {
+          badge.innerText = errorText.substring(0, 32);
+          badge.classList.add('error');
+        }
+        setTimeout(resetCallButtonState, 6000);
+      };
+
+      // 1. Si roomosClient ya está activo
+      if (roomosClient && typeof roomosClient.command === 'function') {
+        roomosClient.command('Dial', { Number: APP_CONFIG.RECEPTION_SIP_URI })
+          .then(handleDialSuccess)
+          .catch(handleDialError);
+        return;
+      }
+
+      // 2. Si webex.js definió webex.dial
       if (typeof window.webex !== 'undefined' && typeof window.webex.dial === 'function') {
-        console.log('Invocando window.webex.dial...');
         window.webex.dial(APP_CONFIG.RECEPTION_SIP_URI)
-          .then(() => console.log('Llamada webex.dial exitosa'))
-          .catch(e => console.error('Error webex.dial:', e));
+          .then(handleDialSuccess)
+          .catch(handleDialError);
+        return;
       }
-      // 2. Intentar llamar mediante xapi inyectado
-      else if (window.xapi && typeof window.xapi.command === 'function') {
-        console.log('Invocando window.xapi.command Dial...');
-        window.xapi.command('Dial', { Number: APP_CONFIG.RECEPTION_SIP_URI })
-          .then(() => console.log('Llamada xapi.command exitosa'))
-          .catch(e => console.error('Error xapi.command:', e));
-      }
-      // 3. Intentar llamar mediante jsxapi.connect(window.parent)
-      else if (typeof jsxapi !== 'undefined' && typeof jsxapi.connect === 'function') {
+
+      // 3. Si jsxapi está disponible globalmente
+      if (typeof jsxapi !== 'undefined' && typeof jsxapi.connect === 'function') {
         try {
-          console.log('Invocando jsxapi.connect(window.parent)...');
-          const client = jsxapi.connect(window.parent);
-          client.command('Dial', { Number: APP_CONFIG.RECEPTION_SIP_URI })
-            .then(() => console.log('Llamada jsxapi exitosa'))
-            .catch(e => console.error('Error jsxapi Dial:', e));
-        } catch(err) {
-          console.error('Error instanciando jsxapi:', err);
-        }
-      }
-      // 4. Enviar comando por postMessage nativo de RoomOS
-      else {
-        console.log('Enviando comando Dial por postMessage...');
-        try {
-          const msg = {
-            type: 'xapi:command',
-            command: 'Dial',
-            arguments: { Number: APP_CONFIG.RECEPTION_SIP_URI },
-            jsonrpc: '2.0',
-            method: 'xCommand/Dial',
-            params: { Number: APP_CONFIG.RECEPTION_SIP_URI }
-          };
-          window.parent.postMessage(msg, '*');
-          window.postMessage(msg, '*');
+          const directXapi = jsxapi.connect(window.parent);
+          directXapi.command('Dial', { Number: APP_CONFIG.RECEPTION_SIP_URI })
+            .then(handleDialSuccess)
+            .catch(handleDialError);
+          return;
         } catch(e) {
-          console.error('Error en postMessage:', e);
+          handleDialError(e);
+          return;
         }
       }
 
-      setTimeout(resetCallButtonState, 5000);
+      // 4. Protocolo PostMessage JSON-RPC Estándar
+      try {
+        const reqId = Date.now();
+        const jsonRpcMsg = {
+          jsonrpc: '2.0',
+          method: 'xCommand/Dial',
+          params: { Number: APP_CONFIG.RECEPTION_SIP_URI },
+          id: reqId
+        };
+        window.parent.postMessage(jsonRpcMsg, '*');
+        window.postMessage(jsonRpcMsg, '*');
+        setDiag('Mensaje JSON-RPC xCommand/Dial enviado');
+        setTimeout(resetCallButtonState, 5000);
+      } catch(e) {
+        handleDialError(e);
+      }
     };
 
     function resetCallButtonState() {
@@ -702,10 +772,24 @@
       const badge = document.getElementById('txtCallBadge');
       if (card) card.classList.remove('calling');
       if (title) title.innerText = 'Llamar Recepción';
-      if (badge) badge.innerText = 'Videollamada en Directo';
+      if (badge) {
+        badge.innerText = 'Videollamada en Directo';
+        badge.classList.remove('error');
+      }
     }
 
-    // Formulario Check In
+    // Navegación de Vistas
+    function showView(viewId) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      const target = document.getElementById(viewId);
+      if (target) target.classList.add('active');
+
+      if (viewId === 'viewHome') {
+        clearInterval(countdownTimer);
+        resetCallButtonState();
+      }
+    }
+
     function showCheckInForm() {
       document.getElementById('checkInForm').reset();
       showView('viewForm');
