@@ -10,7 +10,7 @@ Details:
 const ALLOWED_HOSTS = [
   "Veronica Diaz",
   "Jacob Toala",
-  "Arturo Prieto",
+  "Antonio Delgadillo",
   "Marco Conde"
 ];
 
