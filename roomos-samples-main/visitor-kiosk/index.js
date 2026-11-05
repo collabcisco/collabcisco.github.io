@@ -18,7 +18,7 @@ const ALLOWED_HOSTS = [
 const WEBEX_CONNECT_HOOK_URL = "https://hooks.us.webexconnect.io/events/9GFXGOWCKQ";
 
 const dataModel = {
-  // home > checkIn > findHost > confirmHost > photo > confim > registered | checkOut > checkOutResult
+  // home > checkIn > findHost > confirmHost > photo > confim > registered | checkOut > checkOutResult 
   page: 'home',
   name: '',
   email: '',
