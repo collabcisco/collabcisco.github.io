@@ -80,7 +80,7 @@ const dataModel = {
   },
 
   call() {
-    const defaultNumber = 'marco_conde@connext.com.mx';
+    const defaultNumber = 'recepcin@connext.rooms.webex.com';
     const number = new URLSearchParams(location.search).get('reception') || defaultNumber;
     location.href = `sip:${number}`;
   },
